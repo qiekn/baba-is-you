@@ -1,1 +1,1 @@
-./bin/Debug/baba-is-you
+make && ./bin/Debug/baba-is-you

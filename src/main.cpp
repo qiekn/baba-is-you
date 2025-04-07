@@ -1,54 +1,62 @@
-/*
-Raylib example file.
-This is an example main file for a simple raylib project.
-Use this as a starting point or replace it with your code.
-
-by Jeffery Myers is marked with CC0 1.0. To view a copy of this license, visit https://creativecommons.org/publicdomain/zero/1.0/
-
-*/
-
 #include "raylib.h"
 
-#include "resource_dir.h"	// utility header for SearchAndSetResourceDir
+#include "resource_dir.h" // utility header for SearchAndSetResourceDir
+#include <math.h>
 
-int main ()
-{
-	// Tell the window to use vsync and work on high DPI displays
-	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
+int main() {
+  // Tell the window to use vsync and work on high DPI displays
+  SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 
-	// Create the window and OpenGL context
-	InitWindow(1280, 800, "Hello Raylib");
+  const int screenWeight = 640;
+  const int screenHeight = 480;
 
-	// Utility function from resource_dir.h to find the resources folder and set it as the current working directory so we can load from it
-	SearchAndSetResourceDir("resources");
+  SetConfigFlags(FLAG_MSAA_4X_HINT);
 
-	// Load a texture from the resources directory
-	Texture wabbit = LoadTexture("wabbit_alpha.png");
-	
-	// game loop
-	while (!WindowShouldClose())		// run the loop untill the user presses ESCAPE or presses the Close button on the window
-	{
-		// drawing
-		BeginDrawing();
+  // Create the window and OpenGL context
+  InitWindow(screenWeight, screenHeight, "baba-is-you");
 
-		// Setup the back buffer for drawing (clear color and depth buffers)
-		ClearBackground(BLACK);
+  // Utility function from resource_dir.h to find the resources folder and set
+  // it as the current working directory so we can load from it
+  SearchAndSetResourceDir("resources");
 
-		// draw some text using the default font
-		DrawText("Hello Raylib", 200,200,20,WHITE);
+  // Load a texture from the resources directory
+  Texture wabbit = LoadTexture("wabbit_alpha.png");
 
-		// draw our texture to the screen
-		DrawTexture(wabbit, 400, 200, WHITE);
-		
-		// end the frame and get ready for the next one  (display frame, poll input, etc...)
-		EndDrawing();
-	}
+  // Init camera
+  Camera3D camera = {0};
+  camera.position = (Vector3){40.0f, 20.0f, 0.0f};
+  camera.target = (Vector3){0.0f, 0.0f, 0.0f};
+  camera.up = (Vector3){0.0f, 1.0f, 0.0f};
+  camera.fovy = 70.0f;
+  camera.projection = CAMERA_PERSPECTIVE;
 
-	// cleanup
-	// unload our texture so it can be cleaned up
-	UnloadTexture(wabbit);
+  SetTargetFPS(60);
+  int angle = 0;
 
-	// destroy the window and cleanup the OpenGL context
-	CloseWindow();
-	return 0;
+  // game loop
+  // run the loop untill the user presses ESCAPE or
+  // presses the Close button on the window
+  while (!WindowShouldClose()) {
+
+    double time = GetTime();
+    double cameraTime = time * 0.45;
+    camera.position.x = (float)cos(cameraTime) * 40.0f;
+    camera.position.z = (float)sin(cameraTime) * 40.0f;
+
+    BeginDrawing();
+
+    // Setup the back buffer for drawing (clear color and depth buffers)
+    ClearBackground(WHITE);
+
+    BeginMode3D(camera);
+    DrawCube(Vector3{0, 0, 0}, 10, 10, 10, VIOLET);
+    DrawCubeWires(Vector3{0, 0, 0}, 10, 10, 10, BLACK);
+    EndMode3D();
+
+    EndDrawing();
+  }
+
+  // destroy the window and cleanup the OpenGL context
+  CloseWindow();
+  return 0;
 }

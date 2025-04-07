@@ -12,3 +12,5 @@ cd build
 cd ..
 make
 ```
+
+for neovim lsp: `bear -- make` to generate `compile_commands.json`
