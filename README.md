@@ -7,10 +7,9 @@ A baba is you clone with c++ &amp; raylib
 ### macOS Users
 
 ```bash
+mkdir build
 cd build
-./premake5.osx gmake2
-cd ..
+cmake ..
 make
+./game
 ```
-
-for neovim lsp: `bear -- make` to generate `compile_commands.json`

@@ -1,6 +1,5 @@
 bin
-external
-build_files
+build
 
 .cache
 compile_commands.json
