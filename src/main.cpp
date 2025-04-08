@@ -13,6 +13,7 @@ int main() {
 
   SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI); // vsync and high dpi
   SetConfigFlags(FLAG_MSAA_4X_HINT);                     // anti-aliasing
+  SetTraceLogLevel(LOG_WARNING);
 
   // Utility function from resource_dir.h to find the resources folder and set
   // it as the current working directory so we can load from it

@@ -44,7 +44,7 @@ constexpr bool IsProperty(ObjectType type) {
   return (type > ObjectType::PROPERTY) && (type < ObjectType::ICON);
 }
 
-constexpr ObjectType ConverTextToIcon(ObjectType type) {
+constexpr ObjectType ConvertTextToIcon(ObjectType type) {
   const auto typeVal = static_cast<int>(type);
   const auto iconTypeVal = static_cast<int>(ObjectType::ICON);
 
@@ -68,9 +68,9 @@ constexpr ObjectType ConvertIconToText(ObjectType type) {
   return static_cast<ObjectType>(convertedVal);
 }
 
-enum class PlayerState {
+enum class GameState {
   INVALID,
-  PLAING,
+  PLAYING,
   WON,
   LOST,
 };
