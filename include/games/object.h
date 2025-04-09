@@ -44,8 +44,14 @@ public:
 
   bool HasPropertyType() const;
 
-  bool isRule = false;
+  bool is_rule_ = false;
 
 private:
+  /**
+   * @brief map of types
+   *
+   * key: type
+   * value: count
+   */
   std::map<ObjectType, std::size_t> types_;
 };

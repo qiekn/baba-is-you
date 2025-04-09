@@ -44,7 +44,7 @@ void Game::ParseRules() {
 
   for (std::size_t y = 0; y < height; ++y) {
     for (std::size_t x = 0; x < width; ++x) {
-      map_.At(x, y).isRule = false;
+      map_.At(x, y).is_rule_ = false;
     }
   }
 
@@ -72,9 +72,9 @@ void Game::ParseRule(std::size_t x, std::size_t y, RuleDirection direction) {
          map_.At(x + 2, y).HasPropertyType())) {
       rule_manager_.Add({map_.At(x, y), map_.At(x + 1, y), map_.At(x + 2, y)});
 
-      map_.At(x, y).isRule = true;
-      map_.At(x + 1, y).isRule = true;
-      map_.At(x + 2, y).isRule = true;
+      map_.At(x, y).is_rule_ = true;
+      map_.At(x + 1, y).is_rule_ = true;
+      map_.At(x + 2, y).is_rule_ = true;
     }
   } else if (direction == RuleDirection::VERTICAL) {
     if (y + 2 >= height) {
@@ -86,9 +86,9 @@ void Game::ParseRule(std::size_t x, std::size_t y, RuleDirection direction) {
          map_.At(x, y + 2).HasPropertyType())) {
       rule_manager_.Add({map_.At(x, y), map_.At(x, y + 1), map_.At(x, y + 2)});
 
-      map_.At(x, y).isRule = true;
-      map_.At(x, y + 1).isRule = true;
-      map_.At(x, y + 2).isRule = true;
+      map_.At(x, y).is_rule_ = true;
+      map_.At(x, y + 1).is_rule_ = true;
+      map_.At(x, y + 2).is_rule_ = true;
     }
   }
 }
