@@ -19,17 +19,17 @@ void RuleManager::Remove(const Rule &rule) {
 void RuleManager::Clear() { rules_.clear(); }
 
 std::vector<Rule> RuleManager::GetRules(ObjectType type) const {
-  std::vector<Rule> ret;
+  std::vector<Rule> res;
 
   for (auto &rule : rules_) {
     if (std::get<0>(rule.objects).HasType(type) ||
         std::get<1>(rule.objects).HasType(type) ||
         std::get<2>(rule.objects).HasType(type)) {
-      ret.emplace_back(rule);
+      res.emplace_back(rule);
     }
   }
 
-  return ret;
+  return res;
 }
 
 std::size_t RuleManager::Count() const { return rules_.size(); }
