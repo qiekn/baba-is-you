@@ -1,2 +1,1 @@
-make -j${nproc} -C build
-./build/game
+make -j${nproc} -C build && ./build/game
