@@ -23,35 +23,25 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
   endif()
 endif()
 
-# ImGui
-set(IMGUI_DIR ${CMAKE_SOURCE_DIR}/deps/imgui)
-add_library(imgui STATIC
-   ${IMGUI_DIR}/imgui.cpp
-   ${IMGUI_DIR}/imgui_draw.cpp
-   ${IMGUI_DIR}/imgui_tables.cpp
-   ${IMGUI_DIR}/imgui_widgets.cpp
-   ${IMGUI_DIR}/imgui_demo.cpp
-)
-target_include_directories(imgui INTERFACE ${IMGUI_DIR})
-
-# RlImGui (raylib backend for imgui)
-set(RLIMGUI_DIR ${CMAKE_SOURCE_DIR}/deps/rlimgui)
-add_library(rlimgui STATIC ${RLIMGUI_DIR}/rlimgui.cpp)
-target_include_directories(rlimgui INTERFACE ${RLIMGUI_DIR})
-target_link_libraries(rlimgui PRIVATE imgui raylib)
+add_subdirectory(deps/imgui)
+add_subdirectory(deps/rlimgui)
+add_subdirectory(deps/entt)
+add_subdirectory(deps/json)
 
 #---------------------------------------------------------------------3
 #                             Our Project                             |
 #---------------------------------------------------------------------3
+
+add_compile_definitions(ASSETS="${CMAKE_CURRENT_LIST_DIR}/assets")
+add_compile_definitions(LEVELS="${CMAKE_CURRENT_LIST_DIR}/levels")
 
 # generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_CXX_STANDARD 20)
 
-# header files
+# headers
 include_directories(include)
-include_directories(deps)
 
 file(GLOB_RECURSE HDRS CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/include/*.h"
@@ -66,7 +56,11 @@ file(GLOB_RECURSE SRCS CONFIGURE_DEPENDS
 add_executable(${PROJECT_NAME} ${SRCS})
 
 # libraries
-target_link_libraries(${PROJECT_NAME} raylib imgui, rlimgui)
+target_link_libraries(${PROJECT_NAME}
+    raylib rlimgui
+    entt
+    json
+)
 
 # checks if OSX and links appropriate frameworks (only required on macOS)
 if (APPLE)
