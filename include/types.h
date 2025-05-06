@@ -1,5 +1,6 @@
 #pragma once
 
+#include <entt.h>
 #include <cctype>
 #include <string>
 
@@ -47,3 +48,19 @@ inline std::string ToLower(const std::string &str) {
   }
   return res;
 }
+
+using Registry = entt::registry;
+using Dispatcher = entt::dispatcher;
+using Entity = entt::entity;
+
+// specialize std::hash for Vector2Int
+namespace std {
+template <>
+struct hash<Vector2Int> {
+  std::size_t operator()(const Vector2Int &v) const {
+    return std::hash<int>()(v.x) ^ (std::hash<int>()(v.y) << 1);
+  }
+};
+}  // namespace std
+
+using Map = std::unordered_map<Vector2Int, Entity, std::hash<Vector2Int>>;
