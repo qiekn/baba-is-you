@@ -1,0 +1,29 @@
+#pragma once
+
+/**
+ * @class Maid
+ * @brief 有什么事情尽管来问女仆小姐姐就好了
+ */
+#include "managers/texture-manager.h"
+#include "types.h"
+class Maid {
+public:
+  /* singleton */
+  static Maid& Instance() {
+    static Maid instance;
+    return instance;
+  }
+
+  /* entities */
+  Registry registry_;
+  Dispatcher dispatcher_;
+  Map entity_map_;
+
+  /* managers */
+  TextureManager texture_manager_;
+
+  /* systems */
+
+private:
+  Maid();
+};
