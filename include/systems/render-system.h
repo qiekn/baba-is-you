@@ -8,7 +8,7 @@ public:
   RenderSystem(Registry& registry, TextureManager& texture_manager)
       : registry_(registry), texture_manager_(texture_manager) {}
 
-  virtual ~RenderSystem();
+  virtual ~RenderSystem() = default;
 
   void DrawScene();
   void DrawUI();

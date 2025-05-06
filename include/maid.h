@@ -1,11 +1,13 @@
 #pragma once
 
+#include "managers/texture-manager.h"
+#include "systems/render-system.h"
+#include "types.h"
+
 /**
  * @class Maid
  * @brief 有什么事情尽管来问女仆小姐姐就好了
  */
-#include "managers/texture-manager.h"
-#include "types.h"
 class Maid {
 public:
   /* singleton */
@@ -23,7 +25,8 @@ public:
   TextureManager texture_manager_;
 
   /* systems */
+  RenderSystem render_system_;
 
 private:
-  Maid();
+  Maid() : render_system_(registry_, texture_manager_) {}
 };

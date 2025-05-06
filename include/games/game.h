@@ -1,6 +1,7 @@
 #pragma once
 
 #include <raylib.h>
+#include "managers/scene-manager.h"
 class Game {
 public:
   Game() {}
@@ -9,10 +10,9 @@ public:
   void Run();
 
 private:
-  bool is_running_ = false;
-  Camera2D camera_ = {0};
-
-  /* methods */
   void Update();
   void Draw();
+
+  bool is_running_ = false;
+  SceneManager scene_manager_;
 };
