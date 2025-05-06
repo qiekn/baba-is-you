@@ -3,8 +3,9 @@
 #include <raylib.h>
 #include "components.h"
 #include "constants.h"
-#include "imgui.h"
 #include "rlimgui.h"
+
+// public
 
 void RenderSystem::DrawScene() {
   DrawBackground();
@@ -24,6 +25,8 @@ void RenderSystem::DrawUI() {
   DrawRectangle(0, kScreenHeight - border, kScreenWidth, border, RED);
   */
 }
+
+// private
 
 void RenderSystem::DrawBackground() {
   auto background_outer = Color{38, 30, 67, 255};
@@ -50,28 +53,34 @@ void RenderSystem::DrawGrid() {
 }
 
 void RenderSystem::DrawEntities() {
+  // make sure all animated sprite has AnimationState component
+  InitAnimations();
+
+  UpdateAnimations();
+
   auto view = registry_.view<Position, SpriteRenderer>(entt::exclude<Hide>);
   for (auto entity : view) {
     const auto& pos = view.get<Position>(entity);
     const auto& render = view.get<SpriteRenderer>(entity);
-    float px = pos.x * kCellSize;
-    float py = pos.y * kCellSize;
+    float px = pos.x * kCellSize * kScale;
+    float py = pos.y * kCellSize * kScale;
 
-    auto frames = texture_manager_.GetFrames(render.name);
+    auto& frames = texture_manager_.GetFrames(render.name);
+
+    int current_frame = 0;
 
     // update current index of frame_texture
-    if (render.is_animated) {
-      timer_ += GetFrameTime();
-      if (timer_ >= duration_) {
-        timer_ -= duration_;
-        index_ = (index_ + 1) % frames.size();
-      }
+    if (render.is_animated && registry_.all_of<AnimationState>(entity)) {
+      const auto& anim = registry_.get<AnimationState>(entity);
+      current_frame = anim.frame_index;
     }
 
-    Texture2D current_texture = frames[index_];
+    Texture2D current_texture = frames[current_frame];
     DrawTextureEx(current_texture, Vector2(px, py), 0, kScale, PINK);
   }
 }
+
+// helpers
 
 void RenderSystem::DrawImGui() {
   rlImGuiBegin();
@@ -81,3 +90,34 @@ void RenderSystem::DrawImGui() {
 
   rlImGuiEnd();
 }
+
+void RenderSystem::InitAnimations() {
+  auto view = registry_.view<SpriteRenderer>(entt::exclude<AnimationState>);
+  for (auto entity : view) {
+    const auto& renderer = view.get<SpriteRenderer>(entity);
+    if (renderer.is_animated) {
+      registry_.emplace<AnimationState>(entity);
+    }
+  }
+};
+
+void RenderSystem::UpdateAnimations() {
+  float delta_time = GetFrameTime();
+
+  auto view = registry_.view<SpriteRenderer, AnimationState>();
+  for (auto entity : view) {
+    auto& render = view.get<SpriteRenderer>(entity);
+    auto& anim = view.get<AnimationState>(entity);
+
+    if (render.is_animated) {
+      auto frames = texture_manager_.GetFrames(render.name);
+      if (!frames.empty()) {
+        anim.timer += delta_time;
+        if (anim.timer >= anim.frame_duration) {
+          anim.timer -= anim.frame_duration;
+          anim.frame_index = (anim.frame_index + 1) % frames.size();
+        }
+      }
+    }
+  }
+};

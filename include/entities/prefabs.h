@@ -2,8 +2,17 @@
 
 #include "types.h"
 
-void CreateNoun(Vector2Int pos);
+class Prefabs {
+public:
+  Prefabs(Registry& registry);
+  virtual ~Prefabs();
 
-void CreateOperator(Vector2Int pos);
+  void CreateText(Vector2Int pos, const std::string& name);
 
-void CreateProperty(Vector2Int pos);
+  void CreateNoun(Vector2Int pos);
+  void CreateOperator(Vector2Int pos);
+  void CreateProperty(Vector2Int pos);
+
+private:
+  Registry& registry_;
+};

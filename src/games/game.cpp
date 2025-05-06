@@ -12,9 +12,6 @@ void Game::Run() {
   SetTargetFPS(KFps);
   is_running_ = true;
 
-  // Maid::Instance().level_manager_.LoadJson();
-  // Maid::Instance().level_manager_.InitLevel();
-
   while (!WindowShouldClose() && is_running_) {
     Update();
     Draw();

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "entities/prefabs.h"
+#include "managers/level-manager.h"
 #include "managers/texture-manager.h"
 #include "systems/render-system.h"
 #include "types.h"
@@ -20,13 +22,18 @@ public:
   Registry registry_;
   Dispatcher dispatcher_;
   Map entity_map_;
+  Prefabs prefabs_;
 
   /* managers */
   TextureManager texture_manager_;
+  LevelManager level_manager_;
 
   /* systems */
   RenderSystem render_system_;
 
 private:
-  Maid() : render_system_(registry_, texture_manager_) {}
+  Maid()
+      : prefabs_(registry_),
+        render_system_(registry_, texture_manager_),
+        level_manager_(registry_, prefabs_) {}
 };

@@ -24,14 +24,15 @@ private:
 
   // helper functions
 
+  /**
+   * @brief if entity has SpriteRenderer and is_animated is true, but don't have
+   * AnimationState component, then add it.
+   */
+  void InitAnimations();
+
+  void UpdateAnimations();
+
 private:
   Registry& registry_;
   TextureManager& texture_manager_;
-
-  /**
-   * @brief index for current texture2d (sprite animation)
-   */
-  int index_ = 0;
-  float timer_ = 0;
-  float duration_ = 0.2f;
 };

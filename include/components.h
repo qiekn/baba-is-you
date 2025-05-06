@@ -8,9 +8,11 @@
 struct Position : public Vector2Int {
   Position() : Vector2Int() {}
   Position(int x, int y) : Vector2Int(x, y) {}
+  Position(Vector2Int pos) : Vector2Int(pos) {}
 };
 
 enum class SpriteType {
+  kNone,
   kNoun,
   kOperator,
   kProperty,
@@ -18,10 +20,21 @@ enum class SpriteType {
 };
 
 struct SpriteRenderer {
-  SpriteType type;
+  SpriteType type = SpriteType::kNone;
   std::string name;
   size_t frames = 3;
   bool is_animated = true;
+
+  // use c++20 designated initializer instead
+
+  // SpriteRenderer() = default;
+  // SpriteRenderer(const std::string& name) { this->name = name; }
+};
+
+struct AnimationState {
+  int frame_index = 0;
+  float frame_duration = 0.2f;
+  float timer = 0.0f;
 };
 
 // basic crates

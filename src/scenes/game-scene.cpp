@@ -20,6 +20,10 @@ GameScene::GameScene() : render_system_(Maid::Instance().render_system_) {
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
   io.FontGlobalScale = 1.25f;
   ImGui::StyleColorsClassic();
+
+  // load levels
+  Maid::Instance().level_manager_.LoadJson();
+  Maid::Instance().level_manager_.InitLevel();
 }
 
 GameScene::~GameScene() {}
