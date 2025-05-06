@@ -1,0 +1,17 @@
+{
+  "name": "test level",
+  "description": "A simple level",
+  "tiles": {
+    "nouns": [
+      { "id": "baba", "x": 1, "y": 1 },
+      { "id": "baba", "x": 1, "y": 1 },
+      { "id": "baba", "x": 1, "y": 1 }
+    ],
+    "operators" : [
+      { "id": "baba", "x": 1, "y": 1 }
+    ],
+    "properties" : [
+      { "id" : "you", "x" : 2, "y" : 3}
+    ]
+  }
+}
