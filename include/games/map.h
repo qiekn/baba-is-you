@@ -32,10 +32,10 @@ public:
   // Assigns an object to the map.
   Object &At(std::size_t x, std::size_t y);
 
-  //! Assigns an object to the map.
+  // Assigns an object to the map.
   const Object &At(std::size_t x, std::size_t y) const;
 
-  //! Gets a list of icon positions.
+  // Gets a list of icon positions.
   std::vector<Position> GetPositions(ObjectType type) const;
 
 private:

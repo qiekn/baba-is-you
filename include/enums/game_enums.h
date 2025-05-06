@@ -19,20 +19,20 @@ enum class Direction {
 
 enum class ObjectType {
   NOUN,
-#define X(a) a,
+#define X(a) NOUN_##a,
 #include "noun.def"
 #undef X
   OPERATOR,
-#define X(a) a,
+#define X(a) OPERATOR_##a,
 #include "operator.def"
 #undef X
   PROPERTY,
-#define X(a) a,
+#define X(a) PROPERTY_##a,
 #include "property.def"
 #undef X
   ICON,
-#define X(a) a,
-#include "icon.def"
+#define X(a) ICON_##a,
+#include "noun.def"
 #undef X
 };
 
@@ -56,9 +56,9 @@ constexpr bool IsOperator(ObjectType type) {
  * after a noun and before a property.
  */
 constexpr bool IsVerb(ObjectType type) {
-  return (type == ObjectType::IS || type == ObjectType::HAS ||
-          type == ObjectType::MAKE) ||
-         type == ObjectType::WRITE;
+  return (type == ObjectType::OPERATOR_IS || type == ObjectType::OPERATOR_HAS ||
+          type == ObjectType::OPERATOR_MAKE) ||
+         type == ObjectType::OPERATOR_WRITE;
 }
 
 /**

@@ -1,4 +1,8 @@
+#pragma once
+
+#include <cctype>
 #include <ostream>
+#include <string>
 
 struct Vector2Int {
   int x;
@@ -26,3 +30,11 @@ struct Vector2Int {
     return os;
   }
 };
+
+inline std::string ToLower(const std::string &str) {
+  std::string res = str;
+  for (char &c : res) {
+    c = std::tolower(c);
+  }
+  return res;
+}

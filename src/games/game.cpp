@@ -161,7 +161,7 @@ void Game::ProcessMove(std::size_t x, std::size_t y, Direction dir,
     auto rules = rule_manager_.GetRules(ObjectType::PUSH);
 
     for (auto &rule : rules) {
-      const ObjectType nounType = std::get<0>(rule.objects).GetTypes()[0];
+      const ObjectType nounType = std::get<0>(rule.objects_).GetTypes()[0];
       ProcessMove(_x, _y, dir, ConvertTextToIcon(nounType));
     }
   } else if (rule_manager_.HasProperty(types, ObjectType::SINK) ||
@@ -192,7 +192,7 @@ void Game::CheckPlayState() {
   auto winRules = rule_manager_.GetRules(ObjectType::WIN);
   for (auto &pos : positions) {
     for (auto &rule : winRules) {
-      const ObjectType type = std::get<0>(rule.objects).GetTypes()[0];
+      const ObjectType type = std::get<0>(rule.objects_).GetTypes()[0];
 
       if (map_.At(pos.first, pos.second).HasType(ConvertTextToIcon(type))) {
         game_state_ = GameState::WON;

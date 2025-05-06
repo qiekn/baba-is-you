@@ -21,13 +21,13 @@ std::size_t Map::GetWidth() const { return width_; }
 std::size_t Map::GetHeight() const { return height_; }
 
 void Map::Load(std::string_view filename) {
-  std::ifstream mapFile(filename.data());
+  std::ifstream map_file(filename.data());
 
-  mapFile >> width_ >> height_;
+  map_file >> width_ >> height_;
 
   int val = 0;
   for (std::size_t i = 0; i < width_ * height_; ++i) {
-    mapFile >> val;
+    map_file >> val;
 
     initObjects_.emplace_back(
         std::vector<ObjectType>{static_cast<ObjectType>(val)});

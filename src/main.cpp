@@ -1,114 +1,117 @@
-#include "raylib.h"
-
-#include "resource_dir.h" // utility header for SearchAndSetResourceDir
 #include <math.h>
+
+#include <cstddef>
+
+#include "constants.h"
+#include "raylib.h"
 
 enum GameScreen { LOGO, TITLE, GAMEPLAY, ENDING };
 
-int main() {
+void Update() {}
 
-  /*─────────────────────────────────────┐
-  │                Config                │
-  └──────────────────────────────────────*/
+void DrawGrid(int rows = 18, int cols = 22, int cell_size = 24,
+              int scale = kScale) {
+  int sz = cell_size * scale;
+  Color color = Color{47, 34, 86, 255};
+  // horizontal lines
+  for (int i = 0; i <= rows; i++) DrawLine(0, i * sz, cols * sz, i * sz, color);
+  // vertical lines
+  for (int i = 0; i <= cols; i++) DrawLine(i * sz, 0, i * sz, rows * sz, color);
+}
 
-  SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI); // vsync and high dpi
-  SetConfigFlags(FLAG_MSAA_4X_HINT);                     // anti-aliasing
-  SetTraceLogLevel(LOG_WARNING);
+void DrawScreenArea(int border = 5) {
+  DrawText("SCREEN AREA", kScreenWidth - 160, 10, 20, RED);
+  DrawRectangle(0, 0, kScreenWidth, border, RED);
+  DrawRectangle(0, border, border, kScreenHeight - 10, RED);
+  DrawRectangle(kScreenWidth - border, border, border, kScreenHeight - 10, RED);
+  DrawRectangle(0, kScreenHeight - border, kScreenWidth, border, RED);
+}
 
-  // Utility function from resource_dir.h to find the resources folder and set
-  // it as the current working directory so we can load from it
-  SearchAndSetResourceDir("resources");
+void DrawLogo() {
+  // TODO: Draw LOGO screen here!
+  ClearBackground(LIGHTGRAY);
+  DrawText("LOGO SCREEN", 20, 20, 40, LIGHTGRAY);
+  DrawText("WAIT for 2 SECONDS...", 290, 220, 20, GRAY);
+}
 
-  const int screenWidth = 800;
-  const int screenHeight = 450;
+void DrawTitle() {
+  // TODO: Draw TITLE screen here!
+  ClearBackground(GREEN);
+  DrawText("TITLE SCREEN", 20, 20, 40, DARKGREEN);
+  DrawText("PRESS ENTER or TAP to JUMP to GAMEPLAY SCREEN", 120, 220, 20,
+           DARKGREEN);
+}
 
-  SetTargetFPS(60);
+void DrawGame() {
+  auto background_outer = Color{38, 30, 67, 255};
+  auto background_inner = Color{26, 19, 35, 255};
+  ClearBackground(background_outer);
+  auto height = kCellSize * kScale * kRows;
+  auto width = kCellSize * kScale * kCols;
+  DrawRectangle(0, 0, width, height, background_inner);
+  DrawGrid();
+}
 
-  /*─────────────────────────────────────┐
-  │                Fields                │
-  └──────────────────────────────────────*/
+void DrawEnding() {
+  // TODO: Draw ENDING screen here!
+  ClearBackground(BLUE);
+  DrawText("ENDING SCREEN", 20, 20, 40, DARKBLUE);
+  DrawText("PRESS ENTER or TAP to RETURN to TITLE SCREEN", 120, 220, 20,
+           DARKBLUE);
+}
 
-  GameScreen currentScreen = LOGO;
-  int framesCounter = 0;
-
-  /*─────────────────────────────────────┐
-  │              Funcitons               │
-  └──────────────────────────────────────*/
-
-  auto Update = []() {
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
-    EndDrawing();
-  };
-
-  auto Draw = [&currentScreen]() {
-    switch (currentScreen) {
+void Draw(int currentScreen) {
+  switch (currentScreen) {
     case LOGO: {
-      // TODO: Draw LOGO screen here!
-      DrawText("LOGO SCREEN", 20, 20, 40, LIGHTGRAY);
-      DrawText("WAIT for 2 SECONDS...", 290, 220, 20, GRAY);
-
+      DrawLogo();
     } break;
     case TITLE: {
-      // TODO: Draw TITLE screen here!
-      DrawRectangle(0, 0, screenWidth, screenHeight, GREEN);
-      DrawText("TITLE SCREEN", 20, 20, 40, DARKGREEN);
-      DrawText("PRESS ENTER or TAP to JUMP to GAMEPLAY SCREEN", 120, 220, 20,
-               DARKGREEN);
-
+      DrawTitle();
     } break;
     case GAMEPLAY: {
-      // TODO: Draw GAMEPLAY screen here!
-      DrawRectangle(0, 0, screenWidth, screenHeight, PURPLE);
-      DrawText("GAMEPLAY SCREEN", 20, 20, 40, MAROON);
-      DrawText("PRESS ENTER or TAP to JUMP to ENDING SCREEN", 130, 220, 20,
-               MAROON);
-
+      DrawGame();
     } break;
     case ENDING: {
-      // TODO: Draw ENDING screen here!
-      DrawRectangle(0, 0, screenWidth, screenHeight, BLUE);
-      DrawText("ENDING SCREEN", 20, 20, 40, DARKBLUE);
-      DrawText("PRESS ENTER or TAP to RETURN to TITLE SCREEN", 120, 220, 20,
-               DARKBLUE);
-
+      DrawEnding();
     } break;
     default:
       break;
-    }
-  };
+  }
+};
 
-  auto SceneManager = [&framesCounter, &currentScreen]() {
-    switch (currentScreen) {
+int main() {
+  SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);  // vsync and high dpi
+  SetConfigFlags(FLAG_MSAA_4X_HINT);                      // anti-aliasing
+  SetTraceLogLevel(LOG_WARNING);
+
+  SetTargetFPS(60);
+
+  GameScreen currentScreen = GAMEPLAY;
+  int framesCounter = 0;
+
+  Camera2D camera = {0};
+  camera.target = (Vector2){24 * 2 * 22 * 0.5, 24 * 2 * 18 * 0.5};
+  camera.offset = (Vector2){kScreenWidth / 2.0f, kScreenHeight / 2.0f};
+  camera.rotation = 0.0f;
+  camera.zoom = 1.0f;
+
+  // simple scene manager
+  switch (currentScreen) {
     case LOGO: {
-      // TODO: Update LOGO screen variables here!
-
-      framesCounter++; // Count frames
-
+      framesCounter++;  // Count frames
       // Wait for 2 seconds (120 frames) before jumping to TITLE screen
       if (framesCounter > 120) {
         currentScreen = TITLE;
       }
     } break;
     case TITLE: {
-      // TODO: Update TITLE screen variables here!
-
-      // Press enter to change to GAMEPLAY screen
       if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP)) {
         currentScreen = GAMEPLAY;
       }
     } break;
     case GAMEPLAY: {
-      // TODO: Update GAMEPLAY screen variables here!
-
-      // Press enter to change to ENDING screen
-      if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP)) {
-        currentScreen = ENDING;
-      }
     } break;
     case ENDING: {
-      // TODO: Update ENDING screen variables here!
-
       // Press enter to return to TITLE screen
       if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP)) {
         currentScreen = TITLE;
@@ -116,19 +119,25 @@ int main() {
     } break;
     default:
       break;
-    }
-  };
+  }
 
-  /*─────────────────────────────────────┐
-  │                Render                │
-  └──────────────────────────────────────*/
-
-  InitWindow(screenWidth, screenHeight, "baba-is-you");
+  InitWindow(kScreenWidth, kScreenHeight, "baba-is-you");
 
   while (!WindowShouldClose()) {
     Update();
-    Draw();
-    SceneManager();
+
+    // Render
+    BeginDrawing();
+
+    // Game
+    BeginMode2D(camera);
+    Draw(currentScreen);
+    EndMode2D();
+
+    // UI
+    DrawScreenArea();
+
+    EndDrawing();
   }
 
   CloseWindow();
