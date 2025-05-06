@@ -1,5 +1,3 @@
-// Copyright (c) 2020-2023 Chris Ohk
-
 #pragma once
 
 #include <enums/game_enums.h>
