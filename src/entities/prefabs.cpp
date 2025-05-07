@@ -1,6 +1,6 @@
 #include "entities/prefabs.h"
 #include <string>
-#include "components.h"
+#include "components/components.h"
 
 Prefabs::Prefabs(Registry& registry) : registry_(registry) {}
 

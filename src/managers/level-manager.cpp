@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "components.h"
+#include "components/components.h"
 #include "constants.h"
 #include "entities/prefabs.h"
 #include "json.h"

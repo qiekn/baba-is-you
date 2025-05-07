@@ -1,7 +1,7 @@
 #include "systems/render-system.h"
 #include <entt.h>
 #include <raylib.h>
-#include "components.h"
+#include "components/components.h"
 #include "constants.h"
 #include "rlimgui.h"
 
