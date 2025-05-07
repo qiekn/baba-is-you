@@ -2,6 +2,7 @@
 
 #include <raylib.h>
 #include "managers/scene-manager.h"
+
 class Game {
 public:
   Game() {}

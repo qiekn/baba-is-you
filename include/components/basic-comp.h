@@ -51,9 +51,5 @@ struct Movable {};
 
 struct Imovable {};
 
-/**
- * @class Hide
- * @brief ignored by render system
- *
- */
+// ignored by render system
 struct Hide {};
