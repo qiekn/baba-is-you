@@ -1,6 +1,7 @@
 #pragma once
 
-#include <tuple>
+#include <cstddef>
+#include <string>
 #include "games/object.h"
 
 /**
@@ -24,9 +25,26 @@
  */
 class Rule {
 public:
-  Rule(Object obj1, Object obj2, Object obj3);
+  Rule(Object subject, Object verb, Object predicate);
 
-  bool operator==(const Rule &rhs) const;
+  Object GetSubject() const { return subject_; }
+  Object GetVerb() const { return verb_; }
+  Object GetPredicate() const { return predicate_; }
 
-  std::tuple<Object, Object, Object> objects_;
+  bool operator==(const Rule& rhs) const;
+  bool operator!=(const Rule& rhs) const;
+
+  size_t Hash() const;
+
+  std::string ToString() const;
+
+private:
+  Object subject_;
+  Object verb_;
+  Object predicate_;
+};
+
+// Custom hash function for Rule objects
+struct RuleHash {
+  size_t operator()(const Rule& rule) const { return rule.Hash(); }
 };
