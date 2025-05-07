@@ -5,11 +5,22 @@
 
 /**
  * @class Rule
- * @brief This class represents rule.
+ * @brief Represents a rule
  *
- * The game centers around the manipulation of "rules"--represented by tiles
- * with words written on them--in order to allow the titular character Baba (or
- * some other object) to reach a specified goal.
+ * Rules are formed by arranging word tiles in the format "A IS B". These rules
+ * dynamically alter the behavior and properties of objects in the game world.
+ *
+ * There are two main types of rules:
+ *
+ * 1. **Noun-to-Noun Rules (A IS B)**:
+ *   These transform all instances of object A into object B. For example,
+ *   "BABA IS ROCK" turns every Baba into a Rock.
+ *
+ * 2. **Noun-to-Property Rules (A IS Property)**:
+ *    These assign behaviors or traits to objects. For example, "BABA IS YOU"
+ *    allows the player to control Baba, while "ROCK IS PUSH" makes rocks
+ *    pushable.
+ *
  */
 class Rule {
 public:
