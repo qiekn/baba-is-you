@@ -27,6 +27,7 @@ add_subdirectory(deps/imgui)
 add_subdirectory(deps/rlimgui)
 add_subdirectory(deps/entt)
 add_subdirectory(deps/json)
+add_subdirectory(deps/magic-enum)
 
 #---------------------------------------------------------------------3
 #                             Our Project                             |
@@ -60,6 +61,7 @@ target_link_libraries(${PROJECT_NAME}
     raylib rlimgui
     entt
     json
+    magic-enum
 )
 
 # checks if OSX and links appropriate frameworks (only required on macOS)
