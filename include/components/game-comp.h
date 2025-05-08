@@ -1,5 +1,11 @@
 #pragma once
 
+#include "games/object.h"
+
+struct Tile {
+  ObjectType type;
+};
+
 // core
 struct Subjct {};
 struct Verb {};
@@ -7,10 +13,7 @@ struct Predicate {};
 struct Icon {};
 
 // properties
-struct You {};
-struct Push {};
-struct Stop {};
-struct Hot {};
-struct Melt {};
-struct Sink {};
-struct Defeat {};
+#define X(a) \
+  struct IS_##a {};
+#include "properties.def"
+#undef X

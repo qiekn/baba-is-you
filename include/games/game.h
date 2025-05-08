@@ -5,12 +5,12 @@
 
 class Game {
 public:
-  Game() {}
-  virtual ~Game() {}
+  Game();
 
   void Run();
 
 private:
+  void Init();
   void Update();
   void Draw();
 

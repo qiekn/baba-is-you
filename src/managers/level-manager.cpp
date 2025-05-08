@@ -7,6 +7,7 @@
 #include "components/basic-comp.h"
 #include "constants.h"
 #include "entities/prefabs.h"
+#include "games/object.h"
 #include "json.h"
 
 LevelManager::LevelManager(Registry& registry, Prefabs& prefabs)
@@ -65,7 +66,7 @@ void LevelManager::LoadJson() {
             tile.x = tile_json["x"].get<int>();
             tile.y = tile_json["y"].get<int>();
             tile.z = tile_json["z"].get<int>();
-            tile.name = tile_json["name"].get<std::string>();
+            tile.type = tile_json["type"].get<ObjectType>();
             level.tiles.push_back(tile);
           }
         }
@@ -90,7 +91,7 @@ void LevelManager::InitLevel() {
 
   for (const auto& tile : data.tiles) {
     auto pos = Position{tile.x, tile.y};
-    prefabs_.CreateText(pos, tile.name);
+    prefabs_.CreateText(pos, tile.type);
   }
 }
 

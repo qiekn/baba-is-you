@@ -2,34 +2,36 @@
 #include <magic-enum.h>
 #include <string_view>
 
+// In C++, the ## operator is called the token-pasting or concatenation
+// operator. It is used in macros to combine two tokens into a single token.
 enum class ObjectType {
-  UNKNOWN,
+  DEFAULT,
   TEXT_BEGIN,
 
-  SUBJECT_BEGIN,
-#define X(a) a,
-#include "defs/subject.def"
+  NOUN_BEGIN,
+#define X(a) NOUN_##a,
+#include "noun.def"
 #undef X
-  SUBJECT_END,
+  NOUN_END,
 
   VERB_BEGIN,
-#define X(a) a,
-#include "defs/verb.def"
+#define X(a) VERB_##a,
+#include "verb.def"
 #undef X
   VERB_END,
 
-  PREDICATE_BEGIN,
-#define X(a) a,
-#include "defs/predicate.def"
+  PROPERTY_BEGIN,
+#define X(a) PROP_##a,
+#include "properties.def"
 #undef X
-  PREDICATE_END,
+  PROPERTY_END,
 
   TEXT_END,
 
   // every subject (noun) has a icon
   ICON_BEGIN,
 #define X(a) ICON_##a,
-#include "defs/subject.def"
+#include "noun.def"
 #undef X
   ICON_END,
 };
@@ -38,16 +40,16 @@ constexpr bool IsText(ObjectType type) {
   return (type > ObjectType::TEXT_BEGIN) && (type < ObjectType::TEXT_END);
 }
 
-constexpr bool IsSubject(ObjectType type) {
-  return (type > ObjectType::SUBJECT_BEGIN) && (type < ObjectType::SUBJECT_END);
+constexpr bool IsNoun(ObjectType type) {
+  return (type > ObjectType::NOUN_BEGIN) && (type < ObjectType::NOUN_END);
 }
 
 constexpr bool IsVerb(ObjectType type) {
   return (type > ObjectType::VERB_BEGIN) && (type < ObjectType::VERB_END);
 }
-constexpr bool IsPredicate(ObjectType type) {
-  return (type > ObjectType::PREDICATE_BEGIN) &&
-         (type < ObjectType::PREDICATE_END);
+constexpr bool IsProperty(ObjectType type) {
+  return (type > ObjectType::PROPERTY_BEGIN) &&
+         (type < ObjectType::PROPERTY_END);
 }
 
 constexpr bool IsIcon(ObjectType type) {
@@ -55,5 +57,5 @@ constexpr bool IsIcon(ObjectType type) {
 }
 
 constexpr std::string_view ToString(ObjectType type) {
-  return magic_enum::enum_name(type);
+  return magic_enum::enum_name(type).substr(5);
 }

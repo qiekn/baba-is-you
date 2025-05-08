@@ -4,11 +4,12 @@
 #include <unordered_map>
 #include <vector>
 #include "entities/prefabs.h"
+#include "games/object.h"
 #include "types.h"
 
 struct LevelTile {
   int x, y, z;
-  std::string name;
+  ObjectType type;
 };
 
 struct LevelData {

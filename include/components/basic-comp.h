@@ -20,15 +20,9 @@ enum class SpriteType {
 };
 
 struct SpriteRenderer {
-  SpriteType type = SpriteType::kNone;
   std::string name;
   size_t frames = 3;
   bool is_animated = true;
-
-  // use c++20 designated initializer instead
-
-  // SpriteRenderer() = default;
-  // SpriteRenderer(const std::string& name) { this->name = name; }
 };
 
 struct AnimationState {

@@ -4,7 +4,7 @@
 
 class Object {
 public:
-  Object() : type_(ObjectType::UNKNOWN) {}
+  Object() : type_(ObjectType::DEFAULT) {}
   explicit Object(ObjectType type) : type_(type) {}
 
   ObjectType GetType() const { return type_; }

@@ -2,6 +2,7 @@
 
 #include "entities/prefabs.h"
 #include "managers/level-manager.h"
+#include "managers/rule-manager.h"
 #include "managers/texture-manager.h"
 #include "systems/render-system.h"
 #include "types.h"
@@ -27,6 +28,7 @@ public:
   /* managers */
   TextureManager texture_manager_;
   LevelManager level_manager_;
+  RuleManager rule_manager_;
 
   /* systems */
   RenderSystem render_system_;
@@ -34,6 +36,9 @@ public:
 private:
   Maid()
       : prefabs_(registry_),
-        render_system_(registry_, texture_manager_),
-        level_manager_(registry_, prefabs_) {}
+        rule_manager_(registry_),
+        level_manager_(registry_, prefabs_),
+        render_system_(registry_, texture_manager_) {
+    TraceLog(LOG_DEBUG, "Maid is ready!");
+  }
 };

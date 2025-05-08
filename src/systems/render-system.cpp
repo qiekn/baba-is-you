@@ -1,9 +1,12 @@
 #include "systems/render-system.h"
 #include <entt.h>
 #include <raylib.h>
+#include <cctype>
 #include "components/basic-comp.h"
+#include "components/game-comp.h"
 #include "constants.h"
 #include "rlimgui.h"
+#include "types.h"
 
 // public
 
@@ -58,7 +61,8 @@ void RenderSystem::DrawEntities() {
 
   UpdateAnimations();
 
-  auto view = registry_.view<Position, SpriteRenderer>(entt::exclude<Hide>);
+  auto view =
+      registry_.view<Tile, Position, SpriteRenderer>(entt::exclude<Hide>);
   for (auto entity : view) {
     const auto& pos = view.get<Position>(entity);
     const auto& render = view.get<SpriteRenderer>(entity);
