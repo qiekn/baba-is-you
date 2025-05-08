@@ -4,6 +4,7 @@
 #include "managers/level-manager.h"
 #include "managers/rule-manager.h"
 #include "managers/texture-manager.h"
+#include "systems/move-system.h"
 #include "systems/render-system.h"
 #include "types.h"
 
@@ -32,13 +33,15 @@ public:
 
   /* systems */
   RenderSystem render_system_;
+  MoveSystem move_system_;
 
 private:
   Maid()
       : prefabs_(registry_),
         rule_manager_(registry_),
         level_manager_(registry_, prefabs_),
-        render_system_(registry_, texture_manager_) {
+        render_system_(registry_, texture_manager_),
+        move_system_(registry_) {
     TraceLog(LOG_DEBUG, "Maid is ready!");
   }
 };
