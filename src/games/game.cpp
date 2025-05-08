@@ -35,24 +35,27 @@ void Game::Init() {
 
 void Game::Update() {
   scene_manager_.Update();
-  if (IsKeyPressed(KEY_SPACE)) {
-    Maid::Instance().rule_manager_.Update();
-  }
-  // debug object enum
-  // dump enum list to file
-  if (IsKeyPressed(KEY_E)) {
-    std::ofstream ofs("levels/enum_list.txt");
-    if (!ofs.is_open()) {
-      std::cerr << "can't open enum_list.txt!\n";
-    } else {
-      for (int i = static_cast<int>(ObjectType::DEFAULT);
-           i <= static_cast<int>(ObjectType::ICON_END); i++) {
-        auto type = static_cast<ObjectType>(i);
-        ofs << magic_enum::enum_name(type) << " \t" << i << "\n";
-      }
-      std::cout << "update enum list success\n";
+  Maid::Instance().input_manager_.Update();
+  {  // just for debug
+    if (IsKeyPressed(KEY_SPACE)) {
+      Maid::Instance().rule_manager_.Update();
     }
-    ofs.close();
+    // debug object enum
+    // dump enum list to file
+    if (IsKeyPressed(KEY_E)) {
+      std::ofstream ofs("levels/enum_list.txt");
+      if (!ofs.is_open()) {
+        std::cerr << "can't open enum_list.txt!\n";
+      } else {
+        for (int i = static_cast<int>(ObjectType::DEFAULT);
+             i <= static_cast<int>(ObjectType::ICON_END); i++) {
+          auto type = static_cast<ObjectType>(i);
+          ofs << magic_enum::enum_name(type) << " \t" << i << "\n";
+        }
+        std::cout << "update enum list success\n";
+      }
+      ofs.close();
+    }
   }
 }
 

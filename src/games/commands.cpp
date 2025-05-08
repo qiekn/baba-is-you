@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include "components/basic-comp.h"
 #include "games/command.h"
+#include "maid.h"
 
 bool Command::IsEmpty() { return is_empty_command_; }
 
@@ -25,6 +26,7 @@ void ChainMoveCommand::Execute() {
     auto& pos = registry_.get<Position>(entity);
     pos += dir;
   }
+  Maid::Instance().rule_manager_.Update();
 }
 
 void ChainMoveCommand::Undo() {
@@ -32,6 +34,7 @@ void ChainMoveCommand::Undo() {
     auto& pos = registry_.get<Position>(entity);
     pos -= dir;
   }
+  Maid::Instance().rule_manager_.Update();
 }
 
 // TODO:  <2025-05-08 12:19, @qiekn> //

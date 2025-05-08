@@ -1,4 +1,5 @@
 #include "managers/command-manager.h"
+#include <raylib.h>
 #include <cassert>
 #include <iterator>
 #include <memory>

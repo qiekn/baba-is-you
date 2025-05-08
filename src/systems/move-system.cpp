@@ -45,6 +45,9 @@ MoveBuffer MoveSystem::Move(std::vector<Entity> entities, Vector2Int dir) {
   InitMaps();
   MoveBuffer to_move;
   TraceLog(LOG_DEBUG, "MoveSystem: start");
+  if (entities.size() == 0) {
+    TraceLog(LOG_ERROR, "Player Count: 0");
+  }
   // check move for each entity
   for (const auto entity : entities) {
     // now this method only used by player entities

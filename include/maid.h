@@ -1,6 +1,8 @@
 #pragma once
 
 #include "entities/prefabs.h"
+#include "managers/command-manager.h"
+#include "managers/input-manager.h"
 #include "managers/level-manager.h"
 #include "managers/rule-manager.h"
 #include "managers/texture-manager.h"
@@ -30,6 +32,8 @@ public:
   TextureManager texture_manager_;
   LevelManager level_manager_;
   RuleManager rule_manager_;
+  CommandManager command_manager_;
+  InputManager input_manager_;
 
   /* systems */
   RenderSystem render_system_;
@@ -40,6 +44,7 @@ private:
       : prefabs_(registry_),
         rule_manager_(registry_),
         level_manager_(registry_, prefabs_),
+        input_manager_(registry_, command_manager_),
         render_system_(registry_, texture_manager_),
         move_system_(registry_) {
     TraceLog(LOG_DEBUG, "Maid is ready!");

@@ -13,10 +13,12 @@ RuleManager::RuleManager(Registry& registry) : registry_(registry) {
 
 // public
 
-void RuleManager::Initialize() {}
+void RuleManager::Initialize() { Update(); }
 
 void RuleManager::Update() {
   TraceLog(LOG_DEBUG, "RuleManager: Update");
+  TraceLog(LOG_DEBUG, "previous: %d, active: %d", previous_rules_.size(),
+           active_rules_.size());
   RebuildTypesMap();
   ClearRulesEffect();
   ParseRules();
@@ -40,7 +42,9 @@ void RuleManager::RebuildTypesMap() {
       verbs_.emplace_back(pos, type);
     }
     // gather tiletype
-    types_map_[pos] = type;
+    if (IsText(type)) {
+      types_map_[pos] = type;
+    }
   }
 }
 
@@ -55,14 +59,19 @@ void RuleManager::ClearRulesEffect() {
 void RuleManager::ParseRules() {
   TraceLog(LOG_DEBUG, "RuleManager: 2. ParseRules");
   active_rules_.clear();
+  // default rules: Text Is Push
+  active_rules_.emplace(Object(ObjectType::NOUN_TEXT),
+                        Object(ObjectType::VERB_IS),
+                        Object(ObjectType::PROP_PUSH));
   // horizontal rules
   for (const auto [pos, verb] : verbs_) {
     auto lhs = GetTypeAt(pos.x - 1, pos.y);
     auto rhs = GetTypeAt(pos.x + 1, pos.y);
     if (!IsNoun(lhs)) continue;
-    if (!IsProperty(rhs)) continue;
+    if (IsVerb(rhs)) continue;
     TraceLog(LOG_DEBUG, "RuleManager:\t Horizontal Rule %s %s %s",
              ToString(lhs).data(), ToString(verb).data(), ToString(rhs).data());
+
     active_rules_.emplace(Object(lhs), Object(verb), Object(rhs));
   }
   // vertical rules
@@ -70,7 +79,7 @@ void RuleManager::ParseRules() {
     auto lhs = GetTypeAt(pos.x, pos.y - 1);
     auto rhs = GetTypeAt(pos.x, pos.y + 1);
     if (!IsNoun(lhs)) continue;
-    if (!IsProperty(rhs)) continue;
+    if (IsVerb(rhs)) continue;
     TraceLog(LOG_DEBUG, "RuleManager:\t Vertical Rule %s %s %s",
              ToString(lhs).data(), ToString(verb).data(), ToString(rhs).data());
     active_rules_.emplace(Object(lhs), Object(verb), Object(rhs));
@@ -97,6 +106,10 @@ void RuleManager::ApplyRules() {
       removed_rules.push_back(rule);
     }
   }
+  TraceLog(LOG_DEBUG, "previous: %d, active: %d", previous_rules_.size(),
+           active_rules_.size());
+  TraceLog(LOG_DEBUG, "add: %d, remove: %d", added_rules.size(),
+           removed_rules.size());
 
   for (const auto& rule : removed_rules) RemoveRuleEffect(rule);
   for (const auto& rule : added_rules) AddRuleEffect(rule);
@@ -119,19 +132,31 @@ void RuleManager::AddRuleEffect(const Rule& rule) {
   ObjectType verb = rule.GetVerb().GetType();
   ObjectType predicate = rule.GetPredicate().GetType();
 
+  // gloabl rules
+  if (subject == ObjectType::NOUN_TEXT) {
+    if (verb == ObjectType::VERB_IS && predicate == ObjectType::PROP_PUSH) {
+      auto view = registry_.view<Tile>();
+      for (auto entity : view) {
+        if (IsText(view.get<Tile>(entity).type))
+          registry_.emplace<IS_PUSH>(entity);
+      }
+    }
+  }
+
+  // normal process
   switch (verb) {
     case ObjectType::VERB_IS:
       // noun transorm (e.g. Wall Is Flag)
       if (IsNoun(predicate)) {
         auto view = registry_.view<Tile>();
         for (auto entity : view) {
-          if (view.get<Tile>(entity).type == subject) {
+          if (view.get<Tile>(entity).type == NounToIcon(subject)) {
             auto& tile = registry_.get<Tile>(entity);
             auto& render = registry_.get<SpriteRenderer>(entity);
             switch (predicate) {
 #define X(a)                                      \
   case ObjectType::NOUN_##a:                      \
-    tile.type = ObjectType::NOUN_##a;             \
+    tile.type = NounToIcon(ObjectType::NOUN_##a); \
     render.name = GetSpritePrefixName(tile.type); \
     break;
 #include "noun.def"
@@ -146,7 +171,7 @@ void RuleManager::AddRuleEffect(const Rule& rule) {
       else if (IsProperty(predicate)) {
         auto view = registry_.view<Tile>();
         for (auto entity : view) {
-          if (view.get<Tile>(entity).type == subject) {
+          if (view.get<Tile>(entity).type == NounToIcon(subject)) {
             switch (predicate) {
 #define X(a)                           \
   case ObjectType::PROP_##a:           \
@@ -172,4 +197,31 @@ void RuleManager::AddRuleEffect(const Rule& rule) {
   }
 }
 
-void RuleManager::RemoveRuleEffect(const Rule& rule) {}
+void RuleManager::RemoveRuleEffect(const Rule& rule) {
+  ObjectType subject = rule.GetSubject().GetType();
+  ObjectType verb = rule.GetVerb().GetType();
+  ObjectType predicate = rule.GetPredicate().GetType();
+
+  if (verb == ObjectType::VERB_IS) {
+    if (IsProperty(predicate)) {
+      auto view = registry_.view<Tile>();
+      for (auto entity : view) {
+        if (view.get<Tile>(entity).type == NounToIcon(subject)) {
+          switch (predicate) {
+#define X(a)                                                      \
+  case ObjectType::PROP_##a:                                      \
+    if (!registry_.all_of<IS_##a>(entity)) {                      \
+      TraceLog(LOG_ERROR, "RuleManager: RemoveRuleEffect Error"); \
+    }                                                             \
+    registry_.remove<IS_##a>(entity);                             \
+    break;
+#include "properties.def"
+#undef X
+            default:
+              break;
+          }
+        }
+      }
+    }
+  }
+}
