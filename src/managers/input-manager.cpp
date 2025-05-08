@@ -3,7 +3,6 @@
 #include <memory>
 #include <utility>
 #include <vector>
-#include "components/basic-comp.h"
 #include "components/game-comp.h"
 #include "maid.h"
 #include "managers/command-manager.h"
