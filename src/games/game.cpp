@@ -41,7 +41,7 @@ void Game::Update() {
   // debug object enum
   // dump enum list to file
   if (IsKeyPressed(KEY_E)) {
-    std::ofstream ofs("enum_list.txt");
+    std::ofstream ofs("levels/enum_list.txt");
     if (!ofs.is_open()) {
       std::cerr << "can't open enum_list.txt!\n";
     } else {
