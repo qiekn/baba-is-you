@@ -5,6 +5,7 @@
 const int KFps = 60;
 
 const bool kAnimated = false;
+const bool kMaxUndoHistry = 99;
 
 const int kCellSize = 24;
 const int kScale = 2;
