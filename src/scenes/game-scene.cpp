@@ -35,12 +35,14 @@ void GameScene::Draw() {
   render_system_.DrawScene();
   EndMode2D();
 
-  // render_system_.DrawUI();
+  render_system_.DrawUI();
 
+  /*
   rlImGuiBegin();
   ImGui::Begin("Camera Offset");
   ImGui::DragFloat2("Camera Offset", &camera_.offset.x, 1.0f, -1000.0f,
                     1000.0f);
   ImGui::End();
   rlImGuiEnd();
+  */
 }

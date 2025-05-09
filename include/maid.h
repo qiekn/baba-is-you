@@ -1,6 +1,7 @@
 #pragma once
 
 #include "entities/prefabs.h"
+#include "managers/color-manager.h"
 #include "managers/command-manager.h"
 #include "managers/input-manager.h"
 #include "managers/level-manager.h"
@@ -34,6 +35,7 @@ public:
   RuleManager rule_manager_;
   CommandManager command_manager_;
   InputManager input_manager_;
+  ColorManager color_manager_;
 
   /* systems */
   RenderSystem render_system_;

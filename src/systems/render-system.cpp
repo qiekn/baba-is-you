@@ -5,6 +5,9 @@
 #include "components/basic-comp.h"
 #include "components/game-comp.h"
 #include "constants.h"
+#include "games/object.h"
+#include "imgui.h"
+#include "maid.h"
 #include "rlimgui.h"
 #include "types.h"
 
@@ -66,6 +69,7 @@ void RenderSystem::DrawEntities() {
   for (auto entity : view) {
     const auto& pos = view.get<Position>(entity);
     const auto& render = view.get<SpriteRenderer>(entity);
+    ObjectType type = view.get<Tile>(entity).type;
     float px = pos.x * kCellSize * kScale;
     float py = pos.y * kCellSize * kScale;
 
@@ -80,7 +84,8 @@ void RenderSystem::DrawEntities() {
     }
 
     Texture2D current_texture = frames[current_frame];
-    DrawTextureEx(current_texture, Vector2(px, py), 0, kScale, PINK);
+    Color color = Maid::Instance().color_manager_.GetColor(type);
+    DrawTextureEx(current_texture, Vector2(px, py), 0, kScale, color);
   }
 }
 
@@ -91,6 +96,8 @@ void RenderSystem::DrawImGui() {
 
   bool open = true;
   // ImGui::ShowDemoWindow(&open);
+
+  Maid::Instance().color_manager_.DrawColorEditor();
 
   rlImGuiEnd();
 }

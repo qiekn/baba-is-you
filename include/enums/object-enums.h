@@ -62,6 +62,10 @@ constexpr ObjectType NounToIcon(ObjectType type) {
   return static_cast<ObjectType>(res);
 }
 
+constexpr std::string_view EnumToFullString(ObjectType type) {
+  return magic_enum::enum_name(type);
+}
+
 constexpr std::string_view ToString(ObjectType type) {
   return magic_enum::enum_name(type).substr(5);
   // TODO: just for debugging , remove it soom <2025-05-08 13:36, @qiekn> //
