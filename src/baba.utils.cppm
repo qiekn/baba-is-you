@@ -5,8 +5,8 @@ module;
 
 export module baba.utils;
 
-export import baba.base;
+export import baba.object;
+export import baba.types;
 
-export {
-#include "games/utils.h"
-}
+export std::string GetSpritePrefixName(ObjectType type);
+export Color Haxc(const std::string& color);
