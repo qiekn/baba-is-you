@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git Commit Style"
+  short_description: "Follow the repo owner's commit pattern."
+  default_prompt: "Use this skill when writing commit messages for this repository so the message matches the owner's established style."
