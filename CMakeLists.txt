@@ -41,6 +41,10 @@ add_executable(${PROJECT_NAME} ${SRCS})
 target_sources(${PROJECT_NAME}
   PRIVATE
     FILE_SET CXX_MODULES FILES
+      src/baba.types.cppm
+      src/baba.enums.cppm
+      src/baba.object.cppm
+      src/baba.rule.cppm
       src/baba.cppm
 )
 
