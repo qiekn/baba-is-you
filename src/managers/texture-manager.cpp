@@ -15,7 +15,7 @@ std::vector<Texture2D>& TextureManager::GetFrames(const std::string& name) {
       std::filesystem::path path =
           kAssets / "sprites" /
           (name + "_0_" + std::to_string(i + 1) + ".png");  // text_ba_0_3.png
-      Texture2D texture = LoadTexture(path.c_str());
+      Texture2D texture = LoadTexture(path.string().c_str());
       frames.push_back(texture);
     }
     frames_map_[name] = frames;
