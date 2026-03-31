@@ -1,6 +1,9 @@
-#include "games/rule.h"
+module;
+
 #include <format>
 #include "magic-enum.h"
+
+module baba;
 
 Rule::Rule(Object subject, Object verb, Object predicate)
     : subject_(subject), verb_(verb), predicate_(predicate) {}

@@ -1,14 +1,13 @@
-#include "managers/level-manager.h"
+module;
+
 #include <raylib.h>
 #include <filesystem>
 #include <fstream>
 #include <string>
 #include <vector>
-#include "components/basic-comp.h"
-#include "constants.h"
-#include "entities/prefabs.h"
-#include "games/object.h"
 #include "json.h"
+
+module baba;
 
 LevelManager::LevelManager(Registry& registry, Prefabs& prefabs)
     : registry_(registry), prefabs_(prefabs) {}

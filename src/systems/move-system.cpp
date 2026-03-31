@@ -1,9 +1,10 @@
-#include "systems/move-system.h"
+module;
+
+#include <entt.h>
 #include <raylib.h>
-#include "components/basic-comp.h"
-#include "components/game-comp.h"
-#include "constants.h"
-#include "types.h"
+#include <vector>
+
+module baba;
 
 bool MoveSystem::TryMove(MoveBuffer& to_move, Entity entity, Vector2Int dir,
                          int push_ability) {

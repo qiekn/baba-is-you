@@ -1,7 +1,9 @@
+module;
+
 #include <raylib.h>
-#include "components/basic-comp.h"
-#include "games/command.h"
-#include "maid.h"
+#include <vector>
+
+module baba;
 
 bool Command::IsEmpty() { return is_empty_command_; }
 

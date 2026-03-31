@@ -1,8 +1,4 @@
-#include "entities/prefabs.h"
-#include "components/basic-comp.h"
-#include "components/game-comp.h"
-#include "games/object.h"
-#include "games/utils.h"
+module baba;
 
 Prefabs::Prefabs(Registry& registry) : registry_(registry) {}
 

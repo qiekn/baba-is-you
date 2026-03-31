@@ -1,3 +1,5 @@
+#pragma once
+
 #include <entt.h>
 #include <magic-enum.h>
 #include <string_view>

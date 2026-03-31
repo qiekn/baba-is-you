@@ -1,15 +1,12 @@
-#include "systems/render-system.h"
+module;
+
 #include <entt.h>
 #include <raylib.h>
 #include <cctype>
-#include "components/basic-comp.h"
-#include "components/game-comp.h"
-#include "constants.h"
-#include "games/object.h"
 #include "imgui.h"
-#include "maid.h"
 #include "rlimgui.h"
-#include "types.h"
+
+module baba;
 
 // public
 

@@ -1,4 +1,4 @@
-#include "scenes/pause-scene.h"
+module baba;
 
 void PauseScene::Draw() {}
 void PauseScene::Update() {}

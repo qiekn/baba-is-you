@@ -1,4 +1,4 @@
-#include "scenes/menu-scene.h"
+module baba;
 
 void MenuScene::Draw() {}
 

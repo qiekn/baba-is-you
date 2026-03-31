@@ -1,8 +1,9 @@
-#include "games/utils.h"
+module;
+
 #include <raylib.h>
-#include "games/object.h"
 #include "magic-enum.h"
-#include "types.h"
+
+module baba;
 
 std::string GetSpritePrefixName(ObjectType type) {
   std::string_view enum_name = magic_enum::enum_name(type).substr(5);

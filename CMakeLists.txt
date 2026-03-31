@@ -38,6 +38,16 @@ file(GLOB_RECURSE SRCS CONFIGURE_DEPENDS
 # targets
 add_executable(${PROJECT_NAME} ${SRCS})
 
+target_sources(${PROJECT_NAME}
+  PRIVATE
+    FILE_SET CXX_MODULES FILES
+      src/baba.cppm
+)
+
+set_source_files_properties(src/baba.cppm PROPERTIES
+  COMPILE_OPTIONS "-O0"
+)
+
 target_include_directories(${PROJECT_NAME} PRIVATE
     include
     include/defs

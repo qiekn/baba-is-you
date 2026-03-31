@@ -1,12 +1,9 @@
-#include "managers/scene-manager.h"
+module;
+
 #include <raylib.h>
 #include <memory>
-#include "scenes/game-scene.h"
-#include "scenes/logo-scene.h"
-#include "scenes/menu-scene.h"
-#include "scenes/pause-scene.h"
-#include "scenes/scene.h"
-#include "scenes/title-scene.h"
+
+module baba;
 
 SceneManager::SceneManager() : current_scene_id_(SceneId::kGame) {
   scenes_map_.emplace(SceneId::kLogo, std::make_unique<LogoScene>());

@@ -1,12 +1,12 @@
-#include "games/game.h"
+module;
+
 #include <raylib.h>
 #include <rlimgui.h>
 #include <fstream>
 #include <iostream>
-#include "constants.h"
-#include "games/object.h"
 #include "magic-enum.h"
-#include "maid.h"
+
+module baba;
 
 Game::Game() {}
 

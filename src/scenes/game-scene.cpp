@@ -1,10 +1,10 @@
-#include "scenes/game-scene.h"
+module;
+
 #include <raylib.h>
-#include "constants.h"
 #include "imgui.h"
-#include "maid.h"
 #include "rlimgui.h"
-#include "systems/render-system.h"
+
+module baba;
 
 GameScene::GameScene() : render_system_(Maid::Instance().render_system_) {
   // init game camera

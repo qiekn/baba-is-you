@@ -1,13 +1,12 @@
-#include "managers/input-manager.h"
+module;
+
+#include <entt.h>
 #include <raylib.h>
 #include <memory>
 #include <utility>
 #include <vector>
-#include "components/game-comp.h"
-#include "maid.h"
-#include "managers/command-manager.h"
-#include "systems/move-system.h"
-#include "types.h"
+
+module baba;
 
 InputManager::InputManager(Registry& registry, CommandManager& command_manager)
     : registry_(registry), command_manager_(command_manager) {}
@@ -22,7 +21,10 @@ std::unique_ptr<Command> InputManager::HandleInput() {
   {
     // get player entities
     auto player_view = registry_.view<IS_YOU>();
-    std::vector<Entity> players(player_view->begin(), player_view->end());
+    std::vector<Entity> players;
+    for (auto entity : player_view) {
+      players.push_back(entity);
+    }
     // get move dir
     Vector2Int dir = GetMoveInput();
     if (dir.x || dir.y) {

@@ -1,10 +1,11 @@
-#include "managers/command-manager.h"
+module;
+
 #include <raylib.h>
 #include <cassert>
 #include <iterator>
 #include <memory>
-#include "constants.h"
-#include "games/command.h"
+
+module baba;
 
 CommandManager::CommandManager() : max_history_count_(kMaxUndoHistry) {
   assert(max_history_count_ > 2);

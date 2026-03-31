@@ -1,5 +1,8 @@
-#include "scenes/title-scene.h"
+module;
+
 #include <raylib.h>
+
+module baba;
 
 void TitleScene::Update() {}
 

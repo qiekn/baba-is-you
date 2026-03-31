@@ -1,9 +1,12 @@
-#include "managers/texture-manager.h"
+module;
+
 #include <raylib.h>
 #include <filesystem>
 #include <string>
 #include <utility>
-#include "constants.h"
+#include <vector>
+
+module baba;
 
 std::vector<Texture2D>& TextureManager::GetFrames(const std::string& name) {
   auto it = frames_map_.find(name);

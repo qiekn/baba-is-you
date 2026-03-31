@@ -1,5 +1,8 @@
-#include "scenes/logo-scene.h"
+module;
+
 #include <raylib.h>
+
+module baba;
 
 void LogoScene::Update() {}
 

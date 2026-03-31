@@ -1,11 +1,12 @@
-#include "managers/color-manager.h"
+module;
+
 #include <raylib.h>
 #include <fstream>
 #include <string>
-#include "games/object.h"
-#include "games/utils.h"
 #include "imgui.h"
 #include "json.h"
+
+module baba;
 
 ColorManager::ColorManager() { InitDefaultColors(); }
 

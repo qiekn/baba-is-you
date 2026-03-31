@@ -1,11 +1,10 @@
-#include "managers/rule-manager.h"
+module;
+
+#include <entt.h>
 #include <raylib.h>
 #include <vector>
-#include "components/basic-comp.h"
-#include "components/game-comp.h"
-#include "games/object.h"
-#include "games/utils.h"
-#include "types.h"
+
+module baba;
 
 RuleManager::RuleManager(Registry& registry) : registry_(registry) {
   TraceLog(LOG_DEBUG, "RuleManager is Ready!");
