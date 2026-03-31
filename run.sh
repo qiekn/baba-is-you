@@ -3,7 +3,7 @@
 # Config
 PROJECT_NAME="game"
 
-BUnLD_DIR="build"
+BUILD_DIR="build"
 
 DEBUGGER="gdb -q"
 
