@@ -1,7 +1,6 @@
 #pragma once
 
 #include "managers/texture-manager.h"
-#include "types.h"
 
 class RenderSystem {
 public:

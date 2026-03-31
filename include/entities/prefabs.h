@@ -1,8 +1,5 @@
 #pragma once
 
-#include "games/object.h"
-#include "types.h"
-
 class Prefabs {
 public:
   Prefabs(Registry& registry);

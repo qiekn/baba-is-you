@@ -7,5 +7,6 @@ module;
 export module baba.object;
 
 export {
+#include "enums/object-enums.h"
 #include "games/object.h"
 }

@@ -3,7 +3,7 @@ module;
 #include <raylib.h>
 #include "magic-enum.h"
 
-module baba;
+module baba.utils;
 
 std::string GetSpritePrefixName(ObjectType type) {
   std::string_view enum_name = magic_enum::enum_name(type).substr(5);

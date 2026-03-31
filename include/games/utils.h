@@ -2,7 +2,6 @@
 
 #include <raylib.h>
 #include <string>
-#include "games/object.h"
 
 // NONU_WALL -> text_wall
 // ICON_WALL -> wall

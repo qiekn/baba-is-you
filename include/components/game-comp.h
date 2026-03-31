@@ -1,7 +1,5 @@
 #pragma once
 
-#include "games/object.h"
-
 struct Tile {
   ObjectType type;
 };

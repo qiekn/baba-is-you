@@ -2,6 +2,7 @@ module;
 
 #include <cctype>
 #include <filesystem>
+#include <functional>
 #include <string>
 #include <unordered_map>
 #include "entt.h"

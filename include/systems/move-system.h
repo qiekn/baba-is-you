@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include "types.h"
 
 using MoveBuffer = std::vector<std::pair<Entity, Vector2Int>>;
 

@@ -8,6 +8,8 @@ module;
 
 export module baba.rule;
 
+export import baba.object;
+
 export {
 #include "games/rule.h"
 }

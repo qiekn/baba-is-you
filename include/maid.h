@@ -9,7 +9,6 @@
 #include "managers/texture-manager.h"
 #include "systems/move-system.h"
 #include "systems/render-system.h"
-#include "types.h"
 
 /**
  * @class Maid

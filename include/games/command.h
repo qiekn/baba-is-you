@@ -3,7 +3,6 @@
 #include <vector>
 #include "entt.h"
 #include "systems/move-system.h"
-#include "types.h"
 
 class Command {
 public:

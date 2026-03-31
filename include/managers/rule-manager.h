@@ -5,9 +5,6 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
-#include "games/object.h"
-#include "games/rule.h"
-#include "types.h"
 
 class RuleManager {
 public:

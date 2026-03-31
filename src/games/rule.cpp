@@ -1,9 +1,10 @@
 module;
 
 #include <format>
+#include <functional>
 #include "magic-enum.h"
 
-module baba;
+module baba.rule;
 
 Rule::Rule(Object subject, Object verb, Object predicate)
     : subject_(subject), verb_(verb), predicate_(predicate) {}

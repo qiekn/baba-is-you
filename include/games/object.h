@@ -1,7 +1,5 @@
 #pragma once
 
-#include "enums/object-enums.h"
-
 class Object {
 public:
   Object() : type_(ObjectType::DEFAULT) {}

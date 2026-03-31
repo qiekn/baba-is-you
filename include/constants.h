@@ -1,7 +1,5 @@
 #pragma once
 
-#include <filesystem>
-
 const int KFps = 60;
 
 const bool kAnimated = false;

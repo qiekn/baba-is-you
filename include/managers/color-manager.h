@@ -3,7 +3,6 @@
 #include <raylib.h>
 #include <string>
 #include <unordered_map>
-#include "games/object.h"
 
 class ColorManager {
 public:

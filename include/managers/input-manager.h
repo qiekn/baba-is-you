@@ -3,7 +3,6 @@
 #include <memory>
 #include "games/command.h"
 #include "managers/command-manager.h"
-#include "types.h"
 
 class InputManager {
 public:

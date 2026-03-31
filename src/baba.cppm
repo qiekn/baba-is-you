@@ -17,16 +17,12 @@ module;
 
 export module baba;
 
-export {
-#include "types.h"
-#include "constants.h"
+export import baba.base;
+export import baba.utils;
 
+export {
 #include "enums/game-enums.h"
 #include "enums/rule-enums.h"
-
-#include "games/object.h"
-#include "games/rule.h"
-#include "games/utils.h"
 
 #include "components/basic-comp.h"
 #include "components/game-comp.h"
