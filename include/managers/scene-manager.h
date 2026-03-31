@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <memory>
 #include <unordered_map>
 #include "scenes/scene.h"
 class SceneManager {
