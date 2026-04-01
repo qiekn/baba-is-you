@@ -23,7 +23,7 @@ void Game::Run() {
 void Game::Init() {
   SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);  // vsync and high dpi
   SetConfigFlags(FLAG_MSAA_4X_HINT);                      // anti-aliasing
-  SetTraceLogLevel(LOG_DEBUG);
+  SetTraceLogLevel(LOG_WARNING);
   DrawFPS(0, 0);
 
   Maid::Instance().rule_manager_.Initialize();
