@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 3.24...3.30)
+cmake_minimum_required(VERSION 3.30)
 project(game)
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS Debug Release MinSizeRel RelWithDebInfo)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS Debug Release MinSizeRel RelWithDebInfo)
 endif()
 
 set(CMAKE_CXX_STANDARD 20)
@@ -59,7 +59,7 @@ if (APPLE)
 endif()
 
 # format
-add_custom_target(format 
+add_custom_target(format
     COMMAND clang-format -i ${SRCS} ${HDRS}
     COMMENT "Running clang-format on all header & cpp files"
 )
