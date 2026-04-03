@@ -18,8 +18,23 @@ if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/deps/raylib/CMakeLists.txt")
     "raylib submodule is missing. Run: git submodule update --init --recursive")
 endif()
 
+if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/deps/imgui/imgui.h")
+  message(FATAL_ERROR
+    "imgui submodule is missing. Run: git submodule update --init --recursive")
+endif()
+
 add_subdirectory(deps/raylib)
-add_subdirectory(deps/imgui)
+
+add_library(imgui STATIC
+  deps/imgui/imgui.cpp
+  deps/imgui/imgui_draw.cpp
+  deps/imgui/imgui_tables.cpp
+  deps/imgui/imgui_widgets.cpp
+  deps/imgui/imgui_demo.cpp
+)
+
+target_include_directories(imgui PUBLIC deps/imgui)
+
 add_subdirectory(deps/rlimgui)
 
 add_executable(${PROJECT_NAME}
