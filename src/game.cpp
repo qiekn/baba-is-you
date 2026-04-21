@@ -8,7 +8,14 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
+#define NANOSVG_IMPLEMENTATION
+#include <nanosvg.h>
+#define NANOSVGRAST_IMPLEMENTATION
+#include <nanosvgrast.h>
+
+#include <array>
 #include <cstdio>
+#include <vector>
 
 namespace {
 constexpr const char* kWindowStateFile = "window.state";
@@ -48,6 +55,44 @@ void SaveWindowState() {
     std::fclose(f);
   }
 }
+
+void SetWindowIconFromSvg(const char* path) {
+  NSVGimage* svg = nsvgParseFromFile(path, "px", 96.0f);
+  if (!svg || svg->width <= 0.0f || svg->height <= 0.0f) {
+    if (svg) nsvgDelete(svg);
+    return;
+  }
+
+  NSVGrasterizer* rast = nsvgCreateRasterizer();
+  if (!rast) {
+    nsvgDelete(svg);
+    return;
+  }
+
+  constexpr int kSizes[] = {16, 32, 48, 64, 128, 256};
+  constexpr int kCount = (int)(sizeof(kSizes) / sizeof(kSizes[0]));
+
+  std::array<std::vector<unsigned char>, kCount> buffers;
+  std::array<Image, kCount> images;
+
+  for (int i = 0; i < kCount; ++i) {
+    const int size = kSizes[i];
+    buffers[i].assign((size_t)size * size * 4, 0);
+    const float scale = (float)size / svg->width;
+    nsvgRasterize(rast, svg, 0.0f, 0.0f, scale, buffers[i].data(), size, size, size * 4);
+    images[i] = Image{
+        .data = buffers[i].data(),
+        .width = size,
+        .height = size,
+        .mipmaps = 1,
+        .format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
+    };
+  }
+  SetWindowIcons(images.data(), kCount);
+
+  nsvgDeleteRasterizer(rast);
+  nsvgDelete(svg);
+}
 }  // namespace
 
 void Game::Run() {
@@ -66,6 +111,7 @@ void Game::Init() {
   SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI);
   InitWindow(state.w, state.h, "baba");
   SetWindowPosition(state.x, state.y);
+  SetWindowIconFromSvg("assets/icons/favicon.svg");
   SetTargetFPS(kTargetFps);
 
   ui_.Init();

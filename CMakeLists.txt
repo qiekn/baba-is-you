@@ -60,6 +60,7 @@ target_include_directories(${PROJECT_NAME}
     deps/entt/single_include
     deps/json/single_include
     deps/magic-enum/include
+    deps/nanosvg
     deps/raygui
     deps/raylib/src/external/glfw/include
     src
