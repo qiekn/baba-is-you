@@ -3,11 +3,6 @@
 #include <raylib.h>
 #include <rlgl.h>
 
-#include <GLFW/glfw3.h>
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
-
 #define NANOSVG_IMPLEMENTATION
 #include <nanosvg.h>
 #define NANOSVGRAST_IMPLEMENTATION
@@ -15,6 +10,7 @@
 
 #include <array>
 #include <cstdio>
+#include <memory>
 #include <vector>
 
 namespace {
@@ -114,7 +110,9 @@ void Game::Init() {
   SetWindowIconFromSvg("assets/icons/favicon.svg");
   SetTargetFPS(kTargetFps);
 
-  ui_.Init();
+  auto imgui_layer = std::make_unique<ImGuiLayer>();
+  imgui_layer_ = imgui_layer.get();
+  layers_.PushOverlay(std::move(imgui_layer));
 }
 
 void Game::Tick() {
@@ -123,38 +121,34 @@ void Game::Tick() {
 }
 
 void Game::Update() {
-  if (IsKeyPressed(KEY_GRAVE)) {
-    ui_.ToggleVisible();
+  const float dt = GetFrameTime();
+  for (auto& layer : layers_) {
+    layer->OnUpdate(dt);
   }
 }
 
 void Game::Render() {
   BeginDrawing();
-  ClearBackground(ui_.BackgroundColor());
+  ClearBackground(imgui_layer_->BackgroundColor());
 
   DrawGridBackground();
+  for (auto& layer : layers_) {
+    layer->OnRender();
+  }
   rlDrawRenderBatchActive();
 
-  ImGui_ImplOpenGL3_NewFrame();
-  ImGui_ImplGlfw_NewFrame();
-  ImGui::NewFrame();
-  ui_.Draw();
-  ImGui::Render();
-  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-  if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
-    GLFWwindow* backup = glfwGetCurrentContext();
-    ImGui::UpdatePlatformWindows();
-    ImGui::RenderPlatformWindowsDefault();
-    glfwMakeContextCurrent(backup);
+  imgui_layer_->Begin();
+  for (auto& layer : layers_) {
+    layer->OnImGuiRender();
   }
+  imgui_layer_->End();
 
   EndDrawing();
 }
 
 void Game::Shutdown() {
   SaveWindowState();
-  ui_.Shutdown();
+  layers_.Clear();  // detach layers before the GL context goes away
   CloseWindow();
 }
 
@@ -169,9 +163,9 @@ void Game::DrawGridBackground() const {
       board.height + kBoardPadding * 2.0f,
   };
 
-  DrawRectangleRounded(board_background, 0.04f, 10, ui_.BoardBackgroundColor());
+  DrawRectangleRounded(board_background, 0.04f, 10, imgui_layer_->BoardBackgroundColor());
 
-  const Color border = ui_.BoardGridBorderColor();
+  const Color border = imgui_layer_->BoardGridBorderColor();
   const float inset = (kCellPitch - kCellInnerSize) * 0.5f;
   const float cell_roundness = 0.18f;
 

@@ -1,12 +1,14 @@
 #pragma once
 
-#include "ui.h"
 #include <raylib.h>
+
+#include "imgui_layer.h"
+#include "layer_stack.h"
 
 struct Game {
   void Run();
 
-private:
+ private:
   void Init();
   void Tick();   // TimeStep or DeltaTime progress
   void Update(); // Update GameLogic
@@ -25,5 +27,6 @@ private:
   static constexpr float kCellInnerSize = 44.0f;
   static constexpr float kBoardPadding = 28.0f;
 
-  Ui ui_;
+  LayerStack layers_;
+  ImGuiLayer* imgui_layer_ = nullptr;  // non-owning; layers_ owns the unique_ptr
 };

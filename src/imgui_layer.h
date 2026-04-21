@@ -2,19 +2,32 @@
 
 #include <raylib.h>
 
-struct Ui {
-  void Init();
-  void Draw();
-  void Shutdown();
+#include "layer.h"
 
-  void ToggleVisible() { show_ui_ = !show_ui_; }
-  bool IsVisible() const { return show_ui_; }
+class ImGuiLayer : public Layer {
+ public:
+  ImGuiLayer();
+
+  void OnAttach() override;
+  void OnDetach() override;
+  void OnUpdate(float dt) override;
+  void OnImGuiRender() override;
+
+  // Begin/End bracket the per-frame ImGui pass around every layer's
+  // OnImGuiRender. Keeping this explicit (rather than rolling it into
+  // OnImGuiRender) lets the owner decide the exact ordering relative to
+  // raylib draws and multi-viewport rendering.
+  void Begin();
+  void End();
+
+  void ToggleVisible() { visible_ = !visible_; }
+  bool IsVisible() const { return visible_; }
 
   Color BackgroundColor() const { return ToRaylibColor(background_color_); }
   Color BoardBackgroundColor() const { return ToRaylibColor(board_background_color_); }
   Color BoardGridBorderColor() const { return ToRaylibColor(board_grid_border_color_); }
 
-private:
+ private:
   struct ColorValue {
     float r = 0.0f;
     float g = 0.0f;
@@ -49,7 +62,7 @@ private:
   static constexpr float kImGuiBaseFontSize = 18.0f;
   static const Theme kThemes[6];
 
-  bool show_ui_ = true;
+  bool visible_ = true;
   bool show_viewport_ = true;
   bool show_scene_ = true;
   bool show_inspector_ = true;

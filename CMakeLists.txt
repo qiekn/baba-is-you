@@ -51,8 +51,9 @@ target_include_directories(imgui PRIVATE deps/raylib/src/external/glfw/include)
 
 add_executable(${PROJECT_NAME}
   src/game.cpp
+  src/imgui_layer.cpp
+  src/layer_stack.cpp
   src/main.cpp
-  src/ui.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

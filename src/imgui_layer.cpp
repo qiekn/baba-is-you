@@ -1,4 +1,4 @@
-#include "ui.h"
+#include "imgui_layer.h"
 
 #include <algorithm>
 #include <cmath>
@@ -9,7 +9,7 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-const Ui::Theme Ui::kThemes[6] = {
+const ImGuiLayer::Theme ImGuiLayer::kThemes[6] = {
     {
         "Classic Sand",
         {0.91f, 0.90f, 0.86f, 1.0f},
@@ -48,7 +48,9 @@ const Ui::Theme Ui::kThemes[6] = {
     },
 };
 
-void Ui::Init() {
+ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") {}
+
+void ImGuiLayer::OnAttach() {
   const float dpi_scale = GetDpiScale();
 
   IMGUI_CHECKVERSION();
@@ -69,14 +71,38 @@ void Ui::Init() {
   ApplyTheme(selected_theme_);
 }
 
-void Ui::Shutdown() {
+void ImGuiLayer::OnDetach() {
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
   ImGui::DestroyContext();
 }
 
-void Ui::Draw() {
-  if (!show_ui_) {
+void ImGuiLayer::OnUpdate(float /*dt*/) {
+  if (IsKeyPressed(KEY_GRAVE)) {
+    ToggleVisible();
+  }
+}
+
+void ImGuiLayer::Begin() {
+  ImGui_ImplOpenGL3_NewFrame();
+  ImGui_ImplGlfw_NewFrame();
+  ImGui::NewFrame();
+}
+
+void ImGuiLayer::End() {
+  ImGui::Render();
+  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+  if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+    GLFWwindow* backup = glfwGetCurrentContext();
+    ImGui::UpdatePlatformWindows();
+    ImGui::RenderPlatformWindowsDefault();
+    glfwMakeContextCurrent(backup);
+  }
+}
+
+void ImGuiLayer::OnImGuiRender() {
+  if (!visible_) {
     return;
   }
 
@@ -97,7 +123,7 @@ void Ui::Draw() {
   }
 }
 
-void Ui::DrawMainMenuBar() {
+void ImGuiLayer::DrawMainMenuBar() {
   if (!ImGui::BeginMainMenuBar()) {
     return;
   }
@@ -139,7 +165,7 @@ void Ui::DrawMainMenuBar() {
   ImGui::EndMainMenuBar();
 }
 
-void Ui::DrawViewportPanel() {
+void ImGuiLayer::DrawViewportPanel() {
   if (!ImGui::Begin("Viewport", nullptr, ImGuiWindowFlags_NoCollapse)) {
     ImGui::End();
     return;
@@ -149,7 +175,7 @@ void Ui::DrawViewportPanel() {
   ImGui::End();
 }
 
-void Ui::DrawScenePanel() {
+void ImGuiLayer::DrawScenePanel() {
   if (!ImGui::Begin("Scene", nullptr, ImGuiWindowFlags_NoCollapse)) {
     ImGui::End();
     return;
@@ -158,7 +184,7 @@ void Ui::DrawScenePanel() {
   ImGui::End();
 }
 
-void Ui::DrawInspectorPanel() {
+void ImGuiLayer::DrawInspectorPanel() {
   if (!ImGui::Begin("Inspector", nullptr, ImGuiWindowFlags_NoCollapse)) {
     ImGui::End();
     return;
@@ -167,7 +193,7 @@ void Ui::DrawInspectorPanel() {
   ImGui::End();
 }
 
-void Ui::DrawRulesPanel() {
+void ImGuiLayer::DrawRulesPanel() {
   if (!ImGui::Begin("Rules", nullptr, ImGuiWindowFlags_NoCollapse)) {
     ImGui::End();
     return;
@@ -176,7 +202,7 @@ void Ui::DrawRulesPanel() {
   ImGui::End();
 }
 
-void Ui::DrawThemesPanel() {
+void ImGuiLayer::DrawThemesPanel() {
   if (!ImGui::Begin("Themes", nullptr, ImGuiWindowFlags_NoCollapse)) {
     ImGui::End();
     return;
@@ -212,14 +238,14 @@ void Ui::DrawThemesPanel() {
   ImGui::End();
 }
 
-void Ui::ApplyTheme(int index) {
+void ImGuiLayer::ApplyTheme(int index) {
   selected_theme_ = std::clamp(index, 0, (int)(sizeof(kThemes) / sizeof(kThemes[0])) - 1);
   background_color_ = kThemes[selected_theme_].background;
   board_background_color_ = kThemes[selected_theme_].board_background;
   board_grid_border_color_ = kThemes[selected_theme_].board_grid_border;
 }
 
-void Ui::LoadFonts(float dpi_scale) {
+void ImGuiLayer::LoadFonts(float dpi_scale) {
   ImGuiIO& io = ImGui::GetIO();
 
   const float font_size = kImGuiBaseFontSize * dpi_scale;
@@ -241,7 +267,7 @@ void Ui::LoadFonts(float dpi_scale) {
   }
 }
 
-void Ui::SetupStyle(float dpi_scale) {
+void ImGuiLayer::SetupStyle(float dpi_scale) {
   ImGui::StyleColorsDark();
 
   ImGuiStyle& style = ImGui::GetStyle();
@@ -277,7 +303,7 @@ void Ui::SetupStyle(float dpi_scale) {
   colors[ImGuiCol_DockingEmptyBg] = ImVec4{0.0f, 0.0f, 0.0f, 0.0f};
 }
 
-Color Ui::ToRaylibColor(const ColorValue& color) {
+Color ImGuiLayer::ToRaylibColor(const ColorValue& color) {
   auto to_byte = [](float value) {
     return (unsigned char)std::lround(std::clamp(value, 0.0f, 1.0f) * 255.0f);
   };
@@ -290,7 +316,7 @@ Color Ui::ToRaylibColor(const ColorValue& color) {
   };
 }
 
-float Ui::GetDpiScale() {
+float ImGuiLayer::GetDpiScale() {
   Vector2 dpi = GetWindowScaleDPI();
   return std::max(1.0f, std::max(dpi.x, dpi.y));
 }
