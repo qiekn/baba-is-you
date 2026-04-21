@@ -61,7 +61,7 @@ void Ui::Init() {
   LoadFonts(dpi_scale);
   SetupStyle(dpi_scale);
 
-  GLFWwindow* window = static_cast<GLFWwindow*>(GetWindowHandle());
+  GLFWwindow* window = glfwGetCurrentContext();
   ImGui_ImplGlfw_InitForOpenGL(window, true);
   ImGui_ImplOpenGL3_Init("#version 330");
 
