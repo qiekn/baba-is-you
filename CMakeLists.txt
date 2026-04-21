@@ -50,10 +50,17 @@ target_include_directories(imgui PUBLIC deps/imgui deps/imgui/backends)
 target_include_directories(imgui PRIVATE deps/raylib/src/external/glfw/include)
 
 add_executable(${PROJECT_NAME}
+  src/board.cpp
   src/game.cpp
+  src/game_layer.cpp
+  src/ids.cpp
   src/imgui_layer.cpp
   src/layer_stack.cpp
+  src/level.cpp
   src/main.cpp
+  src/rule_engine.cpp
+  src/sprite_sheet.cpp
+  src/undo_stack.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

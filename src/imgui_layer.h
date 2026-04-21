@@ -47,9 +47,7 @@ class ImGuiLayer : public Layer {
 
   void DrawMainMenuBar();
   void DrawViewportPanel();
-  void DrawScenePanel();
   void DrawInspectorPanel();
-  void DrawRulesPanel();
   void DrawThemesPanel();
 
   void ApplyTheme(int index);
@@ -64,9 +62,7 @@ class ImGuiLayer : public Layer {
 
   bool visible_ = true;
   bool show_viewport_ = true;
-  bool show_scene_ = true;
   bool show_inspector_ = true;
-  bool show_rules_ = true;
   bool show_themes_ = true;
   bool show_demo_ = false;
 

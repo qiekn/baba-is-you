@@ -1,0 +1,28 @@
+{
+  "cols": 24,
+  "rows": 18,
+  "tiles": [
+    { "x": 4,  "y": 2, "kind": "text",   "name": "baba" },
+    { "x": 5,  "y": 2, "kind": "text",   "name": "is" },
+    { "x": 6,  "y": 2, "kind": "text",   "name": "you" },
+
+    { "x": 10, "y": 2, "kind": "text",   "name": "flag" },
+    { "x": 11, "y": 2, "kind": "text",   "name": "is" },
+    { "x": 12, "y": 2, "kind": "text",   "name": "win" },
+
+    { "x": 16, "y": 2, "kind": "text",   "name": "wall" },
+    { "x": 17, "y": 2, "kind": "text",   "name": "is" },
+    { "x": 18, "y": 2, "kind": "text",   "name": "stop" },
+
+    { "x": 4,  "y": 15, "kind": "text",  "name": "rock" },
+    { "x": 5,  "y": 15, "kind": "text",  "name": "is" },
+    { "x": 6,  "y": 15, "kind": "text",  "name": "push" },
+
+    { "x": 5,  "y": 9, "kind": "object", "name": "baba" },
+    { "x": 9,  "y": 9, "kind": "object", "name": "rock" },
+    { "x": 13, "y": 9, "kind": "object", "name": "wall" },
+    { "x": 13, "y": 10, "kind": "object", "name": "wall" },
+    { "x": 13, "y": 8, "kind": "object", "name": "wall" },
+    { "x": 18, "y": 9, "kind": "object", "name": "flag" }
+  ]
+}

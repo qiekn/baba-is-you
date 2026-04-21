@@ -113,9 +113,7 @@ void ImGuiLayer::OnImGuiRender() {
   DrawMainMenuBar();
 
   if (show_viewport_) DrawViewportPanel();
-  if (show_scene_) DrawScenePanel();
   if (show_inspector_) DrawInspectorPanel();
-  if (show_rules_) DrawRulesPanel();
   if (show_themes_) DrawThemesPanel();
 
   if (show_demo_) {
@@ -138,9 +136,7 @@ void ImGuiLayer::DrawMainMenuBar() {
 
   if (ImGui::BeginMenu("View")) {
     ImGui::MenuItem("Viewport", nullptr, &show_viewport_);
-    ImGui::MenuItem("Scene", nullptr, &show_scene_);
     ImGui::MenuItem("Inspector", nullptr, &show_inspector_);
-    ImGui::MenuItem("Rules", nullptr, &show_rules_);
     ImGui::MenuItem("Themes", nullptr, &show_themes_);
     ImGui::Separator();
     ImGuiIO& io = ImGui::GetIO();
@@ -175,30 +171,12 @@ void ImGuiLayer::DrawViewportPanel() {
   ImGui::End();
 }
 
-void ImGuiLayer::DrawScenePanel() {
-  if (!ImGui::Begin("Scene", nullptr, ImGuiWindowFlags_NoCollapse)) {
-    ImGui::End();
-    return;
-  }
-  ImGui::TextDisabled("No level loaded.");
-  ImGui::End();
-}
-
 void ImGuiLayer::DrawInspectorPanel() {
   if (!ImGui::Begin("Inspector", nullptr, ImGuiWindowFlags_NoCollapse)) {
     ImGui::End();
     return;
   }
   ImGui::TextDisabled("Nothing selected.");
-  ImGui::End();
-}
-
-void ImGuiLayer::DrawRulesPanel() {
-  if (!ImGui::Begin("Rules", nullptr, ImGuiWindowFlags_NoCollapse)) {
-    ImGui::End();
-    return;
-  }
-  ImGui::TextDisabled("No active rules.");
   ImGui::End();
 }
 

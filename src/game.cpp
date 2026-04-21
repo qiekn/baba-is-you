@@ -13,17 +13,11 @@
 #include <memory>
 #include <vector>
 
+#include "board.h"
+#include "game_layer.h"
+
 namespace {
 constexpr const char* kWindowStateFile = "window.state";
-
-Rectangle CenteredRect(float width, float height, float offset_y = 0.0f) {
-  return {
-      (GetScreenWidth() - width) * 0.5f,
-      (GetScreenHeight() - height) * 0.5f + offset_y,
-      width,
-      height,
-  };
-}
 
 struct WindowState {
   int x;
@@ -112,6 +106,7 @@ void Game::Init() {
 
   auto imgui_layer = std::make_unique<ImGuiLayer>();
   imgui_layer_ = imgui_layer.get();
+  layers_.PushLayer(std::make_unique<GameLayer>());
   layers_.PushOverlay(std::move(imgui_layer));
 }
 
@@ -153,31 +148,22 @@ void Game::Shutdown() {
 }
 
 void Game::DrawGridBackground() const {
-  const float board_width = kBoardCols * kCellPitch;
-  const float board_height = kBoardRows * kCellPitch;
-  const Rectangle board = CenteredRect(board_width, board_height, 12.0f);
+  const Rectangle board = board::BoardRect();
   const Rectangle board_background = {
-      board.x - kBoardPadding,
-      board.y - kBoardPadding,
-      board.width + kBoardPadding * 2.0f,
-      board.height + kBoardPadding * 2.0f,
+      board.x - board::kBoardPadding,
+      board.y - board::kBoardPadding,
+      board.width + board::kBoardPadding * 2.0f,
+      board.height + board::kBoardPadding * 2.0f,
   };
 
   DrawRectangleRounded(board_background, 0.04f, 10, imgui_layer_->BoardBackgroundColor());
 
   const Color border = imgui_layer_->BoardGridBorderColor();
-  const float inset = (kCellPitch - kCellInnerSize) * 0.5f;
   const float cell_roundness = 0.18f;
 
-  for (int row = 0; row < kBoardRows; ++row) {
-    for (int col = 0; col < kBoardCols; ++col) {
-      Rectangle cell = {
-          board.x + col * kCellPitch + inset,
-          board.y + row * kCellPitch + inset,
-          kCellInnerSize,
-          kCellInnerSize,
-      };
-      DrawRectangleRoundedLinesEx(cell, cell_roundness, 8, 2.5f, border);
+  for (int row = 0; row < board::kRows; ++row) {
+    for (int col = 0; col < board::kCols; ++col) {
+      DrawRectangleRoundedLinesEx(board::CellRect(col, row), cell_roundness, 8, 2.5f, border);
     }
   }
 }
