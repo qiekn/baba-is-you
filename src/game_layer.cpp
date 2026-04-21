@@ -53,6 +53,11 @@ void GameLayer::OnUpdate(float dt) {
   // Input: turn-based movement + undo.
   if (ImGui::GetIO().WantCaptureKeyboard) return;
 
+  if (IsKeyPressed(KEY_R)) {
+    reset_requested_ = true;
+    return;
+  }
+
   if (edit_mode_) {
     HandleEditorMouse();
     return;
@@ -71,11 +76,15 @@ void GameLayer::OnUpdate(float dt) {
     int key;
     Direction dir;
   };
-  static constexpr std::array<KeyDir, 4> kKeys = {{
+  static constexpr std::array<KeyDir, 8> kKeys = {{
       {KEY_RIGHT, Direction::Right},
+      {KEY_D, Direction::Right},
       {KEY_UP, Direction::Up},
+      {KEY_W, Direction::Up},
       {KEY_LEFT, Direction::Left},
+      {KEY_A, Direction::Left},
       {KEY_DOWN, Direction::Down},
+      {KEY_S, Direction::Down},
   }};
   for (const auto& kd : kKeys) {
     if (IsKeyPressed(kd.key)) {
@@ -126,6 +135,28 @@ void GameLayer::OnRender() {
 }
 
 void GameLayer::OnImGuiRender() {
+  if (reset_requested_) {
+    ImGui::OpenPopup("Reset level?");
+    reset_requested_ = false;
+  }
+
+  const ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+  ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+  if (ImGui::BeginPopupModal("Reset level?", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+    ImGui::Text("Revert the board to the level's starting state?");
+    ImGui::Text("All moves will be lost.");
+    ImGui::Separator();
+    if (ImGui::Button("Reset", ImVec2(120, 0))) {
+      ResetToInitial();
+      ImGui::CloseCurrentPopup();
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Cancel", ImVec2(120, 0)) || IsKeyPressed(KEY_ESCAPE)) {
+      ImGui::CloseCurrentPopup();
+    }
+    ImGui::EndPopup();
+  }
+
   DrawScenePanel();
   DrawRulesPanel();
   DrawEditorPanel();
@@ -142,6 +173,15 @@ void GameLayer::LoadLevelFromPath(const std::filesystem::path& path) {
     return;
   }
   level_ = std::move(loaded);
+  initial_level_ = level_;
+  BuildRegistryFromLevel();
+  undo_.Clear();
+  won_ = false;
+  RecomputeRules();
+}
+
+void GameLayer::ResetToInitial() {
+  level_ = initial_level_;
   BuildRegistryFromLevel();
   undo_.Clear();
   won_ = false;
@@ -444,6 +484,10 @@ void GameLayer::DrawEditorPanel() {
   }
 
   ImGui::Checkbox("Edit Mode", &edit_mode_);
+  ImGui::SameLine();
+  if (ImGui::Button("Reset")) {
+    reset_requested_ = true;
+  }
   ImGui::SameLine();
   if (ImGui::Button("Clear")) {
     ClearRegistry();

@@ -27,6 +27,7 @@ class GameLayer : public Layer {
   // Level / registry
   void LoadLevelFromPath(const std::filesystem::path& path);
   void SaveLevelToPath(const std::filesystem::path& path);
+  void ResetToInitial();
   void BuildRegistryFromLevel();
   Level ExtractLevelFromRegistry() const;
   void ClearRegistry();
@@ -61,11 +62,13 @@ class GameLayer : public Layer {
   entt::registry registry_;
   SpriteSheet sprites_;
   Level level_;
+  Level initial_level_;
   std::vector<Rule> rules_;
   UndoStack undo_;
   float anim_timer_ = 0.0f;
   int current_frame_ = 1;
   bool won_ = false;
+  bool reset_requested_ = false;
 
   // Editor state
   bool edit_mode_ = false;
