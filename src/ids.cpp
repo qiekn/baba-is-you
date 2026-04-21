@@ -84,6 +84,8 @@ DrawLayer LayerOf(ObjectId id) {
   return DrawLayer::Object;
 }
 
+bool IsAutoTiled(ObjectId id) { return id == ObjectId::Wall; }
+
 std::optional<ObjectId> ObjectIdFromName(std::string_view name) {
   for (int i = 0; i < kObjectCount; ++i) {
     if (kObjectNames[i] == name) return static_cast<ObjectId>(i);

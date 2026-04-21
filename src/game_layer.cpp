@@ -24,6 +24,24 @@ void DrawSpriteInCell(const Texture2D& tex, Rectangle cell, Color color) {
   DrawTexturePro(tex, src, cell, {0.0f, 0.0f}, 0.0f, color);
 }
 
+// 4-bit neighbor mask: right=1, up=2, left=4, down=8. Matches the variant
+// number encoded in Baba Is You sprite filenames (wall_<mask>_<frame>.png).
+int ComputeTileMask(const entt::registry& registry, ObjectId id, int x, int y) {
+  auto has_same = [&](int nx, int ny) {
+    if (nx < 0 || nx >= board::kCols || ny < 0 || ny >= board::kRows) return false;
+    for (auto [e, cell, kind] : registry.view<const Cell, const Kind>().each()) {
+      if (cell.x == nx && cell.y == ny && kind.id == id) return true;
+    }
+    return false;
+  };
+  int mask = 0;
+  if (has_same(x + 1, y)) mask |= 1;
+  if (has_same(x, y - 1)) mask |= 2;
+  if (has_same(x - 1, y)) mask |= 4;
+  if (has_same(x, y + 1)) mask |= 8;
+  return mask;
+}
+
 }  // namespace
 
 GameLayer::GameLayer() : Layer("GameLayer") {}
@@ -117,12 +135,16 @@ void GameLayer::OnUpdate(float dt) {
 }
 
 void GameLayer::OnRender() {
+  auto draw_kind = [&](const Cell& cell, const Kind& kind) {
+    const int variant = IsAutoTiled(kind.id) ? ComputeTileMask(registry_, kind.id, cell.x, cell.y) : 0;
+    const auto& tex = sprites_.Get(kind.id, current_frame_, variant);
+    DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(kind.id));
+  };
+
   // Three draw layers match the original's ordering.
   // 1) Floor decorations — grass/flower/tile sit below everything.
   for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
-    if (LayerOf(kind.id) != DrawLayer::Floor) continue;
-    const auto& tex = sprites_.Get(kind.id, current_frame_);
-    DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(kind.id));
+    if (LayerOf(kind.id) == DrawLayer::Floor) draw_kind(cell, kind);
   }
   // 2a) Text blocks.
   for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
@@ -131,15 +153,11 @@ void GameLayer::OnRender() {
   }
   // 2b) Gameplay objects on top of text.
   for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
-    if (LayerOf(kind.id) != DrawLayer::Object) continue;
-    const auto& tex = sprites_.Get(kind.id, current_frame_);
-    DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(kind.id));
+    if (LayerOf(kind.id) == DrawLayer::Object) draw_kind(cell, kind);
   }
   // 3) Float decorations — cloud/star drawn on top of everything.
   for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
-    if (LayerOf(kind.id) != DrawLayer::Float) continue;
-    const auto& tex = sprites_.Get(kind.id, current_frame_);
-    DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(kind.id));
+    if (LayerOf(kind.id) == DrawLayer::Float) draw_kind(cell, kind);
   }
 
   // Edit-mode affordances: brush preview on hovered cell.

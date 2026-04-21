@@ -71,6 +71,11 @@ std::string_view NameOf(Direction dir);
 TextCategory CategoryOf(TextId id);
 DrawLayer LayerOf(ObjectId id);
 
+// True if the object uses 16-variant auto-tiling (wall, brick, etc.). When
+// true, SpriteSheet loads wall_{0..15}_{frame}.png and the renderer picks the
+// variant based on same-kind neighbors.
+bool IsAutoTiled(ObjectId id);
+
 // Noun text -> its corresponding object. Non-noun text returns nullopt.
 std::optional<ObjectId> NounToObject(TextId id);
 

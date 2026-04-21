@@ -78,11 +78,16 @@ bool SpriteSheet::LoadAll(const std::filesystem::path& sprites_dir) {
   bool ok = true;
 
   for (int i = 0; i < kObjectCount; ++i) {
-    const std::string name{NameOf(static_cast<ObjectId>(i))};
-    for (int f = 0; f < kFrameCount; ++f) {
-      const std::filesystem::path p = sprites_dir / (name + "_0_" + std::to_string(f + 1) + ".png");
-      objects_[i][f] = LoadSpritePixelArt(p);
-      if (objects_[i][f].id == 0) ok = false;
+    const auto id = static_cast<ObjectId>(i);
+    const std::string name{NameOf(id)};
+    const int variant_max = IsAutoTiled(id) ? kVariantCount : 1;
+    for (int v = 0; v < variant_max; ++v) {
+      for (int f = 0; f < kFrameCount; ++f) {
+        const std::filesystem::path p =
+            sprites_dir / (name + "_" + std::to_string(v) + "_" + std::to_string(f + 1) + ".png");
+        objects_[i][v][f] = LoadSpritePixelArt(p);
+        if (objects_[i][v][f].id == 0) ok = false;
+      }
     }
   }
 
@@ -100,16 +105,18 @@ bool SpriteSheet::LoadAll(const std::filesystem::path& sprites_dir) {
 }
 
 void SpriteSheet::Unload() {
-  for (auto& row : objects_)
-    for (auto& tex : row) UnloadIfValid(tex);
+  for (auto& obj : objects_)
+    for (auto& variant : obj)
+      for (auto& tex : variant) UnloadIfValid(tex);
   for (auto& row : texts_)
     for (auto& tex : row) UnloadIfValid(tex);
   loaded_ = false;
 }
 
-const Texture2D& SpriteSheet::Get(ObjectId id, int frame) const {
+const Texture2D& SpriteSheet::Get(ObjectId id, int frame, int variant) const {
   const int f = std::clamp(frame, 1, kFrameCount) - 1;
-  return objects_[static_cast<int>(id)][f];
+  const int v = std::clamp(variant, 0, kVariantCount - 1);
+  return objects_[static_cast<int>(id)][v][f];
 }
 
 const Texture2D& SpriteSheet::Get(TextId id, int frame) const {
