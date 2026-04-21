@@ -76,8 +76,8 @@ class GameLayer : public Layer {
   std::optional<Direction> held_dir_;
   float hold_time_ = 0.0f;
   bool first_repeat_done_ = false;
-  float repeat_delay_ = 0.22f;
-  float repeat_interval_ = 0.12f;
+  float repeat_delay_ = 0.15f;
+  float repeat_interval_ = 0.13f;
 
   // Editor state
   bool edit_mode_ = false;
