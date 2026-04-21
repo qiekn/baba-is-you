@@ -57,6 +57,7 @@ void Ui::Init() {
   ImGuiIO& io = ImGui::GetIO();
   io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+  io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
   LoadFonts(dpi_scale);
   SetupStyle(dpi_scale);
@@ -115,6 +116,16 @@ void Ui::DrawMainMenuBar() {
     ImGui::MenuItem("Inspector", nullptr, &show_inspector_);
     ImGui::MenuItem("Rules", nullptr, &show_rules_);
     ImGui::MenuItem("Themes", nullptr, &show_themes_);
+    ImGui::Separator();
+    ImGuiIO& io = ImGui::GetIO();
+    bool viewports = (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) != 0;
+    if (ImGui::MenuItem("Allow Detach", nullptr, &viewports)) {
+      if (viewports) {
+        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+      } else {
+        io.ConfigFlags &= ~ImGuiConfigFlags_ViewportsEnable;
+      }
+    }
     ImGui::Separator();
     ImGui::MenuItem("ImGui Demo", nullptr, &show_demo_);
     ImGui::EndMenu();
