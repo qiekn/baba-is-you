@@ -102,9 +102,7 @@ void ImGuiLayer::End() {
 }
 
 void ImGuiLayer::OnImGuiRender() {
-  if (!visible_) {
-    return;
-  }
+  // Visibility is gated by Game::Render before this runs, so no check here.
 
   ImGui::DockSpaceOverViewport(
       0, ImGui::GetMainViewport(),

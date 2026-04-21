@@ -133,8 +133,10 @@ void Game::Render() {
   rlDrawRenderBatchActive();
 
   imgui_layer_->Begin();
-  for (auto& layer : layers_) {
-    layer->OnImGuiRender();
+  if (imgui_layer_->IsVisible()) {
+    for (auto& layer : layers_) {
+      layer->OnImGuiRender();
+    }
   }
   imgui_layer_->End();
 
