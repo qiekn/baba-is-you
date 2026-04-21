@@ -61,6 +61,7 @@ add_executable(${PROJECT_NAME}
   src/rule_engine.cpp
   src/sprite_sheet.cpp
   src/undo_stack.cpp
+  src/world.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

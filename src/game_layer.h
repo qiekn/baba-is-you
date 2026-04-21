@@ -13,6 +13,7 @@
 #include "rule_engine.h"
 #include "sprite_sheet.h"
 #include "undo_stack.h"
+#include "world.h"
 
 class GameLayer : public Layer {
  public:
@@ -58,6 +59,10 @@ class GameLayer : public Layer {
   void LoadTrack(int index);
   void UnloadTrack();
 
+  // World / progression
+  void MarkLevelCompleted(const std::string& id);
+  bool IsUnlocked(std::size_t level_index) const;
+
   // Rendering
   void DrawEntities();
 
@@ -66,6 +71,7 @@ class GameLayer : public Layer {
   void DrawRulesPanel();
   void DrawEditorPanel();
   void DrawSettingsPanel();
+  void DrawWorldPanel();
 
   // Editor
   void HandleEditorMouse();
@@ -112,4 +118,10 @@ class GameLayer : public Layer {
   int track_index_ = 0;
   float volume_ = 0.4f;
   bool muted_ = false;
+
+  // World / progression
+  World world_;
+  Progress progress_;
+  std::string current_level_id_;
+  bool win_handled_ = false;
 };

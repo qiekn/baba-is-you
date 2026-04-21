@@ -17,6 +17,8 @@ constexpr float kAnimFps = 6.0f;  // cycle 1->2->3 every ~0.5s
 constexpr const char* kDefaultLevel = "assets/levels/starter.json";
 constexpr const char* kSpritesDir = "assets/sprites";
 constexpr const char* kLevelsDir = "assets/levels";
+constexpr const char* kWorldFile = "assets/worlds/tutorial.json";
+constexpr const char* kProgressFile = "progress.json";
 
 struct MusicTrack {
   const char* label;
@@ -78,6 +80,8 @@ GameLayer::GameLayer() : Layer("GameLayer") {}
 
 void GameLayer::OnAttach() {
   sprites_.LoadAll(kSpritesDir);
+  LoadWorld(kWorldFile, world_);
+  LoadProgress(kProgressFile, progress_);
   LoadLevelFromPath(kDefaultLevel);
   LoadTrack(track_index_);
 }
@@ -259,6 +263,7 @@ void GameLayer::OnImGuiRender() {
   DrawScenePanel();
   DrawRulesPanel();
   DrawEditorPanel();
+  DrawWorldPanel();
   DrawSettingsPanel();
 }
 
@@ -274,6 +279,8 @@ void GameLayer::LoadLevelFromPath(const std::filesystem::path& path) {
   }
   level_ = std::move(loaded);
   initial_level_ = level_;
+  current_level_id_ = path.stem().string();
+  win_handled_ = false;
   BuildRegistryFromLevel();
   undo_.Clear();
   won_ = false;
@@ -282,6 +289,7 @@ void GameLayer::LoadLevelFromPath(const std::filesystem::path& path) {
 
 void GameLayer::ResetToInitial() {
   level_ = initial_level_;
+  win_handled_ = false;
   BuildRegistryFromLevel();
   undo_.Clear();
   won_ = false;
@@ -449,7 +457,13 @@ void GameLayer::RunWinDefeat() {
   for (auto [e, cell] : registry_.view<const Cell, const IsWin>().each()) {
     for (const auto& yc : you_cells) {
       if (yc.first == cell.x && yc.second == cell.y) {
-        won_ = true;
+        if (!won_) {
+          won_ = true;
+          if (!win_handled_ && !current_level_id_.empty()) {
+            MarkLevelCompleted(current_level_id_);
+            win_handled_ = true;
+          }
+        }
         return;
       }
     }
@@ -843,4 +857,70 @@ void GameLayer::EraseAt(int col, int row) {
   }
   for (auto e : doomed) registry_.destroy(e);
   undo_.Clear();
+}
+
+// ---------------------------------------------------------------------------
+// World / progression
+// ---------------------------------------------------------------------------
+
+void GameLayer::MarkLevelCompleted(const std::string& id) {
+  const bool added = progress_.completed.insert(id).second;
+  if (added) SaveProgress(kProgressFile, progress_);
+}
+
+bool GameLayer::IsUnlocked(std::size_t level_index) const {
+  if (level_index == 0) return true;
+  if (level_index >= world_.levels.size()) return false;
+  return progress_.completed.contains(world_.levels[level_index - 1].id);
+}
+
+void GameLayer::DrawWorldPanel() {
+  if (!ImGui::Begin("World", nullptr, ImGuiWindowFlags_NoCollapse)) {
+    ImGui::End();
+    return;
+  }
+
+  if (world_.levels.empty()) {
+    ImGui::TextDisabled("No world loaded (expected %s).", kWorldFile);
+    ImGui::End();
+    return;
+  }
+
+  ImGui::Text("%s", world_.title.empty() ? "Levels" : world_.title.c_str());
+  const std::size_t done = progress_.completed.size();
+  ImGui::TextDisabled("Cleared %zu / %zu", done, world_.levels.size());
+  ImGui::Separator();
+
+  for (std::size_t i = 0; i < world_.levels.size(); ++i) {
+    const auto& lvl = world_.levels[i];
+    const bool unlocked = IsUnlocked(i);
+    const bool completed = progress_.completed.contains(lvl.id);
+    const bool current = (lvl.id == current_level_id_);
+
+    ImGui::PushID(static_cast<int>(i));
+    const char* badge = completed ? "[*]" : (unlocked ? "[ ]" : "[X]");
+    if (current) {
+      ImGui::TextColored(ImVec4(0.4f, 0.9f, 0.4f, 1.0f), "%s %s", badge, lvl.label.c_str());
+    } else if (unlocked) {
+      ImGui::Text("%s %s", badge, lvl.label.c_str());
+    } else {
+      ImGui::TextDisabled("%s %s", badge, lvl.label.c_str());
+    }
+    ImGui::SameLine();
+    ImGui::BeginDisabled(!unlocked);
+    if (ImGui::Button("Play")) {
+      LoadLevelFromPath(std::filesystem::path{kLevelsDir} / (lvl.id + ".json"));
+    }
+    ImGui::EndDisabled();
+    ImGui::PopID();
+  }
+
+  ImGui::Separator();
+  if (ImGui::Button("Reset Progress")) {
+    progress_.completed.clear();
+    SaveProgress(kProgressFile, progress_);
+    win_handled_ = false;
+  }
+
+  ImGui::End();
 }
