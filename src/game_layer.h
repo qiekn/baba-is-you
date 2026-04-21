@@ -100,6 +100,7 @@ class GameLayer : public Layer {
 
   // Save-as buffer
   char save_name_[64] = "custom.json";
+  int selected_level_ = 0;
 
   // Visual sparkles for IsWin entities.
   std::vector<Particle> particles_;

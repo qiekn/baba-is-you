@@ -33,6 +33,20 @@ constexpr MusicTrack kTracks[] = {
 };
 constexpr int kTrackCount = static_cast<int>(sizeof(kTracks) / sizeof(kTracks[0]));
 
+struct LevelEntry {
+  const char* label;
+  const char* file;
+};
+
+constexpr LevelEntry kBuiltinLevels[] = {
+    {"Starter", "starter.json"},
+    {"01 Intro", "01-intro.json"},
+    {"02 Walls", "02-walls.json"},
+    {"03 Push", "03-push.json"},
+    {"04 Break", "04-break.json"},
+};
+constexpr int kBuiltinLevelCount = static_cast<int>(sizeof(kBuiltinLevels) / sizeof(kBuiltinLevels[0]));
+
 // Draw a sprite texture fitted to a board cell, tinted with `color`.
 void DrawSpriteInCell(const Texture2D& tex, Rectangle cell, Color color) {
   if (tex.id == 0) return;
@@ -703,6 +717,29 @@ void GameLayer::DrawEditorPanel() {
     if (selected) ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.5f, 0.9f, 1.0f));
     if (ImGui::Button(PrettyName(id), btn_size)) brush_ = id;
     if (selected) ImGui::PopStyleColor();
+  }
+
+  ImGui::Separator();
+  const char* lvl_label = kBuiltinLevels[std::clamp(selected_level_, 0, kBuiltinLevelCount - 1)].label;
+  if (ImGui::BeginCombo("Level", lvl_label)) {
+    for (int i = 0; i < kBuiltinLevelCount; ++i) {
+      const bool selected = (i == selected_level_);
+      if (ImGui::Selectable(kBuiltinLevels[i].label, selected)) {
+        selected_level_ = i;
+        LoadLevelFromPath(std::filesystem::path{kLevelsDir} / kBuiltinLevels[i].file);
+      }
+      if (selected) ImGui::SetItemDefaultFocus();
+    }
+    ImGui::EndCombo();
+  }
+  if (ImGui::Button("Prev")) {
+    selected_level_ = (selected_level_ - 1 + kBuiltinLevelCount) % kBuiltinLevelCount;
+    LoadLevelFromPath(std::filesystem::path{kLevelsDir} / kBuiltinLevels[selected_level_].file);
+  }
+  ImGui::SameLine();
+  if (ImGui::Button("Next")) {
+    selected_level_ = (selected_level_ + 1) % kBuiltinLevelCount;
+    LoadLevelFromPath(std::filesystem::path{kLevelsDir} / kBuiltinLevels[selected_level_].file);
   }
 
   ImGui::Separator();
