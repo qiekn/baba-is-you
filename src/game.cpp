@@ -128,8 +128,8 @@ void Game::Update() {
 
 void Game::Render() {
   BeginDrawing();
-  const auto override_bg = game_layer_ ? game_layer_->LevelBackground() : std::nullopt;
-  ClearBackground(override_bg.value_or(imgui_layer_->BackgroundColor()));
+  const auto edge_bg = game_layer_ ? game_layer_->LevelEdge() : std::nullopt;
+  ClearBackground(edge_bg.value_or(imgui_layer_->BackgroundColor()));
 
   DrawGridBackground();
   for (auto& layer : layers_) {

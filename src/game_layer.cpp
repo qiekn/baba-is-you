@@ -88,6 +88,13 @@ std::optional<Color> GameLayer::LevelBackground() const {
                static_cast<unsigned char>(level_.bg_b), 255};
 }
 
+std::optional<Color> GameLayer::LevelEdge() const {
+  if (level_.edge_r < 0) return std::nullopt;
+  return Color{static_cast<unsigned char>(level_.edge_r),
+               static_cast<unsigned char>(level_.edge_g),
+               static_cast<unsigned char>(level_.edge_b), 255};
+}
+
 void GameLayer::OnAttach() {
   sprites_.LoadAll(kSpritesDir);
   LoadWorld(kWorldFile, world_);

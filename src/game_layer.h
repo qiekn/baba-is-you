@@ -26,9 +26,12 @@ class GameLayer : public Layer {
   void OnRender() override;
   void OnImGuiRender() override;
 
-  // Optional palette background for imported levels. nullopt means the
-  // current level has no override and the ImGui theme colors apply.
+  // Optional palette colors for imported levels. nullopt means the current
+  // level has no override and the ImGui theme colors apply.
+  // `LevelBackground` is the walkable-interior fill; `LevelEdge` is the
+  // outer fill around the playfield.
   std::optional<Color> LevelBackground() const;
+  std::optional<Color> LevelEdge() const;
 
  private:
   // Level / registry

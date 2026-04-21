@@ -29,6 +29,11 @@ bool LoadLevelFromJson(const std::filesystem::path& path, Level& out) {
     level.bg_g = (*it)[1].get<int>();
     level.bg_b = (*it)[2].get<int>();
   }
+  if (auto it = doc.find("edge"); it != doc.end() && it->is_array() && it->size() == 3) {
+    level.edge_r = (*it)[0].get<int>();
+    level.edge_g = (*it)[1].get<int>();
+    level.edge_b = (*it)[2].get<int>();
+  }
 
   if (auto it = doc.find("tiles"); it != doc.end() && it->is_array()) {
     level.tiles.reserve(it->size());

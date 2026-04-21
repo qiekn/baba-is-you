@@ -344,16 +344,19 @@ def convert(l_path, values_lua, out_path):
         'tiles': tiles,
     }
 
-    # Background colour from the level's palette, read from pixel (0, 4)
-    # — that's values.lua's `colours.background`. Falls back to omitting
-    # the field when the palette can't be located or decoded.
+    # Background (palette cell 0,4) = walkable interior.
+    # Edge (palette cell 1,0) = the fill around the playfield.
     general = read_ld_general(ld_path)
     palette_name = general.get('palette')
     if palette_name:
         palettes_dir = Path(values_lua).parent / 'Palettes'
-        bg = read_palette_pixel(palettes_dir / palette_name, 0, 4)
+        palette_path = palettes_dir / palette_name
+        bg = read_palette_pixel(palette_path, 0, 4)
         if bg is not None:
             out['background'] = list(bg)
+        edge = read_palette_pixel(palette_path, 1, 0)
+        if edge is not None:
+            out['edge'] = list(edge)
         name = general.get('name')
         if name:
             out['name'] = name

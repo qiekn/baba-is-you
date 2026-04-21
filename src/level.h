@@ -24,11 +24,16 @@ struct Level {
   // Optional display name (e.g. "where do i go?") for imported levels.
   std::string name;
 
-  // Optional palette background (R, G, B). -1 means "unset" — the caller
-  // should fall back to its normal theme.
+  // Optional palette colours. -1 means "unset" — the caller should fall
+  // back to its normal theme.
+  // `bg_*`   = interior fill for the playfield (palette cell 0,4).
+  // `edge_*` = outer fill around the playfield (palette cell 1,0).
   int bg_r = -1;
   int bg_g = -1;
   int bg_b = -1;
+  int edge_r = -1;
+  int edge_g = -1;
+  int edge_b = -1;
 };
 
 // Both return false and leave `out` untouched on IO/parse failure.
