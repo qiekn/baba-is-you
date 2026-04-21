@@ -5,3 +5,12 @@
 	path = deps/imgui
 	url = https://github.com/ocornut/imgui.git
 	branch = docking
+[submodule "deps/entt"]
+	path = deps/entt
+	url = https://github.com/skypjack/entt.git
+[submodule "deps/json"]
+	path = deps/json
+	url = https://github.com/nlohmann/json.git
+[submodule "deps/magic-enum"]
+	path = deps/magic-enum
+	url = https://github.com/Neargye/magic_enum.git

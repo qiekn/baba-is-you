@@ -23,6 +23,17 @@ if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/deps/imgui/imgui.h")
     "imgui submodule is missing. Run: git submodule update --init --recursive")
 endif()
 
+foreach(_dep IN ITEMS
+    "deps/entt/single_include/entt/entt.hpp"
+    "deps/json/single_include/nlohmann/json.hpp"
+    "deps/magic-enum/include/magic_enum/magic_enum.hpp")
+  if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${_dep}")
+    message(FATAL_ERROR
+      "Submodule header missing: ${_dep}. "
+      "Run: git submodule update --init --recursive")
+  endif()
+endforeach()
+
 add_subdirectory(deps/raylib)
 
 add_library(imgui STATIC
@@ -44,9 +55,9 @@ add_executable(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME}
   PRIVATE
-    deps/entt
-    deps/json
-    deps/magic-enum
+    deps/entt/single_include
+    deps/json/single_include
+    deps/magic-enum/include
     deps/raygui
     src
 )
