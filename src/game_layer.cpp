@@ -1,6 +1,7 @@
 #include "game_layer.h"
 
 #include <array>
+#include <cmath>
 #include <cstring>
 #include <string>
 
@@ -67,6 +68,8 @@ void GameLayer::OnUpdate(float dt) {
 
   // Recompute rules every frame so the editor sees live feedback.
   RecomputeRules();
+
+  UpdateParticles(dt);
 
   // Input: turn-based movement + undo.
   if (ImGui::GetIO().WantCaptureKeyboard) return;
@@ -162,6 +165,9 @@ void GameLayer::OnRender() {
   for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
     if (LayerOf(kind.id) == DrawLayer::Float) draw_kind(e, cell, kind);
   }
+
+  // 4) Particles (sparkles for IsWin entities).
+  DrawParticles();
 
   // Edit-mode affordances: brush preview on hovered cell.
   if (edit_mode_ && !ImGui::GetIO().WantCaptureMouse) {
@@ -426,6 +432,59 @@ void GameLayer::RunWinDefeat() {
     }
   }
   for (auto e : doomed) registry_.destroy(e);
+}
+
+// ---------------------------------------------------------------------------
+// Particles
+// ---------------------------------------------------------------------------
+
+void GameLayer::UpdateParticles(float dt) {
+  constexpr float kEmitPeriod = 0.07f;
+  constexpr float kLifetime = 0.8f;
+  constexpr float kMaxSize = 10.0f;
+
+  for (auto& p : particles_) p.life -= dt;
+  std::erase_if(particles_, [](const Particle& p) { return p.life <= 0.0f; });
+
+  // Collect IsWin cells; skip if none so the editor stays quiet.
+  std::vector<std::pair<int, int>> win_cells;
+  for (auto [e, cell] : registry_.view<const Cell, const IsWin>().each()) {
+    win_cells.emplace_back(cell.x, cell.y);
+  }
+
+  particle_emit_timer_ += dt;
+  while (particle_emit_timer_ >= kEmitPeriod) {
+    particle_emit_timer_ -= kEmitPeriod;
+    if (win_cells.empty()) continue;
+    const auto& wc = win_cells[GetRandomValue(0, static_cast<int>(win_cells.size()) - 1)];
+    const Rectangle rect = board::CellRect(wc.first, wc.second);
+    Particle p;
+    p.pos = {
+        rect.x + static_cast<float>(GetRandomValue(0, static_cast<int>(rect.width))),
+        rect.y + static_cast<float>(GetRandomValue(0, static_cast<int>(rect.height))),
+    };
+    p.max_size = kMaxSize + static_cast<float>(GetRandomValue(-2, 4));
+    p.life = p.max_life = kLifetime + 0.01f * GetRandomValue(-20, 20);
+    p.rot_deg = static_cast<float>(GetRandomValue(0, 359));
+    particles_.push_back(p);
+  }
+}
+
+void GameLayer::DrawParticles() const {
+  for (const auto& p : particles_) {
+    const float age = 1.0f - (p.life / p.max_life);               // 0 -> 1
+    const float pulse = 1.0f - std::abs(age - 0.5f) * 2.0f;        // 0 -> 1 -> 0
+    const float size = p.max_size * pulse;
+    if (size < 1.0f) continue;
+    const float thick = std::max(1.5f, size * 0.22f);
+    const unsigned char alpha = static_cast<unsigned char>(255.0f * (p.life / p.max_life));
+    const Color color = {255, 240, 150, alpha};
+
+    const Rectangle horiz = {p.pos.x, p.pos.y, size, thick};
+    const Rectangle vert = {p.pos.x, p.pos.y, thick, size};
+    DrawRectanglePro(horiz, {size * 0.5f, thick * 0.5f}, p.rot_deg, color);
+    DrawRectanglePro(vert, {thick * 0.5f, size * 0.5f}, p.rot_deg, color);
+  }
 }
 
 // ---------------------------------------------------------------------------

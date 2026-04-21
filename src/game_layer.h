@@ -43,6 +43,17 @@ class GameLayer : public Layer {
   void PushChain(int x, int y, int dx, int dy);
   void RunWinDefeat();
 
+  // Particles (visual only — not part of ECS)
+  struct Particle {
+    Vector2 pos;
+    float max_size;
+    float life;
+    float max_life;
+    float rot_deg;
+  };
+  void UpdateParticles(float dt);
+  void DrawParticles() const;
+
   // Rendering
   void DrawEntities();
 
@@ -85,4 +96,8 @@ class GameLayer : public Layer {
 
   // Save-as buffer
   char save_name_[64] = "custom.json";
+
+  // Visual sparkles for IsWin entities.
+  std::vector<Particle> particles_;
+  float particle_emit_timer_ = 0.0f;
 };
