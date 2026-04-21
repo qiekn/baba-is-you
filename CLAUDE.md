@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A from-scratch remake of *Baba Is You* in C++23. Currently a scaffold: raylib window + ImGui editor panel that renders a themed grid board. There is no game logic yet — `Game::Update()` is empty.
 
-原版游戏在 ./original-baba-is-you/
+Original game files is at ./original-baba-is-you/
 
 ## Build & Run
 

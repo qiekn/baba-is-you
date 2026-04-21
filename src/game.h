@@ -8,9 +8,9 @@ struct Game {
 
 private:
   void Init();
-  void Tick();
-  void Update();
-  void Render();
+  void Tick();   // TimeStep or DeltaTime progress
+  void Update(); // Update GameLogic
+  void Render(); // Rendering
   void Shutdown();
 
   void DrawGridBackground() const;
