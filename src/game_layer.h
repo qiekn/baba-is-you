@@ -1,6 +1,7 @@
 #pragma once
 
 #include <filesystem>
+#include <optional>
 #include <variant>
 #include <vector>
 
@@ -69,6 +70,11 @@ class GameLayer : public Layer {
   int current_frame_ = 1;
   bool won_ = false;
   bool reset_requested_ = false;
+
+  // Key-repeat state for held movement keys.
+  std::optional<Direction> held_dir_;
+  float hold_time_ = 0.0f;
+  bool first_repeat_done_ = false;
 
   // Editor state
   bool edit_mode_ = false;

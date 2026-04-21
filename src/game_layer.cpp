@@ -86,10 +86,32 @@ void GameLayer::OnUpdate(float dt) {
       {KEY_DOWN, Direction::Down},
       {KEY_S, Direction::Down},
   }};
+
+  // Scan keys in priority order; first one held wins so switching directions
+  // feels responsive.
+  std::optional<Direction> cur_dir;
   for (const auto& kd : kKeys) {
-    if (IsKeyPressed(kd.key)) {
-      Step(kd.dir);
+    if (IsKeyDown(kd.key)) {
+      cur_dir = kd.dir;
       break;
+    }
+  }
+
+  constexpr float kRepeatDelay = 0.22f;
+  constexpr float kRepeatInterval = 0.08f;
+
+  if (cur_dir != held_dir_) {
+    held_dir_ = cur_dir;
+    hold_time_ = 0.0f;
+    first_repeat_done_ = false;
+    if (cur_dir) Step(*cur_dir);
+  } else if (cur_dir) {
+    hold_time_ += dt;
+    const float threshold = first_repeat_done_ ? kRepeatInterval : kRepeatDelay;
+    if (hold_time_ >= threshold) {
+      Step(*cur_dir);
+      hold_time_ = 0.0f;
+      first_repeat_done_ = true;
     }
   }
 }
