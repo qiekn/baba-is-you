@@ -129,7 +129,7 @@ void Ui::DrawMainMenuBar() {
 }
 
 void Ui::DrawViewportPanel() {
-  if (!ImGui::Begin("Viewport", &show_viewport_)) {
+  if (!ImGui::Begin("Viewport", nullptr, ImGuiWindowFlags_NoCollapse)) {
     ImGui::End();
     return;
   }
@@ -139,7 +139,7 @@ void Ui::DrawViewportPanel() {
 }
 
 void Ui::DrawScenePanel() {
-  if (!ImGui::Begin("Scene", &show_scene_)) {
+  if (!ImGui::Begin("Scene", nullptr, ImGuiWindowFlags_NoCollapse)) {
     ImGui::End();
     return;
   }
@@ -148,7 +148,7 @@ void Ui::DrawScenePanel() {
 }
 
 void Ui::DrawInspectorPanel() {
-  if (!ImGui::Begin("Inspector", &show_inspector_)) {
+  if (!ImGui::Begin("Inspector", nullptr, ImGuiWindowFlags_NoCollapse)) {
     ImGui::End();
     return;
   }
@@ -157,7 +157,7 @@ void Ui::DrawInspectorPanel() {
 }
 
 void Ui::DrawRulesPanel() {
-  if (!ImGui::Begin("Rules", &show_rules_)) {
+  if (!ImGui::Begin("Rules", nullptr, ImGuiWindowFlags_NoCollapse)) {
     ImGui::End();
     return;
   }
@@ -166,7 +166,7 @@ void Ui::DrawRulesPanel() {
 }
 
 void Ui::DrawThemesPanel() {
-  if (!ImGui::Begin("Themes", &show_themes_)) {
+  if (!ImGui::Begin("Themes", nullptr, ImGuiWindowFlags_NoCollapse)) {
     ImGui::End();
     return;
   }
