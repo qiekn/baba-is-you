@@ -446,6 +446,16 @@ const char* GameLayer::PrettyName(ObjectId id) {
       return "Cloud";
     case ObjectId::Star:
       return "Star";
+    case ObjectId::Brick:
+      return "Brick";
+    case ObjectId::Water:
+      return "Water";
+    case ObjectId::Ice:
+      return "Ice";
+    case ObjectId::Hedge:
+      return "Hedge";
+    case ObjectId::Fence:
+      return "Fence";
     case ObjectId::kCount:
       break;
   }

@@ -3,7 +3,8 @@
 namespace {
 
 constexpr std::string_view kObjectNames[kObjectCount] = {
-    "baba", "flag", "wall", "rock", "grass", "flower", "tile", "cloud", "star",
+    "baba", "flag",  "wall", "rock", "grass", "flower", "tile",
+    "cloud", "star", "brick", "water", "ice", "hedge", "fence",
 };
 
 constexpr std::string_view kTextNames[kTextCount] = {
@@ -70,6 +71,9 @@ DrawLayer LayerOf(ObjectId id) {
     case ObjectId::Grass:
     case ObjectId::Flower:
     case ObjectId::Tile:
+    case ObjectId::Brick:
+    case ObjectId::Water:
+    case ObjectId::Ice:
       return DrawLayer::Floor;
     case ObjectId::Cloud:
     case ObjectId::Star:
@@ -78,13 +82,28 @@ DrawLayer LayerOf(ObjectId id) {
     case ObjectId::Flag:
     case ObjectId::Wall:
     case ObjectId::Rock:
+    case ObjectId::Hedge:
+    case ObjectId::Fence:
     case ObjectId::kCount:
       break;
   }
   return DrawLayer::Object;
 }
 
-bool IsAutoTiled(ObjectId id) { return id == ObjectId::Wall; }
+bool IsAutoTiled(ObjectId id) {
+  switch (id) {
+    case ObjectId::Wall:
+    case ObjectId::Brick:
+    case ObjectId::Water:
+    case ObjectId::Ice:
+    case ObjectId::Hedge:
+    case ObjectId::Fence:
+    case ObjectId::Grass:
+      return true;
+    default:
+      return false;
+  }
+}
 
 std::optional<ObjectId> ObjectIdFromName(std::string_view name) {
   for (int i = 0; i < kObjectCount; ++i) {

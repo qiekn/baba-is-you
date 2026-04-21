@@ -53,6 +53,11 @@ constexpr Color kObjectTints[kObjectCount] = {
     {91, 85, 86, 255},     // Tile
     {207, 222, 232, 255},  // Cloud
     {237, 226, 133, 255},  // Star
+    {158, 58, 49, 255},    // Brick
+    {83, 155, 212, 255},   // Water
+    {180, 216, 238, 255},  // Ice
+    {48, 82, 44, 255},     // Hedge
+    {131, 93, 59, 255},    // Fence
 };
 
 constexpr Color kTextTints[kTextCount] = {

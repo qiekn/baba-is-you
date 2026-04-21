@@ -14,6 +14,11 @@ enum class ObjectId : std::uint8_t {
   Tile,
   Cloud,
   Star,
+  Brick,
+  Water,
+  Ice,
+  Hedge,
+  Fence,
   kCount,
 };
 
