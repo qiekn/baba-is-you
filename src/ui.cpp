@@ -3,8 +3,11 @@
 #include <algorithm>
 #include <cmath>
 #include <filesystem>
+
+#include <GLFW/glfw3.h>
 #include <imgui.h>
-#include <rlimgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 const Ui::Theme Ui::kThemes[6] = {
     {
@@ -48,7 +51,8 @@ const Ui::Theme Ui::kThemes[6] = {
 void Ui::Init() {
   const float dpi_scale = GetDpiScale();
 
-  rlImGuiBeginInitImGui();
+  IMGUI_CHECKVERSION();
+  ImGui::CreateContext();
 
   ImGuiIO& io = ImGui::GetIO();
   io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
@@ -57,12 +61,17 @@ void Ui::Init() {
   LoadFonts(dpi_scale);
   SetupStyle(dpi_scale);
 
-  rlImGuiEndInitImGui();
+  GLFWwindow* window = static_cast<GLFWwindow*>(GetWindowHandle());
+  ImGui_ImplGlfw_InitForOpenGL(window, true);
+  ImGui_ImplOpenGL3_Init("#version 330");
+
   ApplyTheme(selected_theme_);
 }
 
 void Ui::Shutdown() {
-  rlImGuiShutdown();
+  ImGui_ImplOpenGL3_Shutdown();
+  ImGui_ImplGlfw_Shutdown();
+  ImGui::DestroyContext();
 }
 
 void Ui::Draw() {

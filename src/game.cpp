@@ -1,7 +1,11 @@
 #include "game.h"
 
 #include <raylib.h>
-#include <rlimgui.h>
+#include <rlgl.h>
+
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 namespace {
 Rectangle CenteredRect(float width, float height, float offset_y = 0.0f) {
@@ -48,10 +52,14 @@ void Game::Render() {
   ClearBackground(ui_.BackgroundColor());
 
   DrawGridBackground();
+  rlDrawRenderBatchActive();
 
-  rlImGuiBegin();
+  ImGui_ImplOpenGL3_NewFrame();
+  ImGui_ImplGlfw_NewFrame();
+  ImGui::NewFrame();
   ui_.Draw();
-  rlImGuiEnd();
+  ImGui::Render();
+  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
   EndDrawing();
 }

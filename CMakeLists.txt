@@ -42,11 +42,12 @@ add_library(imgui STATIC
   deps/imgui/imgui_tables.cpp
   deps/imgui/imgui_widgets.cpp
   deps/imgui/imgui_demo.cpp
+  deps/imgui/backends/imgui_impl_glfw.cpp
+  deps/imgui/backends/imgui_impl_opengl3.cpp
 )
 
-target_include_directories(imgui PUBLIC deps/imgui)
-
-add_subdirectory(deps/rlimgui)
+target_include_directories(imgui PUBLIC deps/imgui deps/imgui/backends)
+target_include_directories(imgui PRIVATE deps/raylib/src/external/glfw/include)
 
 add_executable(${PROJECT_NAME}
   src/game.cpp
@@ -60,6 +61,7 @@ target_include_directories(${PROJECT_NAME}
     deps/json/single_include
     deps/magic-enum/include
     deps/raygui
+    deps/raylib/src/external/glfw/include
     src
 )
 
@@ -67,7 +69,6 @@ target_link_libraries(${PROJECT_NAME}
   PRIVATE
     raylib
     imgui
-    rlimgui
 )
 
 if (APPLE)
