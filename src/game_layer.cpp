@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cctype>
 #include <cmath>
 #include <cstring>
 #include <string>
@@ -80,6 +81,13 @@ int ComputeTileMask(const entt::registry& registry, ObjectId id, int x, int y) {
 
 GameLayer::GameLayer() : Layer("GameLayer") {}
 
+std::optional<Color> GameLayer::LevelBackground() const {
+  if (level_.bg_r < 0) return std::nullopt;
+  return Color{static_cast<unsigned char>(level_.bg_r),
+               static_cast<unsigned char>(level_.bg_g),
+               static_cast<unsigned char>(level_.bg_b), 255};
+}
+
 void GameLayer::OnAttach() {
   sprites_.LoadAll(kSpritesDir);
   LoadWorld(kWorldFile, world_);
@@ -92,7 +100,18 @@ void GameLayer::OnAttach() {
         imported_stems_.push_back(entry.path().stem().string());
       }
     }
-    std::sort(imported_stems_.begin(), imported_stems_.end());
+    // Natural sort: leading digits compared numerically, then the rest
+    // alphabetically. Keeps 1, 2, 10, 100 in order instead of 1, 10, 100, 2.
+    auto split = [](const std::string& s) -> std::pair<long long, std::string> {
+      std::size_t i = 0;
+      while (i < s.size() && std::isdigit(static_cast<unsigned char>(s[i]))) ++i;
+      long long n = i > 0 ? std::stoll(s.substr(0, i)) : -1;
+      return {n, s.substr(i)};
+    };
+    std::sort(imported_stems_.begin(), imported_stems_.end(),
+              [&](const std::string& a, const std::string& b) {
+                return split(a) < split(b);
+              });
   }
   LoadLevelFromPath(kDefaultLevel);
   LoadTrack(track_index_);
@@ -291,6 +310,8 @@ void GameLayer::LoadLevelFromPath(const std::filesystem::path& path) {
   }
   level_ = std::move(loaded);
   initial_level_ = level_;
+  board::kCols = level_.cols;
+  board::kRows = level_.rows;
   current_level_id_ = path.stem().string();
   win_handled_ = false;
   BuildRegistryFromLevel();
@@ -653,6 +674,11 @@ void GameLayer::DrawScenePanel() {
     return;
   }
 
+  if (!level_.name.empty()) {
+    ImGui::TextColored(ImVec4(0.9f, 0.9f, 0.4f, 1.0f), "%s", level_.name.c_str());
+    ImGui::Separator();
+  }
+
   int object_count = 0;
   for ([[maybe_unused]] auto [e, k] : registry_.view<const Kind>().each()) ++object_count;
   int text_count = 0;
@@ -785,10 +811,22 @@ void GameLayer::DrawEditorPanel() {
   if (!imported_stems_.empty()) {
     ImGui::Separator();
     ImGui::Text("Imported (%zu)", imported_stems_.size());
+    ImGui::InputTextWithHint("##filter", "filter (e.g. 12 or lev)",
+                             imported_filter_, sizeof(imported_filter_));
+    // Case-insensitive substring match on the filter text.
+    auto matches = [&](const std::string& s) {
+      if (imported_filter_[0] == '\0') return true;
+      auto lower = [](char c) { return static_cast<char>(std::tolower(static_cast<unsigned char>(c))); };
+      std::string a(s.size(), ' '), b(std::strlen(imported_filter_), ' ');
+      std::transform(s.begin(), s.end(), a.begin(), lower);
+      std::transform(imported_filter_, imported_filter_ + b.size(), b.begin(), lower);
+      return a.find(b) != std::string::npos;
+    };
     imported_index_ = std::clamp(imported_index_, 0, static_cast<int>(imported_stems_.size()) - 1);
     const char* cur = imported_stems_[imported_index_].c_str();
     if (ImGui::BeginCombo("##imported", cur)) {
       for (int i = 0; i < static_cast<int>(imported_stems_.size()); ++i) {
+        if (!matches(imported_stems_[i])) continue;
         const bool selected = (i == imported_index_);
         if (ImGui::Selectable(imported_stems_[i].c_str(), selected)) {
           imported_index_ = i;

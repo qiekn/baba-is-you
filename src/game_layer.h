@@ -26,6 +26,10 @@ class GameLayer : public Layer {
   void OnRender() override;
   void OnImGuiRender() override;
 
+  // Optional palette background for imported levels. nullopt means the
+  // current level has no override and the ImGui theme colors apply.
+  std::optional<Color> LevelBackground() const;
+
  private:
   // Level / registry
   void LoadLevelFromPath(const std::filesystem::path& path);
@@ -112,6 +116,7 @@ class GameLayer : public Layer {
   // Imported-level browser (assets/imported/)
   std::vector<std::string> imported_stems_;
   int imported_index_ = 0;
+  char imported_filter_[64] = "";
 
   // Visual sparkles for IsWin entities.
   std::vector<Particle> particles_;

@@ -5,6 +5,8 @@
 #include "imgui_layer.h"
 #include "layer_stack.h"
 
+class GameLayer;
+
 struct Game {
   void Run();
 
@@ -23,4 +25,5 @@ struct Game {
 
   LayerStack layers_;
   ImGuiLayer* imgui_layer_ = nullptr;  // non-owning; layers_ owns the unique_ptr
+  GameLayer* game_layer_ = nullptr;    // non-owning; layers_ owns the unique_ptr
 };

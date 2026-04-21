@@ -108,7 +108,9 @@ void Game::Init() {
 
   auto imgui_layer = std::make_unique<ImGuiLayer>();
   imgui_layer_ = imgui_layer.get();
-  layers_.PushLayer(std::make_unique<GameLayer>());
+  auto game_layer = std::make_unique<GameLayer>();
+  game_layer_ = game_layer.get();
+  layers_.PushLayer(std::move(game_layer));
   layers_.PushOverlay(std::move(imgui_layer));
 }
 
@@ -126,7 +128,8 @@ void Game::Update() {
 
 void Game::Render() {
   BeginDrawing();
-  ClearBackground(imgui_layer_->BackgroundColor());
+  const auto override_bg = game_layer_ ? game_layer_->LevelBackground() : std::nullopt;
+  ClearBackground(override_bg.value_or(imgui_layer_->BackgroundColor()));
 
   DrawGridBackground();
   for (auto& layer : layers_) {
@@ -163,19 +166,29 @@ void Game::DrawGridBackground() const {
 
   DrawRectangleRounded(board_background, 0.04f, 10, imgui_layer_->BoardBackgroundColor());
 
+  // Imported levels override the board interior with their palette color so
+  // the themed background reads correctly even though our ImGui theme is
+  // still active.
+  if (game_layer_) {
+    if (auto bg = game_layer_->LevelBackground()) {
+      DrawRectangleRounded(board_background, 0.04f, 10, *bg);
+    }
+  }
+
   if (!imgui_layer_->ShowGrid()) return;
 
   const Color border = imgui_layer_->BoardGridBorderColor();
   const float t = board::kGridLineThickness;
+  const float pitch = board::Pitch();
 
   // Single-line grid: each interior boundary is drawn once, so adjacent cells
   // share an edge instead of floating inside inset rectangles.
   for (int col = 0; col <= board::kCols; ++col) {
-    const float x = board.x + col * board::kCellPitch - t * 0.5f;
+    const float x = board.x + col * pitch - t * 0.5f;
     DrawRectangleRec({x, board.y, t, board.height}, border);
   }
   for (int row = 0; row <= board::kRows; ++row) {
-    const float y = board.y + row * board::kCellPitch - t * 0.5f;
+    const float y = board.y + row * pitch - t * 0.5f;
     DrawRectangleRec({board.x, y, board.width, t}, border);
   }
 }

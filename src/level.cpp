@@ -21,6 +21,14 @@ bool LoadLevelFromJson(const std::filesystem::path& path, Level& out) {
   Level level;
   level.cols = doc.value("cols", 24);
   level.rows = doc.value("rows", 18);
+  level.name = doc.value("name", "");
+
+  // Optional [r, g, b] background from the imported palette.
+  if (auto it = doc.find("background"); it != doc.end() && it->is_array() && it->size() == 3) {
+    level.bg_r = (*it)[0].get<int>();
+    level.bg_g = (*it)[1].get<int>();
+    level.bg_b = (*it)[2].get<int>();
+  }
 
   if (auto it = doc.find("tiles"); it != doc.end() && it->is_array()) {
     level.tiles.reserve(it->size());

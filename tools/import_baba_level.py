@@ -97,6 +97,107 @@ def build_per_level_tile_map(ld_path):
     return out
 
 
+def read_ld_general(ld_path):
+    """Extract the [general] INI section as a dict. Missing file -> empty."""
+    if not ld_path.exists():
+        return {}
+    text = ld_path.read_text(encoding='utf-8', errors='replace')
+    idx = text.find('[general]')
+    if idx < 0:
+        return {}
+    end = text.find('\n[', idx + 1)
+    body = text[idx:end] if end > 0 else text[idx:]
+    out = {}
+    for line in body.splitlines()[1:]:  # skip [general] line
+        if '=' in line:
+            k, v = line.split('=', 1)
+            out[k.strip()] = v.strip()
+    return out
+
+
+# ---------------------------------------------------------------------------
+# Palette PNG reader (stdlib only; handles PNG filters 0-4)
+# ---------------------------------------------------------------------------
+
+def _paeth(a, b, c):
+    p = a + b - c
+    pa = abs(p - a); pb = abs(p - b); pc = abs(p - c)
+    if pa <= pb and pa <= pc: return a
+    if pb <= pc: return b
+    return c
+
+
+def read_palette_pixel(png_path, x, y):
+    """Return (r, g, b) at (x, y) from a tiny palette PNG. Returns None on
+    any decode error — callers should just skip the background emit."""
+    try:
+        d = Path(png_path).read_bytes()
+        if d[:8] != b'\x89PNG\r\n\x1a\n':
+            return None
+        i = 8
+        idat = b''
+        plte = None
+        w = h = ct = None
+        while i < len(d):
+            ln = struct.unpack('>I', d[i:i + 4])[0]
+            tag = d[i + 4:i + 8]
+            payload = d[i + 8:i + 8 + ln]
+            i += 12 + ln
+            if tag == b'IHDR':
+                w, h = struct.unpack('>II', payload[:8])
+                ct = payload[9]
+            elif tag == b'PLTE':
+                plte = payload
+            elif tag == b'IDAT':
+                idat += payload
+            elif tag == b'IEND':
+                break
+        if w is None or y >= h or x >= w:
+            return None
+        bpp = {2: 3, 6: 4, 3: 1}.get(ct)
+        if bpp is None:
+            return None
+        raw = zlib.decompress(idat)
+        stride = w * bpp
+        rows = []
+        prev = bytes(stride)
+        off = 0
+        for _ in range(h):
+            filt = raw[off]
+            line = bytearray(raw[off + 1:off + 1 + stride])
+            off += 1 + stride
+            if filt == 1:
+                for k in range(bpp, stride):
+                    line[k] = (line[k] + line[k - bpp]) & 0xFF
+            elif filt == 2:
+                for k in range(stride):
+                    line[k] = (line[k] + prev[k]) & 0xFF
+            elif filt == 3:
+                for k in range(stride):
+                    a = line[k - bpp] if k >= bpp else 0
+                    line[k] = (line[k] + (a + prev[k]) // 2) & 0xFF
+            elif filt == 4:
+                for k in range(stride):
+                    a = line[k - bpp] if k >= bpp else 0
+                    b = prev[k]
+                    c = prev[k - bpp] if k >= bpp else 0
+                    line[k] = (line[k] + _paeth(a, b, c)) & 0xFF
+            rows.append(bytes(line))
+            prev = line
+        if ct == 2:
+            s = rows[y][x * 3:x * 3 + 3]
+            return (s[0], s[1], s[2])
+        if ct == 6:
+            s = rows[y][x * 4:x * 4 + 4]
+            return (s[0], s[1], s[2])
+        if ct == 3 and plte is not None:
+            idx = rows[y][x]
+            return (plte[idx * 3], plte[idx * 3 + 1], plte[idx * 3 + 2])
+    except Exception:
+        return None
+    return None
+
+
 # ---------------------------------------------------------------------------
 # .l chunk parsing
 # ---------------------------------------------------------------------------
@@ -134,13 +235,17 @@ def parse_l(path):
         sub = d[cursor:cursor + sub_sz]
         cursor += sub_sz
         w = struct.unpack('<H', sub[0:2])[0]
-        h = struct.unpack('<H', sub[4:6])[0]
+        # Subheader offset 4 holds tile pixel size, NOT grid row count. The
+        # true row count falls out of the MAIN payload length: it's column-
+        # major with stride `rows`, so `rows = (len(main)//2) / w` (computed
+        # below once MAIN is decompressed).
 
         main_off = d.find(b'MAIN', cursor)
         if main_off < 0:
             raise RuntimeError(f'{path}: no MAIN for layer {i}')
         main_sz = struct.unpack('<I', d[main_off + 4:main_off + 8])[0]
         main = zlib.decompress(d[main_off + 8:main_off + 8 + main_sz])
+        rows = (len(main) // 2) // max(w, 1)
 
         data_off = main_off + 8 + main_sz
         if d[data_off:data_off + 4] != b'DATA':
@@ -150,7 +255,7 @@ def parse_l(path):
         data = zlib.decompress(d[data_off + 13:data_off + 13 + data_sz])
         cursor = data_off + 13 + data_sz
 
-        layers.append(Layer(w, h, main, data))
+        layers.append(Layer(w, rows, main, data))
     return layers
 
 
@@ -187,19 +292,16 @@ def extract_tiles(layer, tile_map, unknown=None):
     """Walk the MAIN uint16 stream and emit {x, y, kind, name} records.
     Cells equal to 0 (floor default) or 0xFFFF (empty) are skipped.
 
-    MMF2's tilemap stores data column-major with a fixed storage-row count
-    per column — so the visible level occupies the first `h` entries of each
-    `stride` block, with the remaining rows holding padding the editor keeps
-    around for resizing."""
+    MMF2's tilemap is stored column-major at stride = layer.h, so cell
+    (x, y) = main[x * layer.h + y]."""
     w, h = layer.w, layer.h
     count = len(layer.main) // 2
     cells = struct.unpack(f'<{count}H', layer.main)
-    stride = count // max(w, 1) if w else h
     tiles = []
     used = 0
     for x in range(w):
         for y in range(h):
-            idx = x * stride + y
+            idx = x * h + y
             if idx >= count:
                 continue
             v = cells[idx]
@@ -241,6 +343,21 @@ def convert(l_path, values_lua, out_path):
         'rows': primary.h,
         'tiles': tiles,
     }
+
+    # Background colour from the level's palette, read from pixel (0, 4)
+    # — that's values.lua's `colours.background`. Falls back to omitting
+    # the field when the palette can't be located or decoded.
+    general = read_ld_general(ld_path)
+    palette_name = general.get('palette')
+    if palette_name:
+        palettes_dir = Path(values_lua).parent / 'Palettes'
+        bg = read_palette_pixel(palettes_dir / palette_name, 0, 4)
+        if bg is not None:
+            out['background'] = list(bg)
+        name = general.get('name')
+        if name:
+            out['name'] = name
+
     Path(out_path).write_text(json.dumps(out, indent=2))
     return used, unknown, primary.w, primary.h
 
