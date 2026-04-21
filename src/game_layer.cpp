@@ -115,9 +115,6 @@ void GameLayer::OnUpdate(float dt) {
     }
   }
 
-  constexpr float kRepeatDelay = 0.22f;
-  constexpr float kRepeatInterval = 0.08f;
-
   if (cur_dir != held_dir_) {
     held_dir_ = cur_dir;
     hold_time_ = 0.0f;
@@ -125,7 +122,7 @@ void GameLayer::OnUpdate(float dt) {
     if (cur_dir) Step(*cur_dir);
   } else if (cur_dir) {
     hold_time_ += dt;
-    const float threshold = first_repeat_done_ ? kRepeatInterval : kRepeatDelay;
+    const float threshold = first_repeat_done_ ? repeat_interval_ : repeat_delay_;
     if (hold_time_ >= threshold) {
       Step(*cur_dir);
       hold_time_ = 0.0f;
@@ -214,6 +211,7 @@ void GameLayer::OnImGuiRender() {
   DrawScenePanel();
   DrawRulesPanel();
   DrawEditorPanel();
+  DrawSettingsPanel();
 }
 
 // ---------------------------------------------------------------------------
@@ -599,6 +597,26 @@ void GameLayer::DrawEditorPanel() {
   if (ImGui::Button("Reload Starter")) {
     LoadLevelFromPath(kDefaultLevel);
   }
+
+  ImGui::End();
+}
+
+void GameLayer::DrawSettingsPanel() {
+  if (!ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_NoCollapse)) {
+    ImGui::End();
+    return;
+  }
+
+  ImGui::SeparatorText("Input");
+  ImGui::SliderFloat("Repeat delay", &repeat_delay_, 0.05f, 1.0f, "%.2f s");
+  ImGui::TextDisabled("How long a direction must be held before auto-repeat starts.");
+  ImGui::SliderFloat("Repeat interval", &repeat_interval_, 0.02f, 0.5f, "%.2f s");
+  ImGui::TextDisabled("Time between repeated steps once auto-repeat kicks in.");
+
+  ImGui::Spacing();
+  ImGui::SeparatorText("Animation");
+  ImGui::Text("Sprite frame: %d", current_frame_);
+  ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
 
   ImGui::End();
 }

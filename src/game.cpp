@@ -160,6 +160,8 @@ void Game::DrawGridBackground() const {
 
   DrawRectangleRounded(board_background, 0.04f, 10, imgui_layer_->BoardBackgroundColor());
 
+  if (!imgui_layer_->ShowGrid()) return;
+
   const Color border = imgui_layer_->BoardGridBorderColor();
   const float t = board::kGridLineThickness;
 

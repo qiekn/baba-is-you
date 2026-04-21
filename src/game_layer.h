@@ -50,6 +50,7 @@ class GameLayer : public Layer {
   void DrawScenePanel();
   void DrawRulesPanel();
   void DrawEditorPanel();
+  void DrawSettingsPanel();
 
   // Editor
   void HandleEditorMouse();
@@ -75,6 +76,8 @@ class GameLayer : public Layer {
   std::optional<Direction> held_dir_;
   float hold_time_ = 0.0f;
   bool first_repeat_done_ = false;
+  float repeat_delay_ = 0.22f;
+  float repeat_interval_ = 0.12f;
 
   // Editor state
   bool edit_mode_ = false;

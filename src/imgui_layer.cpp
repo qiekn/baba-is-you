@@ -208,6 +208,7 @@ void ImGuiLayer::DrawThemesPanel() {
   ImGui::ColorEdit4("Background Color", background_color_.data());
   ImGui::ColorEdit4("Board Background", board_background_color_.data());
   ImGui::ColorEdit4("Grid Border", board_grid_border_color_.data());
+  ImGui::Checkbox("Show Grid", &show_grid_);
   ImGui::Separator();
   ImGui::Text("%.1f FPS (%.2f ms)", ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
 
