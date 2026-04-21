@@ -51,6 +51,7 @@ add_subdirectory(deps/rlimgui)
 add_executable(${PROJECT_NAME}
   src/game.cpp
   src/main.cpp
+  src/ui.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
