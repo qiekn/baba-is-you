@@ -5,3 +5,4 @@ build/
 /window.state
 /assets/imported/
 /progress.json
+__pycache__/

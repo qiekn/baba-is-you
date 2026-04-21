@@ -260,28 +260,16 @@ def parse_l(path):
 
 
 # ---------------------------------------------------------------------------
-# Object classification (matches our src/ids.h enums)
+# Object classification
 # ---------------------------------------------------------------------------
 
-# Objects we know how to render in the remake. Everything else is dropped.
-SUPPORTED_OBJECTS = {
-    'baba', 'flag', 'wall', 'rock', 'grass', 'flower', 'tile', 'cloud',
-    'star', 'brick', 'water', 'ice', 'hedge', 'fence',
-}
-SUPPORTED_TEXT = {
-    'text_is', 'text_and', 'text_not', 'text_baba', 'text_flag', 'text_wall',
-    'text_rock', 'text_you', 'text_win', 'text_stop', 'text_push', 'text_move',
-    'text_defeat',
-}
-
-
 def classify(name):
-    """Return (kind, short_name) or (None, None) if unsupported."""
-    if name in SUPPORTED_OBJECTS:
-        return ('object', name)
-    if name in SUPPORTED_TEXT:
+    """Return (kind, short_name). 'text_*' names become ('text', '<rest>'),
+    everything else is treated as a gameplay object. We no longer drop
+    anything — the game's catalog (src/ids.cpp) decides what it can render."""
+    if name.startswith('text_'):
         return ('text', name[len('text_'):])
-    return (None, None)
+    return ('object', name)
 
 
 # ---------------------------------------------------------------------------
@@ -322,6 +310,30 @@ def extract_tiles(layer, tile_map, unknown=None):
     return tiles, used
 
 
+def trim_to_bbox(tiles, w, h, pad=1):
+    """Shrink the grid around its content so levels with huge empty margins
+    (e.g. the overworld, which stores 20x35 cells but only uses rows 12-22)
+    don't render as tall vertical boards. Returns a possibly-smaller (tiles,
+    w, h). `pad` controls how many empty cells we keep on each side."""
+    if not tiles:
+        return tiles, w, h
+    xs = [t['x'] for t in tiles]
+    ys = [t['y'] for t in tiles]
+    min_x, max_x = min(xs), max(xs)
+    min_y, max_y = min(ys), max(ys)
+    # Only trim if we can shave at least ~4 cells off either side.
+    # Otherwise leave the stored dimensions alone so playable levels don't
+    # lose their perimeter framing.
+    lead_x = max(0, min_x - pad)
+    trail_x = max(0, (w - 1) - (max_x + pad))
+    lead_y = max(0, min_y - pad)
+    trail_y = max(0, (h - 1) - (max_y + pad))
+    if lead_x + trail_x < 4 and lead_y + trail_y < 4:
+        return tiles, w, h
+    new_tiles = [{**t, 'x': t['x'] - lead_x, 'y': t['y'] - lead_y} for t in tiles]
+    return new_tiles, w - lead_x - trail_x, h - lead_y - trail_y
+
+
 def convert(l_path, values_lua, out_path):
     layers = parse_l(l_path)
     ld_path = Path(str(l_path)[:-2] + '.ld')
@@ -337,10 +349,11 @@ def convert(l_path, values_lua, out_path):
     primary = layers[0]
     unknown = {}
     tiles, used = extract_tiles(primary, tile_map, unknown)
+    tiles, cols, rows = trim_to_bbox(tiles, primary.w, primary.h)
 
     out = {
-        'cols': primary.w,
-        'rows': primary.h,
+        'cols': cols,
+        'rows': rows,
         'tiles': tiles,
     }
 
@@ -362,7 +375,7 @@ def convert(l_path, values_lua, out_path):
             out['name'] = name
 
     Path(out_path).write_text(json.dumps(out, indent=2))
-    return used, unknown, primary.w, primary.h
+    return used, unknown, cols, rows
 
 
 def main():

@@ -225,25 +225,35 @@ void GameLayer::OnRender() {
     DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(kind.id));
   };
 
-  // Three draw layers match the original's ordering.
-  // 1) Floor decorations — grass/flower/tile sit below everything.
+  // Gather everything with its engine layer number so we can draw strictly
+  // bottom-to-top. Values come from values.lua — e.g. tile=4 (bottom),
+  // wall=14, flag=17, baba=18, text=20.
+  struct Draw {
+    int layer;
+    entt::entity e;
+    int x, y;
+    int kind;  // 0 = object, 1 = text
+  };
+  std::vector<Draw> draws;
+  draws.reserve(registry_.storage<Cell>().size());
   for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
-    if (LayerOf(kind.id) == DrawLayer::Floor) draw_kind(e, cell, kind);
+    draws.push_back({LayerOf(kind.id), e, cell.x, cell.y, 0});
   }
-  // 2a) Text blocks.
   for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
-    const auto& tex = sprites_.Get(text.id, current_frame_);
-    DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(text.id));
+    draws.push_back({LayerOf(text.id), e, cell.x, cell.y, 1});
   }
-  // 2b) Gameplay objects on top of text.
-  for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
-    if (LayerOf(kind.id) == DrawLayer::Object) draw_kind(e, cell, kind);
+  std::sort(draws.begin(), draws.end(),
+            [](const Draw& a, const Draw& b) { return a.layer < b.layer; });
+  for (const Draw& d : draws) {
+    if (d.kind == 0) {
+      const auto& kind = registry_.get<const Kind>(d.e);
+      draw_kind(d.e, registry_.get<const Cell>(d.e), kind);
+    } else {
+      const auto& text = registry_.get<const TextBlock>(d.e);
+      const auto& tex = sprites_.Get(text.id, current_frame_);
+      DrawSpriteInCell(tex, board::CellRect(d.x, d.y), sprites_.TintFor(text.id));
+    }
   }
-  // 3) Float decorations — cloud/star drawn on top of everything.
-  for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
-    if (LayerOf(kind.id) == DrawLayer::Float) draw_kind(e, cell, kind);
-  }
-
   // 4) Particles (sparkles for IsWin entities).
   DrawParticles();
 
@@ -606,73 +616,11 @@ void GameLayer::UnloadTrack() {
 // ---------------------------------------------------------------------------
 
 const char* GameLayer::PrettyName(ObjectId id) {
-  switch (id) {
-    case ObjectId::Baba:
-      return "Baba";
-    case ObjectId::Flag:
-      return "Flag";
-    case ObjectId::Wall:
-      return "Wall";
-    case ObjectId::Rock:
-      return "Rock";
-    case ObjectId::Grass:
-      return "Grass";
-    case ObjectId::Flower:
-      return "Flower";
-    case ObjectId::Tile:
-      return "Tile";
-    case ObjectId::Cloud:
-      return "Cloud";
-    case ObjectId::Star:
-      return "Star";
-    case ObjectId::Brick:
-      return "Brick";
-    case ObjectId::Water:
-      return "Water";
-    case ObjectId::Ice:
-      return "Ice";
-    case ObjectId::Hedge:
-      return "Hedge";
-    case ObjectId::Fence:
-      return "Fence";
-    case ObjectId::kCount:
-      break;
-  }
-  return "?";
+  return InfoOf(id).name.data();
 }
 
 const char* GameLayer::PrettyName(TextId id) {
-  switch (id) {
-    case TextId::Is:
-      return "IS";
-    case TextId::And:
-      return "AND";
-    case TextId::Not:
-      return "NOT";
-    case TextId::Baba:
-      return "BABA";
-    case TextId::Flag:
-      return "FLAG";
-    case TextId::Wall:
-      return "WALL";
-    case TextId::Rock:
-      return "ROCK";
-    case TextId::You:
-      return "YOU";
-    case TextId::Win:
-      return "WIN";
-    case TextId::Stop:
-      return "STOP";
-    case TextId::Push:
-      return "PUSH";
-    case TextId::Move:
-      return "MOVE";
-    case TextId::Defeat:
-      return "DEFEAT";
-    case TextId::kCount:
-      break;
-  }
-  return "?";
+  return InfoOf(id).short_name.data();
 }
 
 void GameLayer::DrawScenePanel() {
@@ -846,6 +794,19 @@ void GameLayer::DrawEditorPanel() {
     }
     ImGui::SameLine();
     if (ImGui::Button("Load##imp")) {
+      LoadLevelFromPath(std::filesystem::path{kImportedDir} /
+                        (imported_stems_[imported_index_] + ".json"));
+    }
+    if (ImGui::Button("Prev##imp")) {
+      const int n = static_cast<int>(imported_stems_.size());
+      imported_index_ = (imported_index_ - 1 + n) % n;
+      LoadLevelFromPath(std::filesystem::path{kImportedDir} /
+                        (imported_stems_[imported_index_] + ".json"));
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Next##imp")) {
+      const int n = static_cast<int>(imported_stems_.size());
+      imported_index_ = (imported_index_ + 1) % n;
       LoadLevelFromPath(std::filesystem::path{kImportedDir} /
                         (imported_stems_[imported_index_] + ".json"));
     }

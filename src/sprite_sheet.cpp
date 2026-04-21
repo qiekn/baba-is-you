@@ -43,53 +43,20 @@ void UnloadIfValid(Texture2D& tex) {
   }
 }
 
-constexpr Color kObjectTints[kObjectCount] = {
-    {255, 255, 255, 255},  // Baba
-    {237, 226, 133, 255},  // Flag
-    {115, 115, 115, 255},  // Wall
-    {186, 140, 102, 255},  // Rock
-    {76, 122, 68, 255},    // Grass
-    {230, 112, 113, 255},  // Flower
-    {91, 85, 86, 255},     // Tile
-    {207, 222, 232, 255},  // Cloud
-    {237, 226, 133, 255},  // Star
-    {158, 58, 49, 255},    // Brick
-    {83, 155, 212, 255},   // Water
-    {180, 216, 238, 255},  // Ice
-    {48, 82, 44, 255},     // Hedge
-    {131, 93, 59, 255},    // Fence
-};
-
-constexpr Color kTextTints[kTextCount] = {
-    {255, 255, 255, 255},  // Is
-    {255, 255, 255, 255},  // And
-    {201, 56, 55, 255},    // Not
-    {217, 57, 106, 255},   // Baba (text)
-    {237, 226, 133, 255},  // Flag (text)
-    {158, 158, 158, 255},  // Wall (text)
-    {186, 140, 102, 255},  // Rock (text)
-    {217, 57, 106, 255},   // You
-    {255, 211, 113, 255},  // Win
-    {75, 122, 72, 255},    // Stop
-    {186, 140, 102, 255},  // Push
-    {151, 208, 134, 255},  // Move
-    {201, 56, 55, 255},    // Defeat
-};
-
 }  // namespace
 
 bool SpriteSheet::LoadAll(const std::filesystem::path& sprites_dir) {
   Unload();
-  bool ok = true;
+  bool any_loaded = false;
 
   auto load_variant = [&](const std::string& name, int object_index, int v) {
     for (int f = 0; f < kFrameCount; ++f) {
       const std::filesystem::path p =
           sprites_dir / (name + "_" + std::to_string(v) + "_" + std::to_string(f + 1) + ".png");
-      objects_[object_index][v][f] = LoadSpritePixelArt(p);
-      if (objects_[object_index][v][f].id == 0) return false;
+      auto tex = LoadSpritePixelArt(p);
+      if (tex.id != 0) any_loaded = true;
+      objects_[object_index][v][f] = tex;
     }
-    return true;
   };
 
   for (int i = 0; i < kObjectCount; ++i) {
@@ -97,15 +64,13 @@ bool SpriteSheet::LoadAll(const std::filesystem::path& sprites_dir) {
     const std::string name{NameOf(id)};
 
     if (IsAutoTiled(id)) {
-      for (int v = 0; v < 16; ++v) {
-        if (!load_variant(name, i, v)) ok = false;
-      }
+      for (int v = 0; v < 16; ++v) load_variant(name, i, v);
     } else if (IsDirectional(id)) {
       for (Direction d : {Direction::Right, Direction::Up, Direction::Left, Direction::Down}) {
-        if (!load_variant(name, i, DirectionToVariant(d))) ok = false;
+        load_variant(name, i, DirectionToVariant(d));
       }
     } else {
-      if (!load_variant(name, i, 0)) ok = false;
+      load_variant(name, i, 0);
     }
   }
 
@@ -113,13 +78,14 @@ bool SpriteSheet::LoadAll(const std::filesystem::path& sprites_dir) {
     const std::string name = "text_" + std::string{NameOf(static_cast<TextId>(i))};
     for (int f = 0; f < kFrameCount; ++f) {
       const std::filesystem::path p = sprites_dir / (name + "_0_" + std::to_string(f + 1) + ".png");
-      texts_[i][f] = LoadSpritePixelArt(p);
-      if (texts_[i][f].id == 0) ok = false;
+      auto tex = LoadSpritePixelArt(p);
+      if (tex.id != 0) any_loaded = true;
+      texts_[i][f] = tex;
     }
   }
 
-  loaded_ = ok;
-  return ok;
+  loaded_ = any_loaded;
+  return any_loaded;
 }
 
 void SpriteSheet::Unload() {
@@ -142,5 +108,12 @@ const Texture2D& SpriteSheet::Get(TextId id, int frame) const {
   return texts_[static_cast<int>(id)][f];
 }
 
-Color SpriteSheet::TintFor(ObjectId id) const { return kObjectTints[static_cast<int>(id)]; }
-Color SpriteSheet::TintFor(TextId id) const { return kTextTints[static_cast<int>(id)]; }
+Color SpriteSheet::TintFor(ObjectId id) const {
+  const auto& info = InfoOf(id);
+  return Color{info.tint_r, info.tint_g, info.tint_b, 255};
+}
+
+Color SpriteSheet::TintFor(TextId id) const {
+  const auto& info = InfoOf(id);
+  return Color{info.tint_r, info.tint_g, info.tint_b, 255};
+}
