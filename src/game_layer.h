@@ -82,9 +82,53 @@ class GameLayer : public Layer {
   void DrawWorldPanel();
 
   // Editor
+  enum class Tool : std::uint8_t {
+    Brush,
+    Line,
+    RectOutline,
+    RectFilled,
+    Select,
+    Bucket,
+    Eraser,
+  };
+  // Eraser shares sub-modes with the normal tools; "Point" means one-cell brush.
+  enum class EraseMode : std::uint8_t {
+    Point,
+    Line,
+    RectOutline,
+    RectFilled,
+    Bucket,
+  };
+
   void HandleEditorMouse();
+  void DrawEditorOverlay();  // brush ghost, drag preview, clipboard preview
+  void DrawToolbar();
+  void DrawPalette();
+
+  // One-cell brush placement / erasure.
   void PlaceBrushAt(int col, int row);
   void EraseAt(int col, int row);
+
+  // Multi-cell tool commits.
+  void PlaceAtCells(const std::vector<std::pair<int, int>>& cells);
+  void EraseAtCells(const std::vector<std::pair<int, int>>& cells);
+
+  // Shape rasterization (inclusive endpoints).
+  static std::vector<std::pair<int, int>> RasterLine(int x0, int y0, int x1, int y1);
+  static std::vector<std::pair<int, int>> RasterRectOutline(int x0, int y0, int x1, int y1);
+  static std::vector<std::pair<int, int>> RasterRectFilled(int x0, int y0, int x1, int y1);
+
+  // 4-neighbor flood: the "content signature" at (sx,sy) defines the target;
+  // returns every connected cell with the same signature.
+  std::vector<std::pair<int, int>> FloodRegion(int sx, int sy) const;
+
+  // Returns the set of object/text kinds at (x,y) — used as the flood signature.
+  std::vector<std::variant<ObjectId, TextId>> CellContents(int x, int y) const;
+
+  // Clipboard (for the select/cut/paste tool).
+  void CutRegionToClipboard(int x0, int y0, int x1, int y1);
+  void PasteClipboardAt(int col, int row);
+  void DiscardClipboard();
 
   static std::pair<int, int> Delta(Direction dir);
   static const char* PrettyName(ObjectId id);
@@ -111,6 +155,24 @@ class GameLayer : public Layer {
   // Editor state
   bool edit_mode_ = false;
   std::variant<ObjectId, TextId> brush_ = ObjectId::Baba;
+  Tool tool_ = Tool::Brush;
+  EraseMode erase_mode_ = EraseMode::Point;
+  int palette_layer_ = 1;  // 0 = backgrounds, 1 = objects, 2 = text
+
+  // Shape / select drag state. When `dragging_` is true, `drag_start_` holds
+  // the anchor cell and the current mouse cell is the live endpoint.
+  bool dragging_ = false;
+  int drag_start_x_ = 0;
+  int drag_start_y_ = 0;
+
+  // Clipboard populated by the Select tool's cut on drag-release. Cells are
+  // stored with offsets relative to the top-left of the selection.
+  struct ClipTile {
+    int dx;
+    int dy;
+    std::variant<ObjectId, TextId> kind;
+  };
+  std::vector<ClipTile> clipboard_;
 
   // Save-as buffer
   char save_name_[64] = "custom.json";

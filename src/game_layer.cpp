@@ -59,6 +59,18 @@ void DrawSpriteInCell(const Texture2D& tex, Rectangle cell, Color color) {
   DrawTexturePro(tex, src, cell, {0.0f, 0.0f}, 0.0f, color);
 }
 
+// Tool/sub-mode icons drawn procedurally on top of a regular ImGui::Button.
+// Each toolbar button uses one of these so we don't ship any extra art.
+enum class ToolGlyph : std::uint8_t {
+  Pen,
+  Line,
+  RectOutline,
+  RectFilled,
+  Select,
+  Bucket,
+  Eraser,
+};
+
 // 4-bit neighbor mask: right=1, up=2, left=4, down=8. Matches the variant
 // number encoded in Baba Is You sprite filenames (wall_<mask>_<frame>.png).
 int ComputeTileMask(const entt::registry& registry, ObjectId id, int x, int y) {
@@ -257,24 +269,8 @@ void GameLayer::OnRender() {
   // 4) Particles (sparkles for IsWin entities).
   DrawParticles();
 
-  // Edit-mode affordances: brush preview on hovered cell.
   if (edit_mode_ && !ImGui::GetIO().WantCaptureMouse) {
-    if (auto cell = board::ScreenToCell(GetMousePosition())) {
-      const auto [col, row] = *cell;
-      const Rectangle rect = board::CellRect(col, row);
-      DrawRectangleLinesEx(rect, 2.0f, YELLOW);
-      if (std::holds_alternative<ObjectId>(brush_)) {
-        const auto id = std::get<ObjectId>(brush_);
-        Color tint = sprites_.TintFor(id);
-        tint.a = 128;
-        DrawSpriteInCell(sprites_.Get(id, current_frame_), rect, tint);
-      } else {
-        const auto id = std::get<TextId>(brush_);
-        Color tint = sprites_.TintFor(id);
-        tint.a = 128;
-        DrawSpriteInCell(sprites_.Get(id, current_frame_), rect, tint);
-      }
-    }
+    DrawEditorOverlay();
   }
 
   if (won_) {
@@ -696,58 +692,14 @@ void GameLayer::DrawEditorPanel() {
   if (ImGui::Button("Clear")) {
     ClearRegistry();
     undo_.Clear();
+    DiscardClipboard();
     won_ = false;
   }
 
   ImGui::Separator();
-  ImGui::Text("Brush");
-  ImGui::TextDisabled("Left click: place   Right click: erase");
-
-  constexpr float kBtn = 44.0f;
-  const ImVec2 btn_size{kBtn, kBtn};
-
-  // Object row
-  for (int i = 0; i < kObjectCount; ++i) {
-    if (i > 0) ImGui::SameLine();
-    const auto id = static_cast<ObjectId>(i);
-    const bool selected = std::holds_alternative<ObjectId>(brush_) && std::get<ObjectId>(brush_) == id;
-    if (selected) ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.5f, 0.9f, 1.0f));
-    if (ImGui::Button(PrettyName(id), btn_size)) brush_ = id;
-    if (selected) ImGui::PopStyleColor();
-  }
-
-  // Text rows (6 per row)
-  for (int i = 0; i < kTextCount; ++i) {
-    if (i % 6 != 0) ImGui::SameLine();
-    const auto id = static_cast<TextId>(i);
-    const bool selected = std::holds_alternative<TextId>(brush_) && std::get<TextId>(brush_) == id;
-    if (selected) ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.5f, 0.9f, 1.0f));
-    if (ImGui::Button(PrettyName(id), btn_size)) brush_ = id;
-    if (selected) ImGui::PopStyleColor();
-  }
-
+  DrawToolbar();
   ImGui::Separator();
-  const char* lvl_label = kBuiltinLevels[std::clamp(selected_level_, 0, kBuiltinLevelCount - 1)].label;
-  if (ImGui::BeginCombo("Level", lvl_label)) {
-    for (int i = 0; i < kBuiltinLevelCount; ++i) {
-      const bool selected = (i == selected_level_);
-      if (ImGui::Selectable(kBuiltinLevels[i].label, selected)) {
-        selected_level_ = i;
-        LoadLevelFromPath(std::filesystem::path{kLevelsDir} / kBuiltinLevels[i].file);
-      }
-      if (selected) ImGui::SetItemDefaultFocus();
-    }
-    ImGui::EndCombo();
-  }
-  if (ImGui::Button("Prev")) {
-    selected_level_ = (selected_level_ - 1 + kBuiltinLevelCount) % kBuiltinLevelCount;
-    LoadLevelFromPath(std::filesystem::path{kLevelsDir} / kBuiltinLevels[selected_level_].file);
-  }
-  ImGui::SameLine();
-  if (ImGui::Button("Next")) {
-    selected_level_ = (selected_level_ + 1) % kBuiltinLevelCount;
-    LoadLevelFromPath(std::filesystem::path{kLevelsDir} / kBuiltinLevels[selected_level_].file);
-  }
+  DrawPalette();
 
   ImGui::Separator();
   ImGui::InputText("File", save_name_, sizeof(save_name_));
@@ -758,61 +710,236 @@ void GameLayer::DrawEditorPanel() {
   if (ImGui::Button("Save")) {
     SaveLevelToPath(std::filesystem::path{kLevelsDir} / save_name_);
   }
-  ImGui::SameLine();
-  if (ImGui::Button("Reload Starter")) {
-    LoadLevelFromPath(kDefaultLevel);
-  }
-
-  if (!imported_stems_.empty()) {
-    ImGui::Separator();
-    ImGui::Text("Imported (%zu)", imported_stems_.size());
-    ImGui::InputTextWithHint("##filter", "filter (e.g. 12 or lev)",
-                             imported_filter_, sizeof(imported_filter_));
-    // Case-insensitive substring match on the filter text.
-    auto matches = [&](const std::string& s) {
-      if (imported_filter_[0] == '\0') return true;
-      auto lower = [](char c) { return static_cast<char>(std::tolower(static_cast<unsigned char>(c))); };
-      std::string a(s.size(), ' '), b(std::strlen(imported_filter_), ' ');
-      std::transform(s.begin(), s.end(), a.begin(), lower);
-      std::transform(imported_filter_, imported_filter_ + b.size(), b.begin(), lower);
-      return a.find(b) != std::string::npos;
-    };
-    imported_index_ = std::clamp(imported_index_, 0, static_cast<int>(imported_stems_.size()) - 1);
-    const char* cur = imported_stems_[imported_index_].c_str();
-    if (ImGui::BeginCombo("##imported", cur)) {
-      for (int i = 0; i < static_cast<int>(imported_stems_.size()); ++i) {
-        if (!matches(imported_stems_[i])) continue;
-        const bool selected = (i == imported_index_);
-        if (ImGui::Selectable(imported_stems_[i].c_str(), selected)) {
-          imported_index_ = i;
-          LoadLevelFromPath(std::filesystem::path{kImportedDir} /
-                            (imported_stems_[i] + ".json"));
-        }
-        if (selected) ImGui::SetItemDefaultFocus();
-      }
-      ImGui::EndCombo();
-    }
-    ImGui::SameLine();
-    if (ImGui::Button("Load##imp")) {
-      LoadLevelFromPath(std::filesystem::path{kImportedDir} /
-                        (imported_stems_[imported_index_] + ".json"));
-    }
-    if (ImGui::Button("Prev##imp")) {
-      const int n = static_cast<int>(imported_stems_.size());
-      imported_index_ = (imported_index_ - 1 + n) % n;
-      LoadLevelFromPath(std::filesystem::path{kImportedDir} /
-                        (imported_stems_[imported_index_] + ".json"));
-    }
-    ImGui::SameLine();
-    if (ImGui::Button("Next##imp")) {
-      const int n = static_cast<int>(imported_stems_.size());
-      imported_index_ = (imported_index_ + 1) % n;
-      LoadLevelFromPath(std::filesystem::path{kImportedDir} /
-                        (imported_stems_[imported_index_] + ".json"));
-    }
-  }
 
   ImGui::End();
+}
+
+namespace {
+
+// Renders a tiny glyph centered in `rect`. Uses the window's draw list so we
+// can stamp vector icons on top of a regular ImGui::Button frame.
+void DrawToolGlyph(ImDrawList* dl, const ImVec2& center, float size, ImU32 col,
+                   ToolGlyph glyph) {
+  const float h = size * 0.5f;
+  switch (glyph) {
+    case ToolGlyph::Pen: {
+      // A slanted pencil: body + tip.
+      ImVec2 a{center.x - h * 0.7f, center.y + h * 0.7f};
+      ImVec2 b{center.x + h * 0.3f, center.y - h * 0.3f};
+      dl->AddLine(a, b, col, 2.2f);
+      dl->AddLine({center.x + h * 0.3f, center.y - h * 0.3f},
+                  {center.x + h * 0.7f, center.y - h * 0.7f}, col, 2.2f);
+      break;
+    }
+    case ToolGlyph::Line: {
+      dl->AddLine({center.x - h * 0.8f, center.y + h * 0.8f},
+                  {center.x + h * 0.8f, center.y - h * 0.8f}, col, 2.0f);
+      break;
+    }
+    case ToolGlyph::RectOutline: {
+      dl->AddRect({center.x - h * 0.8f, center.y - h * 0.8f},
+                  {center.x + h * 0.8f, center.y + h * 0.8f}, col, 0.0f, 0, 2.0f);
+      break;
+    }
+    case ToolGlyph::RectFilled: {
+      dl->AddRectFilled({center.x - h * 0.8f, center.y - h * 0.8f},
+                        {center.x + h * 0.8f, center.y + h * 0.8f}, col);
+      break;
+    }
+    case ToolGlyph::Select: {
+      // Dashed rectangle: draw four gap-separated segments per side.
+      const float x0 = center.x - h * 0.8f;
+      const float y0 = center.y - h * 0.8f;
+      const float x1 = center.x + h * 0.8f;
+      const float y1 = center.y + h * 0.8f;
+      const float step = (x1 - x0) / 5.0f;
+      for (int i = 0; i < 5; i += 2) {
+        dl->AddLine({x0 + step * i, y0}, {x0 + step * (i + 1), y0}, col, 1.6f);
+        dl->AddLine({x0 + step * i, y1}, {x0 + step * (i + 1), y1}, col, 1.6f);
+        dl->AddLine({x0, y0 + step * i}, {x0, y0 + step * (i + 1)}, col, 1.6f);
+        dl->AddLine({x1, y0 + step * i}, {x1, y0 + step * (i + 1)}, col, 1.6f);
+      }
+      break;
+    }
+    case ToolGlyph::Bucket: {
+      // Triangle bucket silhouette + drop.
+      ImVec2 t0{center.x - h * 0.8f, center.y - h * 0.2f};
+      ImVec2 t1{center.x + h * 0.8f, center.y - h * 0.2f};
+      ImVec2 t2{center.x, center.y + h * 0.7f};
+      dl->AddTriangle(t0, t1, t2, col, 1.6f);
+      dl->AddCircleFilled({center.x + h * 0.7f, center.y + h * 0.6f}, h * 0.15f, col);
+      break;
+    }
+    case ToolGlyph::Eraser: {
+      // Rotated square with a diagonal line showing worn corner.
+      ImVec2 pts[4] = {
+          {center.x - h * 0.8f, center.y},
+          {center.x, center.y - h * 0.8f},
+          {center.x + h * 0.8f, center.y},
+          {center.x, center.y + h * 0.8f},
+      };
+      dl->AddPolyline(pts, 4, col, ImDrawFlags_Closed, 1.8f);
+      dl->AddLine({center.x - h * 0.4f, center.y - h * 0.4f},
+                  {center.x + h * 0.4f, center.y + h * 0.4f}, col, 1.6f);
+      break;
+    }
+  }
+}
+
+bool ToolIconButton(const char* id, ToolGlyph glyph, bool selected,
+                    const char* tooltip, float size) {
+  if (selected) ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.5f, 0.9f, 1.0f));
+  const bool clicked = ImGui::Button(id, {size, size});
+  if (selected) ImGui::PopStyleColor();
+  ImDrawList* dl = ImGui::GetWindowDrawList();
+  const ImVec2 p0 = ImGui::GetItemRectMin();
+  const ImVec2 p1 = ImGui::GetItemRectMax();
+  const ImVec2 c{(p0.x + p1.x) * 0.5f, (p0.y + p1.y) * 0.5f};
+  DrawToolGlyph(dl, c, size, ImGui::GetColorU32(ImGuiCol_Text), glyph);
+  if (tooltip && ImGui::IsItemHovered()) ImGui::SetTooltip("%s", tooltip);
+  return clicked;
+}
+
+}  // namespace
+
+void GameLayer::DrawToolbar() {
+  ImGui::TextUnformatted("Tool");
+  constexpr float kBtn = 32.0f;
+
+  struct ToolEntry {
+    Tool tool;
+    ToolGlyph glyph;
+    const char* id;
+    const char* tip;
+  };
+  const ToolEntry entries[] = {
+      {Tool::Brush, ToolGlyph::Pen, "##t_brush", "Brush (pen)"},
+      {Tool::Line, ToolGlyph::Line, "##t_line", "Line"},
+      {Tool::RectOutline, ToolGlyph::RectOutline, "##t_rect", "Rectangle outline"},
+      {Tool::RectFilled, ToolGlyph::RectFilled, "##t_rectf", "Filled rectangle"},
+      {Tool::Select, ToolGlyph::Select, "##t_sel", "Select / cut / paste"},
+      {Tool::Bucket, ToolGlyph::Bucket, "##t_fill", "Paint bucket (flood)"},
+      {Tool::Eraser, ToolGlyph::Eraser, "##t_erase", "Eraser"},
+  };
+  for (std::size_t i = 0; i < sizeof(entries) / sizeof(entries[0]); ++i) {
+    if (i > 0) ImGui::SameLine();
+    const auto& e = entries[i];
+    if (ToolIconButton(e.id, e.glyph, tool_ == e.tool, e.tip, kBtn)) {
+      tool_ = e.tool;
+      dragging_ = false;
+      if (tool_ != Tool::Select) DiscardClipboard();
+    }
+  }
+
+  // Eraser sub-mode selector: shape it reuses when Eraser is active.
+  if (tool_ == Tool::Eraser) {
+    ImGui::TextUnformatted("Eraser mode");
+    struct ModeEntry {
+      EraseMode mode;
+      ToolGlyph glyph;
+      const char* id;
+      const char* tip;
+    };
+    const ModeEntry modes[] = {
+        {EraseMode::Point, ToolGlyph::Pen, "##e_pt", "Single cell"},
+        {EraseMode::Line, ToolGlyph::Line, "##e_ln", "Line"},
+        {EraseMode::RectOutline, ToolGlyph::RectOutline, "##e_ro", "Rectangle outline"},
+        {EraseMode::RectFilled, ToolGlyph::RectFilled, "##e_rf", "Filled rectangle"},
+        {EraseMode::Bucket, ToolGlyph::Bucket, "##e_bk", "Flood fill erase"},
+    };
+    for (std::size_t i = 0; i < sizeof(modes) / sizeof(modes[0]); ++i) {
+      if (i > 0) ImGui::SameLine();
+      const auto& m = modes[i];
+      if (ToolIconButton(m.id, m.glyph, erase_mode_ == m.mode, m.tip, kBtn)) {
+        erase_mode_ = m.mode;
+        dragging_ = false;
+      }
+    }
+  }
+
+  if (tool_ == Tool::Select && !clipboard_.empty()) {
+    ImGui::TextDisabled("%zu tiles in clipboard — LMB paste, RMB discard", clipboard_.size());
+  }
+}
+
+void GameLayer::DrawPalette() {
+  if (ImGui::BeginTabBar("##layers")) {
+    const char* labels[] = {"Layer 1", "Layer 2", "Layer 3"};
+    for (int i = 0; i < 3; ++i) {
+      if (ImGui::BeginTabItem(labels[i])) {
+        palette_layer_ = i;
+        ImGui::EndTabItem();
+      }
+    }
+    ImGui::EndTabBar();
+  }
+
+  constexpr float kBtn = 40.0f;
+  const ImVec2 btn_size{kBtn, kBtn};
+  int col = 0;
+  const float avail = ImGui::GetContentRegionAvail().x;
+  const int cols = std::max(1, static_cast<int>(avail / (kBtn + ImGui::GetStyle().ItemSpacing.x)));
+
+  auto tint_to_imvec = [](Color c) {
+    return ImVec4(c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, 1.0f);
+  };
+
+  auto button_for_object = [&](ObjectId id) {
+    const Texture2D& tex = sprites_.Get(id, current_frame_,
+                                        IsDirectional(id) ? DirectionToVariant(Direction::Right) : 0);
+    const bool selected = std::holds_alternative<ObjectId>(brush_) && std::get<ObjectId>(brush_) == id;
+    if (col > 0 && col < cols) ImGui::SameLine();
+    if (selected) ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.5f, 0.9f, 1.0f));
+    ImGui::PushID(static_cast<int>(id));
+    bool clicked = false;
+    if (tex.id != 0) {
+      clicked = ImGui::ImageButton("##obj", (ImTextureID)(intptr_t)tex.id, btn_size, {0, 0}, {1, 1},
+                                   {0, 0, 0, 0}, tint_to_imvec(sprites_.TintFor(id)));
+    } else {
+      clicked = ImGui::Button(PrettyName(id), btn_size);
+    }
+    if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s", PrettyName(id));
+    ImGui::PopID();
+    if (selected) ImGui::PopStyleColor();
+    if (clicked) brush_ = id;
+    col = (col + 1) % cols;
+  };
+
+  auto button_for_text = [&](TextId id) {
+    const Texture2D& tex = sprites_.Get(id, current_frame_);
+    const bool selected = std::holds_alternative<TextId>(brush_) && std::get<TextId>(brush_) == id;
+    if (col > 0 && col < cols) ImGui::SameLine();
+    if (selected) ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.5f, 0.9f, 1.0f));
+    ImGui::PushID(static_cast<int>(id) + 10000);
+    bool clicked = false;
+    if (tex.id != 0) {
+      clicked = ImGui::ImageButton("##txt", (ImTextureID)(intptr_t)tex.id, btn_size, {0, 0}, {1, 1},
+                                   {0, 0, 0, 0}, tint_to_imvec(sprites_.TintFor(id)));
+    } else {
+      clicked = ImGui::Button(PrettyName(id), btn_size);
+    }
+    if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s", PrettyName(id));
+    ImGui::PopID();
+    if (selected) ImGui::PopStyleColor();
+    if (clicked) brush_ = id;
+    col = (col + 1) % cols;
+  };
+
+  if (palette_layer_ < 2) {
+    // Split objects by engine layer: < 14 = backgrounds, >= 14 = objects.
+    for (int i = 0; i < kObjectCount; ++i) {
+      const auto id = static_cast<ObjectId>(i);
+      const int lvl = InfoOf(id).layer;
+      const bool is_bg = (lvl < 14);
+      if ((palette_layer_ == 0) == is_bg) {
+        button_for_object(id);
+      }
+    }
+  } else {
+    for (int i = 0; i < kTextCount; ++i) {
+      button_for_text(static_cast<TextId>(i));
+    }
+  }
 }
 
 void GameLayer::DrawSettingsPanel() {
@@ -861,16 +988,247 @@ void GameLayer::DrawSettingsPanel() {
 // Editor mouse
 // ---------------------------------------------------------------------------
 
-void GameLayer::HandleEditorMouse() {
-  if (ImGui::GetIO().WantCaptureMouse) return;
-  auto cell = board::ScreenToCell(GetMousePosition());
-  if (!cell) return;
-  const auto [col, row] = *cell;
+void GameLayer::DrawEditorOverlay() {
+  auto cell_opt = board::ScreenToCell(GetMousePosition());
+  const bool in_board = cell_opt.has_value();
+  const int col = in_board ? cell_opt->first : 0;
+  const int row = in_board ? cell_opt->second : 0;
 
-  if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-    PlaceBrushAt(col, row);
-  } else if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
-    EraseAt(col, row);
+  auto draw_brush_ghost = [&](int c, int r, Color tint_override, bool use_override) {
+    const Rectangle rect = board::CellRect(c, r);
+    if (std::holds_alternative<ObjectId>(brush_)) {
+      const auto id = std::get<ObjectId>(brush_);
+      Color tint = use_override ? tint_override : sprites_.TintFor(id);
+      tint.a = 128;
+      DrawSpriteInCell(sprites_.Get(id, current_frame_), rect, tint);
+    } else {
+      const auto id = std::get<TextId>(brush_);
+      Color tint = use_override ? tint_override : sprites_.TintFor(id);
+      tint.a = 128;
+      DrawSpriteInCell(sprites_.Get(id, current_frame_), rect, tint);
+    }
+  };
+
+  auto outline_cell = [](int c, int r, Color color, float thickness) {
+    if (c < 0 || c >= board::kCols || r < 0 || r >= board::kRows) return;
+    DrawRectangleLinesEx(board::CellRect(c, r), thickness, color);
+  };
+
+  // Hover highlight on the cell under the cursor.
+  if (in_board) outline_cell(col, row, YELLOW, 2.0f);
+
+  // Drag-preview overlays for shape-capable tools.
+  const bool erasing = (tool_ == Tool::Eraser);
+  const Color preview_col = erasing ? Color{235, 90, 90, 255} : YELLOW;
+
+  auto preview_cells = [&](const std::vector<std::pair<int, int>>& cells) {
+    for (const auto& [cx, cy] : cells) {
+      outline_cell(cx, cy, preview_col, 2.0f);
+      if (!erasing) draw_brush_ghost(cx, cy, preview_col, false);
+    }
+  };
+
+  if (dragging_ && in_board) {
+    std::vector<std::pair<int, int>> cells;
+    switch (tool_) {
+      case Tool::Line:
+        cells = RasterLine(drag_start_x_, drag_start_y_, col, row);
+        preview_cells(cells);
+        break;
+      case Tool::RectOutline:
+        cells = RasterRectOutline(drag_start_x_, drag_start_y_, col, row);
+        preview_cells(cells);
+        break;
+      case Tool::RectFilled:
+        cells = RasterRectFilled(drag_start_x_, drag_start_y_, col, row);
+        preview_cells(cells);
+        break;
+      case Tool::Select: {
+        // Draw the current selection box (no ghost; box-select is cut on release).
+        const int lx = std::min(drag_start_x_, col), rx = std::max(drag_start_x_, col);
+        const int ly = std::min(drag_start_y_, row), ry = std::max(drag_start_y_, row);
+        const Rectangle a = board::CellRect(lx, ly);
+        const Rectangle b = board::CellRect(rx, ry);
+        const Rectangle box{a.x, a.y, (b.x + b.width) - a.x, (b.y + b.height) - a.y};
+        DrawRectangleLinesEx(box, 2.0f, SKYBLUE);
+        break;
+      }
+      case Tool::Eraser: {
+        switch (erase_mode_) {
+          case EraseMode::Line:
+            cells = RasterLine(drag_start_x_, drag_start_y_, col, row);
+            break;
+          case EraseMode::RectOutline:
+            cells = RasterRectOutline(drag_start_x_, drag_start_y_, col, row);
+            break;
+          case EraseMode::RectFilled:
+            cells = RasterRectFilled(drag_start_x_, drag_start_y_, col, row);
+            break;
+          default:
+            break;
+        }
+        preview_cells(cells);
+        break;
+      }
+      default:
+        break;
+    }
+  } else if (tool_ == Tool::Select && !clipboard_.empty() && in_board) {
+    // Show clipboard tiles as a ghost at the cursor (paste preview).
+    for (const auto& t : clipboard_) {
+      const int cx = col + t.dx;
+      const int cy = row + t.dy;
+      if (cx < 0 || cx >= board::kCols || cy < 0 || cy >= board::kRows) continue;
+      const Rectangle rect = board::CellRect(cx, cy);
+      outline_cell(cx, cy, SKYBLUE, 1.5f);
+      if (std::holds_alternative<ObjectId>(t.kind)) {
+        const auto id = std::get<ObjectId>(t.kind);
+        Color tint = sprites_.TintFor(id);
+        tint.a = 128;
+        DrawSpriteInCell(sprites_.Get(id, current_frame_), rect, tint);
+      } else {
+        const auto id = std::get<TextId>(t.kind);
+        Color tint = sprites_.TintFor(id);
+        tint.a = 128;
+        DrawSpriteInCell(sprites_.Get(id, current_frame_), rect, tint);
+      }
+    }
+  } else if (in_board && (tool_ == Tool::Brush || tool_ == Tool::Bucket ||
+                          (tool_ == Tool::Eraser && erase_mode_ == EraseMode::Point))) {
+    // Single-cell tools: show brush ghost (or red tint for point eraser).
+    if (tool_ == Tool::Eraser) {
+      outline_cell(col, row, Color{235, 90, 90, 255}, 2.0f);
+    } else {
+      draw_brush_ghost(col, row, WHITE, false);
+    }
+  }
+}
+
+void GameLayer::HandleEditorMouse() {
+  if (ImGui::GetIO().WantCaptureMouse) {
+    dragging_ = false;
+    return;
+  }
+  auto cell_opt = board::ScreenToCell(GetMousePosition());
+  const bool in_board = cell_opt.has_value();
+  const int col = in_board ? cell_opt->first : 0;
+  const int row = in_board ? cell_opt->second : 0;
+
+  const bool lmb_pressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+  const bool lmb_released = IsMouseButtonReleased(MOUSE_BUTTON_LEFT);
+  const bool lmb_down = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+  const bool rmb_pressed = IsMouseButtonPressed(MOUSE_BUTTON_RIGHT);
+  const bool rmb_down = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
+
+  auto commit_shape = [&](bool erase) {
+    std::vector<std::pair<int, int>> cells;
+    const EraseMode shape = erase ? erase_mode_ : EraseMode::Point;
+    const Tool t = erase ? (shape == EraseMode::Line          ? Tool::Line
+                            : shape == EraseMode::RectOutline ? Tool::RectOutline
+                            : shape == EraseMode::RectFilled  ? Tool::RectFilled
+                                                              : Tool::Brush)
+                         : tool_;
+    switch (t) {
+      case Tool::Line:
+        cells = RasterLine(drag_start_x_, drag_start_y_, col, row);
+        break;
+      case Tool::RectOutline:
+        cells = RasterRectOutline(drag_start_x_, drag_start_y_, col, row);
+        break;
+      case Tool::RectFilled:
+        cells = RasterRectFilled(drag_start_x_, drag_start_y_, col, row);
+        break;
+      default:
+        return;
+    }
+    if (erase)
+      EraseAtCells(cells);
+    else
+      PlaceAtCells(cells);
+  };
+
+  switch (tool_) {
+    case Tool::Brush: {
+      if (!in_board) return;
+      if (lmb_down) PlaceBrushAt(col, row);
+      else if (rmb_down) EraseAt(col, row);
+      break;
+    }
+    case Tool::Line:
+    case Tool::RectOutline:
+    case Tool::RectFilled: {
+      if (lmb_pressed && in_board) {
+        dragging_ = true;
+        drag_start_x_ = col;
+        drag_start_y_ = row;
+      }
+      if (lmb_released && dragging_) {
+        if (in_board) commit_shape(false);
+        dragging_ = false;
+      }
+      if (rmb_pressed) dragging_ = false;  // cancel
+      break;
+    }
+    case Tool::Select: {
+      if (!clipboard_.empty()) {
+        if (rmb_pressed) {
+          DiscardClipboard();
+        } else if (lmb_pressed && in_board) {
+          PasteClipboardAt(col, row);
+        }
+        break;
+      }
+      if (lmb_pressed && in_board) {
+        dragging_ = true;
+        drag_start_x_ = col;
+        drag_start_y_ = row;
+      }
+      if (lmb_released && dragging_) {
+        if (in_board) CutRegionToClipboard(drag_start_x_, drag_start_y_, col, row);
+        dragging_ = false;
+      }
+      if (rmb_pressed) dragging_ = false;
+      break;
+    }
+    case Tool::Bucket: {
+      if (lmb_pressed && in_board) {
+        auto cells = FloodRegion(col, row);
+        PlaceAtCells(cells);
+      }
+      break;
+    }
+    case Tool::Eraser: {
+      switch (erase_mode_) {
+        case EraseMode::Point: {
+          if (!in_board) return;
+          if (lmb_down) EraseAt(col, row);
+          break;
+        }
+        case EraseMode::Line:
+        case EraseMode::RectOutline:
+        case EraseMode::RectFilled: {
+          if (lmb_pressed && in_board) {
+            dragging_ = true;
+            drag_start_x_ = col;
+            drag_start_y_ = row;
+          }
+          if (lmb_released && dragging_) {
+            if (in_board) commit_shape(true);
+            dragging_ = false;
+          }
+          if (rmb_pressed) dragging_ = false;
+          break;
+        }
+        case EraseMode::Bucket: {
+          if (lmb_pressed && in_board) {
+            auto cells = FloodRegion(col, row);
+            EraseAtCells(cells);
+          }
+          break;
+        }
+      }
+      break;
+    }
   }
 }
 
@@ -901,6 +1259,159 @@ void GameLayer::EraseAt(int col, int row) {
   undo_.Clear();
 }
 
+void GameLayer::PlaceAtCells(const std::vector<std::pair<int, int>>& cells) {
+  for (const auto& [c, r] : cells) {
+    if (c < 0 || c >= board::kCols || r < 0 || r >= board::kRows) continue;
+    PlaceBrushAt(c, r);
+  }
+}
+
+void GameLayer::EraseAtCells(const std::vector<std::pair<int, int>>& cells) {
+  for (const auto& [c, r] : cells) {
+    if (c < 0 || c >= board::kCols || r < 0 || r >= board::kRows) continue;
+    EraseAt(c, r);
+  }
+}
+
+std::vector<std::pair<int, int>> GameLayer::RasterLine(int x0, int y0, int x1, int y1) {
+  // Bresenham's line algorithm. Generates one cell per step.
+  std::vector<std::pair<int, int>> out;
+  int dx = std::abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+  int dy = -std::abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+  int err = dx + dy;
+  int x = x0, y = y0;
+  for (;;) {
+    out.emplace_back(x, y);
+    if (x == x1 && y == y1) break;
+    const int e2 = 2 * err;
+    if (e2 >= dy) {
+      err += dy;
+      x += sx;
+    }
+    if (e2 <= dx) {
+      err += dx;
+      y += sy;
+    }
+  }
+  return out;
+}
+
+std::vector<std::pair<int, int>> GameLayer::RasterRectOutline(int x0, int y0, int x1, int y1) {
+  std::vector<std::pair<int, int>> out;
+  const int lx = std::min(x0, x1), rx = std::max(x0, x1);
+  const int ly = std::min(y0, y1), ry = std::max(y0, y1);
+  for (int x = lx; x <= rx; ++x) {
+    out.emplace_back(x, ly);
+    if (ry != ly) out.emplace_back(x, ry);
+  }
+  for (int y = ly + 1; y <= ry - 1; ++y) {
+    out.emplace_back(lx, y);
+    if (rx != lx) out.emplace_back(rx, y);
+  }
+  return out;
+}
+
+std::vector<std::pair<int, int>> GameLayer::RasterRectFilled(int x0, int y0, int x1, int y1) {
+  std::vector<std::pair<int, int>> out;
+  const int lx = std::min(x0, x1), rx = std::max(x0, x1);
+  const int ly = std::min(y0, y1), ry = std::max(y0, y1);
+  for (int y = ly; y <= ry; ++y)
+    for (int x = lx; x <= rx; ++x) out.emplace_back(x, y);
+  return out;
+}
+
+std::vector<std::variant<ObjectId, TextId>> GameLayer::CellContents(int x, int y) const {
+  std::vector<std::variant<ObjectId, TextId>> out;
+  for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
+    if (cell.x == x && cell.y == y) out.emplace_back(kind.id);
+  }
+  for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
+    if (cell.x == x && cell.y == y) out.emplace_back(text.id);
+  }
+  std::sort(out.begin(), out.end());
+  return out;
+}
+
+std::vector<std::pair<int, int>> GameLayer::FloodRegion(int sx, int sy) const {
+  if (sx < 0 || sx >= board::kCols || sy < 0 || sy >= board::kRows) return {};
+  const auto target = CellContents(sx, sy);
+
+  std::vector<std::vector<unsigned char>> seen(board::kRows,
+                                               std::vector<unsigned char>(board::kCols, 0));
+  std::vector<std::pair<int, int>> out, stack;
+  stack.emplace_back(sx, sy);
+  seen[sy][sx] = 1;
+  while (!stack.empty()) {
+    auto [cx, cy] = stack.back();
+    stack.pop_back();
+    if (CellContents(cx, cy) != target) continue;
+    out.emplace_back(cx, cy);
+    const int nbr[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    for (auto& d : nbr) {
+      const int nx = cx + d[0], ny = cy + d[1];
+      if (nx < 0 || nx >= board::kCols || ny < 0 || ny >= board::kRows) continue;
+      if (seen[ny][nx]) continue;
+      seen[ny][nx] = 1;
+      stack.emplace_back(nx, ny);
+    }
+  }
+  return out;
+}
+
+void GameLayer::CutRegionToClipboard(int x0, int y0, int x1, int y1) {
+  DiscardClipboard();
+  const int lx = std::min(x0, x1), rx = std::max(x0, x1);
+  const int ly = std::min(y0, y1), ry = std::max(y0, y1);
+
+  std::vector<entt::entity> doomed;
+  for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
+    if (cell.x >= lx && cell.x <= rx && cell.y >= ly && cell.y <= ry) {
+      clipboard_.push_back({cell.x - lx, cell.y - ly, kind.id});
+      doomed.push_back(e);
+    }
+  }
+  for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
+    if (cell.x >= lx && cell.x <= rx && cell.y >= ly && cell.y <= ry) {
+      clipboard_.push_back({cell.x - lx, cell.y - ly, text.id});
+      doomed.push_back(e);
+    }
+  }
+  for (auto e : doomed) registry_.destroy(e);
+  undo_.Clear();
+}
+
+void GameLayer::PasteClipboardAt(int col, int row) {
+  for (const auto& t : clipboard_) {
+    const int x = col + t.dx;
+    const int y = row + t.dy;
+    if (x < 0 || x >= board::kCols || y < 0 || y >= board::kRows) continue;
+    if (std::holds_alternative<ObjectId>(t.kind)) {
+      const auto id = std::get<ObjectId>(t.kind);
+      bool exists = false;
+      for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
+        if (cell.x == x && cell.y == y && kind.id == id) {
+          exists = true;
+          break;
+        }
+      }
+      if (!exists) SpawnObject(id, x, y);
+    } else {
+      const auto id = std::get<TextId>(t.kind);
+      bool exists = false;
+      for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
+        if (cell.x == x && cell.y == y && text.id == id) {
+          exists = true;
+          break;
+        }
+      }
+      if (!exists) SpawnText(id, x, y);
+    }
+  }
+  undo_.Clear();
+}
+
+void GameLayer::DiscardClipboard() { clipboard_.clear(); }
+
 // ---------------------------------------------------------------------------
 // World / progression
 // ---------------------------------------------------------------------------
@@ -922,46 +1433,118 @@ void GameLayer::DrawWorldPanel() {
     return;
   }
 
-  if (world_.levels.empty()) {
-    ImGui::TextDisabled("No world loaded (expected %s).", kWorldFile);
-    ImGui::End();
-    return;
-  }
-
-  ImGui::Text("%s", world_.title.empty() ? "Levels" : world_.title.c_str());
-  const std::size_t done = progress_.completed.size();
-  ImGui::TextDisabled("Cleared %zu / %zu", done, world_.levels.size());
-  ImGui::Separator();
-
-  for (std::size_t i = 0; i < world_.levels.size(); ++i) {
-    const auto& lvl = world_.levels[i];
-    const bool unlocked = IsUnlocked(i);
-    const bool completed = progress_.completed.contains(lvl.id);
-    const bool current = (lvl.id == current_level_id_);
-
-    ImGui::PushID(static_cast<int>(i));
-    const char* badge = completed ? "[*]" : (unlocked ? "[ ]" : "[X]");
-    if (current) {
-      ImGui::TextColored(ImVec4(0.4f, 0.9f, 0.4f, 1.0f), "%s %s", badge, lvl.label.c_str());
-    } else if (unlocked) {
-      ImGui::Text("%s %s", badge, lvl.label.c_str());
-    } else {
-      ImGui::TextDisabled("%s %s", badge, lvl.label.c_str());
+  if (ImGui::CollapsingHeader("Built-in", ImGuiTreeNodeFlags_DefaultOpen)) {
+    const char* lvl_label = kBuiltinLevels[std::clamp(selected_level_, 0, kBuiltinLevelCount - 1)].label;
+    if (ImGui::BeginCombo("##builtin", lvl_label)) {
+      for (int i = 0; i < kBuiltinLevelCount; ++i) {
+        const bool selected = (i == selected_level_);
+        if (ImGui::Selectable(kBuiltinLevels[i].label, selected)) {
+          selected_level_ = i;
+          LoadLevelFromPath(std::filesystem::path{kLevelsDir} / kBuiltinLevels[i].file);
+        }
+        if (selected) ImGui::SetItemDefaultFocus();
+      }
+      ImGui::EndCombo();
+    }
+    if (ImGui::Button("Prev##b")) {
+      selected_level_ = (selected_level_ - 1 + kBuiltinLevelCount) % kBuiltinLevelCount;
+      LoadLevelFromPath(std::filesystem::path{kLevelsDir} / kBuiltinLevels[selected_level_].file);
     }
     ImGui::SameLine();
-    ImGui::BeginDisabled(!unlocked);
-    if (ImGui::Button("Play")) {
-      LoadLevelFromPath(std::filesystem::path{kLevelsDir} / (lvl.id + ".json"));
+    if (ImGui::Button("Next##b")) {
+      selected_level_ = (selected_level_ + 1) % kBuiltinLevelCount;
+      LoadLevelFromPath(std::filesystem::path{kLevelsDir} / kBuiltinLevels[selected_level_].file);
     }
-    ImGui::EndDisabled();
-    ImGui::PopID();
+    ImGui::SameLine();
+    if (ImGui::Button("Reload Starter")) {
+      LoadLevelFromPath(kDefaultLevel);
+    }
   }
 
-  ImGui::Separator();
-  if (ImGui::Button("Reset Progress")) {
-    progress_.completed.clear();
-    SaveProgress(kProgressFile, progress_);
-    win_handled_ = false;
+  if (!imported_stems_.empty() && ImGui::CollapsingHeader("Imported")) {
+    ImGui::Text("(%zu levels)", imported_stems_.size());
+    ImGui::InputTextWithHint("##filter", "filter (e.g. 12 or lev)",
+                             imported_filter_, sizeof(imported_filter_));
+    // Case-insensitive substring match on the filter text.
+    auto matches = [&](const std::string& s) {
+      if (imported_filter_[0] == '\0') return true;
+      auto lower = [](char c) { return static_cast<char>(std::tolower(static_cast<unsigned char>(c))); };
+      std::string a(s.size(), ' '), b(std::strlen(imported_filter_), ' ');
+      std::transform(s.begin(), s.end(), a.begin(), lower);
+      std::transform(imported_filter_, imported_filter_ + b.size(), b.begin(), lower);
+      return a.find(b) != std::string::npos;
+    };
+    imported_index_ = std::clamp(imported_index_, 0, static_cast<int>(imported_stems_.size()) - 1);
+    const char* cur = imported_stems_[imported_index_].c_str();
+    if (ImGui::BeginCombo("##imported", cur)) {
+      for (int i = 0; i < static_cast<int>(imported_stems_.size()); ++i) {
+        if (!matches(imported_stems_[i])) continue;
+        const bool selected = (i == imported_index_);
+        if (ImGui::Selectable(imported_stems_[i].c_str(), selected)) {
+          imported_index_ = i;
+          LoadLevelFromPath(std::filesystem::path{kImportedDir} /
+                            (imported_stems_[i] + ".json"));
+        }
+        if (selected) ImGui::SetItemDefaultFocus();
+      }
+      ImGui::EndCombo();
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Load##imp")) {
+      LoadLevelFromPath(std::filesystem::path{kImportedDir} /
+                        (imported_stems_[imported_index_] + ".json"));
+    }
+    if (ImGui::Button("Prev##imp")) {
+      const int n = static_cast<int>(imported_stems_.size());
+      imported_index_ = (imported_index_ - 1 + n) % n;
+      LoadLevelFromPath(std::filesystem::path{kImportedDir} /
+                        (imported_stems_[imported_index_] + ".json"));
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Next##imp")) {
+      const int n = static_cast<int>(imported_stems_.size());
+      imported_index_ = (imported_index_ + 1) % n;
+      LoadLevelFromPath(std::filesystem::path{kImportedDir} /
+                        (imported_stems_[imported_index_] + ".json"));
+    }
+  }
+
+  if (!world_.levels.empty() && ImGui::CollapsingHeader("Campaign", ImGuiTreeNodeFlags_DefaultOpen)) {
+    ImGui::Text("%s", world_.title.empty() ? "Levels" : world_.title.c_str());
+    const std::size_t done = progress_.completed.size();
+    ImGui::TextDisabled("Cleared %zu / %zu", done, world_.levels.size());
+    ImGui::Separator();
+
+    for (std::size_t i = 0; i < world_.levels.size(); ++i) {
+      const auto& lvl = world_.levels[i];
+      const bool unlocked = IsUnlocked(i);
+      const bool completed = progress_.completed.contains(lvl.id);
+      const bool current = (lvl.id == current_level_id_);
+
+      ImGui::PushID(static_cast<int>(i));
+      const char* badge = completed ? "[*]" : (unlocked ? "[ ]" : "[X]");
+      if (current) {
+        ImGui::TextColored(ImVec4(0.4f, 0.9f, 0.4f, 1.0f), "%s %s", badge, lvl.label.c_str());
+      } else if (unlocked) {
+        ImGui::Text("%s %s", badge, lvl.label.c_str());
+      } else {
+        ImGui::TextDisabled("%s %s", badge, lvl.label.c_str());
+      }
+      ImGui::SameLine();
+      ImGui::BeginDisabled(!unlocked);
+      if (ImGui::Button("Play")) {
+        LoadLevelFromPath(std::filesystem::path{kLevelsDir} / (lvl.id + ".json"));
+      }
+      ImGui::EndDisabled();
+      ImGui::PopID();
+    }
+
+    ImGui::Separator();
+    if (ImGui::Button("Reset Progress")) {
+      progress_.completed.clear();
+      SaveProgress(kProgressFile, progress_);
+      win_handled_ = false;
+    }
   }
 
   ImGui::End();
