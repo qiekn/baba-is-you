@@ -96,6 +96,7 @@ void Game::Run() {
 }
 
 void Game::Init() {
+  SetTraceLogLevel(LOG_WARNING);
   const WindowState state = LoadWindowState(kScreenWidth, kScreenHeight);
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI);
