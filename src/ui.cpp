@@ -70,7 +70,9 @@ void Ui::Draw() {
     return;
   }
 
-  ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+  ImGui::DockSpaceOverViewport(
+      0, ImGui::GetMainViewport(),
+      ImGuiDockNodeFlags_PassthruCentralNode | ImGuiDockNodeFlags_NoDockingOverCentralNode);
 
   DrawMainMenuBar();
 
@@ -206,26 +208,16 @@ void Ui::LoadFonts(float dpi_scale) {
 
   io.Fonts->Clear();
 
-  ImFontConfig regular_config;
-  regular_config.SizePixels = font_size;
-  regular_config.OversampleH = 4;
-  regular_config.OversampleV = 4;
-  regular_config.PixelSnapH = false;
-  regular_config.RasterizerMultiply = 1.05f;
-
-  ImFontConfig bold_config = regular_config;
-
   if (std::filesystem::exists(bold_font)) {
-    io.Fonts->AddFontFromFileTTF(bold_font.string().c_str(), font_size, &bold_config);
+    io.Fonts->AddFontFromFileTTF(bold_font.string().c_str(), font_size);
   }
 
   if (std::filesystem::exists(regular_font)) {
-    io.FontDefault = io.Fonts->AddFontFromFileTTF(
-        regular_font.string().c_str(), font_size, &regular_config);
+    io.FontDefault = io.Fonts->AddFontFromFileTTF(regular_font.string().c_str(), font_size);
   }
 
   if (io.FontDefault == nullptr) {
-    io.FontDefault = io.Fonts->AddFontDefault(&regular_config);
+    io.FontDefault = io.Fonts->AddFontDefault();
   }
 }
 
