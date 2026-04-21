@@ -7,7 +7,11 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
+#include <cstdio>
+
 namespace {
+constexpr const char* kWindowStateFile = "window.state";
+
 Rectangle CenteredRect(float width, float height, float offset_y = 0.0f) {
   return {
       (GetScreenWidth() - width) * 0.5f,
@@ -15,6 +19,33 @@ Rectangle CenteredRect(float width, float height, float offset_y = 0.0f) {
       width,
       height,
   };
+}
+
+struct WindowState {
+  int x;
+  int y;
+  int w;
+  int h;
+};
+
+WindowState LoadWindowState(int default_w, int default_h) {
+  WindowState s{80, 80, default_w, default_h};
+  if (FILE* f = std::fopen(kWindowStateFile, "r")) {
+    int x, y, w, h;
+    if (std::fscanf(f, "%d %d %d %d", &x, &y, &w, &h) == 4 && w > 0 && h > 0) {
+      s = {x, y, w, h};
+    }
+    std::fclose(f);
+  }
+  return s;
+}
+
+void SaveWindowState() {
+  Vector2 pos = GetWindowPosition();
+  if (FILE* f = std::fopen(kWindowStateFile, "w")) {
+    std::fprintf(f, "%d %d %d %d\n", (int)pos.x, (int)pos.y, GetScreenWidth(), GetScreenHeight());
+    std::fclose(f);
+  }
 }
 }  // namespace
 
@@ -29,8 +60,11 @@ void Game::Run() {
 }
 
 void Game::Init() {
+  const WindowState state = LoadWindowState(kScreenWidth, kScreenHeight);
+
   SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI);
-  InitWindow(kScreenWidth, kScreenHeight, "baba");
+  InitWindow(state.w, state.h, "baba");
+  SetWindowPosition(state.x, state.y);
   SetTargetFPS(kTargetFps);
 
   ui_.Init();
@@ -65,6 +99,7 @@ void Game::Render() {
 }
 
 void Game::Shutdown() {
+  SaveWindowState();
   ui_.Shutdown();
   CloseWindow();
 }
