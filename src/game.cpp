@@ -104,6 +104,7 @@ void Game::Init() {
   SetWindowPosition(state.x, state.y);
   SetWindowIconFromSvg("assets/icons/favicon.svg");
   SetTargetFPS(kTargetFps);
+  InitAudioDevice();
 
   auto imgui_layer = std::make_unique<ImGuiLayer>();
   imgui_layer_ = imgui_layer.get();
@@ -147,6 +148,7 @@ void Game::Render() {
 void Game::Shutdown() {
   SaveWindowState();
   layers_.Clear();  // detach layers before the GL context goes away
+  CloseAudioDevice();
   CloseWindow();
 }
 

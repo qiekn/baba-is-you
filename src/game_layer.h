@@ -54,6 +54,10 @@ class GameLayer : public Layer {
   void UpdateParticles(float dt);
   void DrawParticles() const;
 
+  // Audio
+  void LoadTrack(int index);
+  void UnloadTrack();
+
   // Rendering
   void DrawEntities();
 
@@ -100,4 +104,11 @@ class GameLayer : public Layer {
   // Visual sparkles for IsWin entities.
   std::vector<Particle> particles_;
   float particle_emit_timer_ = 0.0f;
+
+  // Background music
+  Music music_{};
+  bool music_loaded_ = false;
+  int track_index_ = 0;
+  float volume_ = 0.4f;
+  bool muted_ = false;
 };

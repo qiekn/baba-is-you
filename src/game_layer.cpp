@@ -18,6 +18,21 @@ constexpr const char* kDefaultLevel = "assets/levels/starter.json";
 constexpr const char* kSpritesDir = "assets/sprites";
 constexpr const char* kLevelsDir = "assets/levels";
 
+struct MusicTrack {
+  const char* label;
+  const char* path;
+};
+
+constexpr MusicTrack kTracks[] = {
+    {"Map", "assets/music/map.ogg"},
+    {"Menu", "assets/music/menu.ogg"},
+    {"Baba", "assets/music/baba.ogg"},
+    {"Cave", "assets/music/cave.ogg"},
+    {"Garden", "assets/music/garden.ogg"},
+    {"Forest", "assets/music/forest.ogg"},
+};
+constexpr int kTrackCount = static_cast<int>(sizeof(kTracks) / sizeof(kTracks[0]));
+
 // Draw a sprite texture fitted to a board cell, tinted with `color`.
 void DrawSpriteInCell(const Texture2D& tex, Rectangle cell, Color color) {
   if (tex.id == 0) return;
@@ -50,11 +65,13 @@ GameLayer::GameLayer() : Layer("GameLayer") {}
 void GameLayer::OnAttach() {
   sprites_.LoadAll(kSpritesDir);
   LoadLevelFromPath(kDefaultLevel);
+  LoadTrack(track_index_);
 }
 
 void GameLayer::OnDetach() {
   sprites_.Unload();
   registry_.clear();
+  UnloadTrack();
 }
 
 void GameLayer::OnUpdate(float dt) {
@@ -70,6 +87,11 @@ void GameLayer::OnUpdate(float dt) {
   RecomputeRules();
 
   UpdateParticles(dt);
+
+  if (music_loaded_) {
+    SetMusicVolume(music_, muted_ ? 0.0f : volume_);
+    UpdateMusicStream(music_);
+  }
 
   // Input: turn-based movement + undo.
   if (ImGui::GetIO().WantCaptureKeyboard) return;
@@ -488,6 +510,30 @@ void GameLayer::DrawParticles() const {
 }
 
 // ---------------------------------------------------------------------------
+// Audio
+// ---------------------------------------------------------------------------
+
+void GameLayer::LoadTrack(int index) {
+  if (index < 0 || index >= kTrackCount) return;
+  UnloadTrack();
+  if (!IsAudioDeviceReady()) return;
+  music_ = LoadMusicStream(kTracks[index].path);
+  if (music_.stream.buffer == nullptr) return;
+  music_.looping = true;
+  music_loaded_ = true;
+  track_index_ = index;
+  SetMusicVolume(music_, muted_ ? 0.0f : volume_);
+  PlayMusicStream(music_);
+}
+
+void GameLayer::UnloadTrack() {
+  if (!music_loaded_) return;
+  StopMusicStream(music_);
+  UnloadMusicStream(music_);
+  music_loaded_ = false;
+}
+
+// ---------------------------------------------------------------------------
 // ImGui panels
 // ---------------------------------------------------------------------------
 
@@ -687,6 +733,28 @@ void GameLayer::DrawSettingsPanel() {
   ImGui::TextDisabled("How long a direction must be held before auto-repeat starts.");
   ImGui::SliderFloat("Repeat interval", &repeat_interval_, 0.02f, 0.5f, "%.2f s");
   ImGui::TextDisabled("Time between repeated steps once auto-repeat kicks in.");
+
+  ImGui::Spacing();
+  ImGui::SeparatorText("Audio");
+  const char* current_label = kTracks[std::clamp(track_index_, 0, kTrackCount - 1)].label;
+  if (ImGui::BeginCombo("Track", current_label)) {
+    for (int i = 0; i < kTrackCount; ++i) {
+      const bool selected = (i == track_index_);
+      if (ImGui::Selectable(kTracks[i].label, selected)) {
+        LoadTrack(i);
+      }
+      if (selected) ImGui::SetItemDefaultFocus();
+    }
+    ImGui::EndCombo();
+  }
+  ImGui::SliderFloat("Volume", &volume_, 0.0f, 1.0f, "%.2f");
+  ImGui::Checkbox("Mute", &muted_);
+  ImGui::SameLine();
+  if (music_loaded_) {
+    ImGui::TextDisabled("[loaded]");
+  } else {
+    ImGui::TextDisabled("[no track]");
+  }
 
   ImGui::Spacing();
   ImGui::SeparatorText("Animation");
