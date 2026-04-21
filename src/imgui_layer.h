@@ -61,7 +61,7 @@ class ImGuiLayer : public Layer {
   static const Theme kThemes[6];
 
   bool visible_ = true;
-  bool show_viewport_ = true;
+  bool show_viewport_ = false;
   bool show_inspector_ = true;
   bool show_themes_ = true;
   bool show_demo_ = false;
