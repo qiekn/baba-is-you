@@ -77,7 +77,7 @@ void Game::Tick() {
 }
 
 void Game::Update() {
-  if (IsKeyPressed(KEY_O)) {
+  if (IsKeyPressed(KEY_GRAVE)) {
     ui_.ToggleVisible();
   }
 }

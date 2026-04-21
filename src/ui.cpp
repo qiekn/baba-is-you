@@ -132,7 +132,7 @@ void Ui::DrawMainMenuBar() {
   }
 
   if (ImGui::BeginMenu("Help")) {
-    ImGui::TextDisabled("Toggle UI: O");
+    ImGui::TextDisabled("Toggle UI: `");
     ImGui::EndMenu();
   }
 
@@ -145,7 +145,7 @@ void Ui::DrawViewportPanel() {
     return;
   }
   ImGui::TextDisabled("The game renders into the raylib framebuffer behind this UI.");
-  ImGui::TextDisabled("Press O to hide all panels.");
+  ImGui::TextDisabled("Press ` to hide all panels.");
   ImGui::End();
 }
 
