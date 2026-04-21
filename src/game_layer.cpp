@@ -1,5 +1,6 @@
 #include "game_layer.h"
 
+#include <algorithm>
 #include <array>
 #include <cmath>
 #include <cstring>
@@ -17,6 +18,7 @@ constexpr float kAnimFps = 6.0f;  // cycle 1->2->3 every ~0.5s
 constexpr const char* kDefaultLevel = "assets/levels/starter.json";
 constexpr const char* kSpritesDir = "assets/sprites";
 constexpr const char* kLevelsDir = "assets/levels";
+constexpr const char* kImportedDir = "assets/imported";
 constexpr const char* kWorldFile = "assets/worlds/tutorial.json";
 constexpr const char* kProgressFile = "progress.json";
 
@@ -82,6 +84,16 @@ void GameLayer::OnAttach() {
   sprites_.LoadAll(kSpritesDir);
   LoadWorld(kWorldFile, world_);
   LoadProgress(kProgressFile, progress_);
+  // Scan the imported-level directory (may not exist in a fresh checkout).
+  std::error_code ec;
+  if (std::filesystem::is_directory(kImportedDir, ec)) {
+    for (const auto& entry : std::filesystem::directory_iterator(kImportedDir, ec)) {
+      if (entry.is_regular_file() && entry.path().extension() == ".json") {
+        imported_stems_.push_back(entry.path().stem().string());
+      }
+    }
+    std::sort(imported_stems_.begin(), imported_stems_.end());
+  }
   LoadLevelFromPath(kDefaultLevel);
   LoadTrack(track_index_);
 }
@@ -768,6 +780,30 @@ void GameLayer::DrawEditorPanel() {
   ImGui::SameLine();
   if (ImGui::Button("Reload Starter")) {
     LoadLevelFromPath(kDefaultLevel);
+  }
+
+  if (!imported_stems_.empty()) {
+    ImGui::Separator();
+    ImGui::Text("Imported (%zu)", imported_stems_.size());
+    imported_index_ = std::clamp(imported_index_, 0, static_cast<int>(imported_stems_.size()) - 1);
+    const char* cur = imported_stems_[imported_index_].c_str();
+    if (ImGui::BeginCombo("##imported", cur)) {
+      for (int i = 0; i < static_cast<int>(imported_stems_.size()); ++i) {
+        const bool selected = (i == imported_index_);
+        if (ImGui::Selectable(imported_stems_[i].c_str(), selected)) {
+          imported_index_ = i;
+          LoadLevelFromPath(std::filesystem::path{kImportedDir} /
+                            (imported_stems_[i] + ".json"));
+        }
+        if (selected) ImGui::SetItemDefaultFocus();
+      }
+      ImGui::EndCombo();
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Load##imp")) {
+      LoadLevelFromPath(std::filesystem::path{kImportedDir} /
+                        (imported_stems_[imported_index_] + ".json"));
+    }
   }
 
   ImGui::End();
