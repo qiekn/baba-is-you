@@ -17,7 +17,7 @@ private:
 
   static constexpr int kScreenWidth = 1280;
   static constexpr int kScreenHeight = 720;
-  static constexpr int kTargetFps = 60;
+  static constexpr int kTargetFps = 160;
 
   static constexpr int kBoardCols = 24;
   static constexpr int kBoardRows = 18;
