@@ -81,6 +81,13 @@ DrawLayer LayerOf(ObjectId id);
 // variant based on same-kind neighbors.
 bool IsAutoTiled(ObjectId id);
 
+// True if the object uses directional sprites keyed on its Facing component.
+// The renderer picks sprite slot DirectionToVariant(dir) — i.e. 0/8/16/24
+// for right/up/left/down. SpriteSheet loads exactly those 4 slots.
+bool IsDirectional(ObjectId id);
+
+int DirectionToVariant(Direction d);
+
 // Noun text -> its corresponding object. Non-noun text returns nullopt.
 std::optional<ObjectId> NounToObject(TextId id);
 

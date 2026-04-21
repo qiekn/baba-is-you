@@ -10,7 +10,9 @@
 class SpriteSheet {
  public:
   static constexpr int kFrameCount = 3;
-  static constexpr int kVariantCount = 16;
+  // Wide enough to hold both the 0..15 auto-tile bitmask range and the
+  // directional slots (0, 8, 16, 24) used by characters like Baba.
+  static constexpr int kVariantCount = 32;
 
   SpriteSheet() = default;
   ~SpriteSheet() { Unload(); }

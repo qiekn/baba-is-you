@@ -105,6 +105,22 @@ bool IsAutoTiled(ObjectId id) {
   }
 }
 
+bool IsDirectional(ObjectId id) { return id == ObjectId::Baba; }
+
+int DirectionToVariant(Direction d) {
+  switch (d) {
+    case Direction::Right:
+      return 0;
+    case Direction::Up:
+      return 8;
+    case Direction::Left:
+      return 16;
+    case Direction::Down:
+      return 24;
+  }
+  return 0;
+}
+
 std::optional<ObjectId> ObjectIdFromName(std::string_view name) {
   for (int i = 0; i < kObjectCount; ++i) {
     if (kObjectNames[i] == name) return static_cast<ObjectId>(i);

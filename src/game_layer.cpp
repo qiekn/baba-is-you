@@ -132,8 +132,14 @@ void GameLayer::OnUpdate(float dt) {
 }
 
 void GameLayer::OnRender() {
-  auto draw_kind = [&](const Cell& cell, const Kind& kind) {
-    const int variant = IsAutoTiled(kind.id) ? ComputeTileMask(registry_, kind.id, cell.x, cell.y) : 0;
+  auto draw_kind = [&](entt::entity e, const Cell& cell, const Kind& kind) {
+    int variant = 0;
+    if (IsAutoTiled(kind.id)) {
+      variant = ComputeTileMask(registry_, kind.id, cell.x, cell.y);
+    } else if (IsDirectional(kind.id)) {
+      const Direction dir = registry_.try_get<Facing>(e) ? registry_.get<Facing>(e).dir : Direction::Right;
+      variant = DirectionToVariant(dir);
+    }
     const auto& tex = sprites_.Get(kind.id, current_frame_, variant);
     DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(kind.id));
   };
@@ -141,7 +147,7 @@ void GameLayer::OnRender() {
   // Three draw layers match the original's ordering.
   // 1) Floor decorations — grass/flower/tile sit below everything.
   for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
-    if (LayerOf(kind.id) == DrawLayer::Floor) draw_kind(cell, kind);
+    if (LayerOf(kind.id) == DrawLayer::Floor) draw_kind(e, cell, kind);
   }
   // 2a) Text blocks.
   for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
@@ -150,11 +156,11 @@ void GameLayer::OnRender() {
   }
   // 2b) Gameplay objects on top of text.
   for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
-    if (LayerOf(kind.id) == DrawLayer::Object) draw_kind(cell, kind);
+    if (LayerOf(kind.id) == DrawLayer::Object) draw_kind(e, cell, kind);
   }
   // 3) Float decorations — cloud/star drawn on top of everything.
   for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
-    if (LayerOf(kind.id) == DrawLayer::Float) draw_kind(cell, kind);
+    if (LayerOf(kind.id) == DrawLayer::Float) draw_kind(e, cell, kind);
   }
 
   // Edit-mode affordances: brush preview on hovered cell.

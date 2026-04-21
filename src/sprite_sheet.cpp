@@ -82,17 +82,30 @@ bool SpriteSheet::LoadAll(const std::filesystem::path& sprites_dir) {
   Unload();
   bool ok = true;
 
+  auto load_variant = [&](const std::string& name, int object_index, int v) {
+    for (int f = 0; f < kFrameCount; ++f) {
+      const std::filesystem::path p =
+          sprites_dir / (name + "_" + std::to_string(v) + "_" + std::to_string(f + 1) + ".png");
+      objects_[object_index][v][f] = LoadSpritePixelArt(p);
+      if (objects_[object_index][v][f].id == 0) return false;
+    }
+    return true;
+  };
+
   for (int i = 0; i < kObjectCount; ++i) {
     const auto id = static_cast<ObjectId>(i);
     const std::string name{NameOf(id)};
-    const int variant_max = IsAutoTiled(id) ? kVariantCount : 1;
-    for (int v = 0; v < variant_max; ++v) {
-      for (int f = 0; f < kFrameCount; ++f) {
-        const std::filesystem::path p =
-            sprites_dir / (name + "_" + std::to_string(v) + "_" + std::to_string(f + 1) + ".png");
-        objects_[i][v][f] = LoadSpritePixelArt(p);
-        if (objects_[i][v][f].id == 0) ok = false;
+
+    if (IsAutoTiled(id)) {
+      for (int v = 0; v < 16; ++v) {
+        if (!load_variant(name, i, v)) ok = false;
       }
+    } else if (IsDirectional(id)) {
+      for (Direction d : {Direction::Right, Direction::Up, Direction::Left, Direction::Down}) {
+        if (!load_variant(name, i, DirectionToVariant(d))) ok = false;
+      }
+    } else {
+      if (!load_variant(name, i, 0)) ok = false;
     }
   }
 
