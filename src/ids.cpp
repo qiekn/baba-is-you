@@ -3,10 +3,7 @@
 namespace {
 
 constexpr std::string_view kObjectNames[kObjectCount] = {
-    "baba",
-    "flag",
-    "wall",
-    "rock",
+    "baba", "flag", "wall", "rock", "grass", "flower", "tile", "cloud", "star",
 };
 
 constexpr std::string_view kTextNames[kTextCount] = {
@@ -66,6 +63,25 @@ std::optional<ObjectId> NounToObject(TextId id) {
     default:
       return std::nullopt;
   }
+}
+
+DrawLayer LayerOf(ObjectId id) {
+  switch (id) {
+    case ObjectId::Grass:
+    case ObjectId::Flower:
+    case ObjectId::Tile:
+      return DrawLayer::Floor;
+    case ObjectId::Cloud:
+    case ObjectId::Star:
+      return DrawLayer::Float;
+    case ObjectId::Baba:
+    case ObjectId::Flag:
+    case ObjectId::Wall:
+    case ObjectId::Rock:
+    case ObjectId::kCount:
+      break;
+  }
+  return DrawLayer::Object;
 }
 
 std::optional<ObjectId> ObjectIdFromName(std::string_view name) {

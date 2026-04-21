@@ -9,6 +9,11 @@ enum class ObjectId : std::uint8_t {
   Flag,
   Wall,
   Rock,
+  Grass,
+  Flower,
+  Tile,
+  Cloud,
+  Star,
   kCount,
 };
 
@@ -44,6 +49,15 @@ enum class TextCategory : std::uint8_t {
   Property,
 };
 
+// Render order, low to high. Only used for draw sorting — rules apply
+// regardless of layer, but we have no text blocks for Floor/Float kinds so
+// they never become subjects in practice.
+enum class DrawLayer : std::uint8_t {
+  Floor,
+  Object,
+  Float,
+};
+
 inline constexpr int kObjectCount = static_cast<int>(ObjectId::kCount);
 inline constexpr int kTextCount = static_cast<int>(TextId::kCount);
 
@@ -55,6 +69,7 @@ std::string_view NameOf(TextId id);
 std::string_view NameOf(Direction dir);
 
 TextCategory CategoryOf(TextId id);
+DrawLayer LayerOf(ObjectId id);
 
 // Noun text -> its corresponding object. Non-noun text returns nullopt.
 std::optional<ObjectId> NounToObject(TextId id);

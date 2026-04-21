@@ -95,13 +95,27 @@ void GameLayer::OnUpdate(float dt) {
 }
 
 void GameLayer::OnRender() {
-  // Draw text blocks first, then objects on top — mirrors the original's
-  // foreground ordering (objects like Baba walk over text).
+  // Three draw layers match the original's ordering.
+  // 1) Floor decorations — grass/flower/tile sit below everything.
+  for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
+    if (LayerOf(kind.id) != DrawLayer::Floor) continue;
+    const auto& tex = sprites_.Get(kind.id, current_frame_);
+    DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(kind.id));
+  }
+  // 2a) Text blocks.
   for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
     const auto& tex = sprites_.Get(text.id, current_frame_);
     DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(text.id));
   }
+  // 2b) Gameplay objects on top of text.
   for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
+    if (LayerOf(kind.id) != DrawLayer::Object) continue;
+    const auto& tex = sprites_.Get(kind.id, current_frame_);
+    DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(kind.id));
+  }
+  // 3) Float decorations — cloud/star drawn on top of everything.
+  for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
+    if (LayerOf(kind.id) != DrawLayer::Float) continue;
     const auto& tex = sprites_.Get(kind.id, current_frame_);
     DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(kind.id));
   }
@@ -384,6 +398,16 @@ const char* GameLayer::PrettyName(ObjectId id) {
       return "Wall";
     case ObjectId::Rock:
       return "Rock";
+    case ObjectId::Grass:
+      return "Grass";
+    case ObjectId::Flower:
+      return "Flower";
+    case ObjectId::Tile:
+      return "Tile";
+    case ObjectId::Cloud:
+      return "Cloud";
+    case ObjectId::Star:
+      return "Star";
     case ObjectId::kCount:
       break;
   }
