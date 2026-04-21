@@ -161,11 +161,16 @@ void Game::DrawGridBackground() const {
   DrawRectangleRounded(board_background, 0.04f, 10, imgui_layer_->BoardBackgroundColor());
 
   const Color border = imgui_layer_->BoardGridBorderColor();
-  const float cell_roundness = 0.18f;
+  const float t = board::kGridLineThickness;
 
-  for (int row = 0; row < board::kRows; ++row) {
-    for (int col = 0; col < board::kCols; ++col) {
-      DrawRectangleRoundedLinesEx(board::CellRect(col, row), cell_roundness, 8, 2.5f, border);
-    }
+  // Single-line grid: each interior boundary is drawn once, so adjacent cells
+  // share an edge instead of floating inside inset rectangles.
+  for (int col = 0; col <= board::kCols; ++col) {
+    const float x = board.x + col * board::kCellPitch - t * 0.5f;
+    DrawRectangleRec({x, board.y, t, board.height}, border);
+  }
+  for (int row = 0; row <= board::kRows; ++row) {
+    const float y = board.y + row * board::kCellPitch - t * 0.5f;
+    DrawRectangleRec({board.x, y, board.width, t}, border);
   }
 }

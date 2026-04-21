@@ -15,12 +15,11 @@ Rectangle BoardRect() {
 
 Rectangle CellRect(int col, int row) {
   const Rectangle b = BoardRect();
-  const float inset = (kCellPitch - kCellInnerSize) * 0.5f;
   return {
-      b.x + col * kCellPitch + inset,
-      b.y + row * kCellPitch + inset,
-      kCellInnerSize,
-      kCellInnerSize,
+      b.x + col * kCellPitch,
+      b.y + row * kCellPitch,
+      kCellPitch,
+      kCellPitch,
   };
 }
 

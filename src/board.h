@@ -10,9 +10,9 @@ namespace board {
 inline constexpr int kCols = 24;
 inline constexpr int kRows = 18;
 inline constexpr float kCellPitch = 50.0f;
-inline constexpr float kCellInnerSize = 44.0f;
 inline constexpr float kBoardPadding = 28.0f;
 inline constexpr float kBoardOffsetY = 12.0f;
+inline constexpr float kGridLineThickness = 1.0f;
 
 // Screen-space rectangle that the board occupies (not including padding).
 Rectangle BoardRect();
