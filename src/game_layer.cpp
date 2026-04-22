@@ -176,7 +176,9 @@ void GameLayer::OnUpdate(float dt) {
   }
 
   if (edit_mode_) {
-    HandleEditorMouse();
+    // Mouse handling for edit mode now runs from OnImGuiRender (after
+    // ImGui::NewFrame) so ImGui's WantCaptureMouse is current, not 1 frame
+    // stale. Bail out of the gameplay input path regardless.
     return;
   }
 
@@ -275,7 +277,7 @@ void GameLayer::OnRender() {
   // 4) Particles (sparkles for IsWin entities).
   DrawParticles();
 
-  if (edit_mode_ && !ImGui::GetIO().WantCaptureMouse) {
+  if (edit_mode_) {
     DrawEditorOverlay();
   }
 
@@ -288,6 +290,10 @@ void GameLayer::OnRender() {
 }
 
 void GameLayer::OnImGuiRender() {
+  if (edit_mode_) {
+    HandleEditorMouse();
+  }
+
   if (reset_requested_) {
     ImGui::OpenPopup("Reset level?");
     reset_requested_ = false;
@@ -927,10 +933,22 @@ void GameLayer::DrawSettingsPanel() {
 // ---------------------------------------------------------------------------
 
 void GameLayer::DrawEditorOverlay() {
-  auto cell_opt = board::ScreenToCell(GetMousePosition());
+  const Vector2 mp = GetMousePosition();
+  auto cell_opt = board::ScreenToCell(mp);
   const bool in_board = cell_opt.has_value();
-  const int col = in_board ? cell_opt->first : 0;
-  const int row = in_board ? cell_opt->second : 0;
+  int col, row;
+  if (in_board) {
+    col = cell_opt->first;
+    row = cell_opt->second;
+  } else {
+    const Rectangle br = board::BoardRect();
+    const float pitch = board::Pitch();
+    col = std::clamp(static_cast<int>((mp.x - br.x) / pitch), 0, board::kCols - 1);
+    row = std::clamp(static_cast<int>((mp.y - br.y) / pitch), 0, board::kRows - 1);
+  }
+  // When dragging, preview must follow the cursor even past the board edge.
+  // Outside a drag, we only draw the hover ghost when actually over the board.
+  const bool show_hover = in_board;
 
   auto draw_brush_ghost = [&](int c, int r, Color tint_override, bool use_override) {
     const Rectangle rect = board::CellRect(c, r);
@@ -953,7 +971,7 @@ void GameLayer::DrawEditorOverlay() {
   };
 
   // Hover highlight on the cell under the cursor.
-  if (in_board) outline_cell(col, row, YELLOW, 2.0f);
+  if (show_hover) outline_cell(col, row, YELLOW, 2.0f);
 
   // Drag-preview overlays for shape-capable tools.
   const bool erasing = (tool_ == Tool::Eraser);
@@ -966,7 +984,7 @@ void GameLayer::DrawEditorOverlay() {
     }
   };
 
-  if (dragging_ && in_board) {
+  if (dragging_) {
     std::vector<std::pair<int, int>> cells;
     switch (tool_) {
       case Tool::Line:
@@ -1011,7 +1029,7 @@ void GameLayer::DrawEditorOverlay() {
       default:
         break;
     }
-  } else if (tool_ == Tool::Select && !clipboard_.empty() && in_board) {
+  } else if (tool_ == Tool::Select && !clipboard_.empty() && show_hover) {
     // Show clipboard tiles as a ghost at the cursor (paste preview).
     for (const auto& t : clipboard_) {
       const int cx = col + t.dx;
@@ -1031,8 +1049,8 @@ void GameLayer::DrawEditorOverlay() {
         DrawSpriteInCell(sprites_.Get(id, current_frame_), rect, tint);
       }
     }
-  } else if (in_board && (tool_ == Tool::Brush || tool_ == Tool::Bucket ||
-                          (tool_ == Tool::Eraser && erase_mode_ == EraseMode::Point))) {
+  } else if (show_hover && (tool_ == Tool::Brush || tool_ == Tool::Bucket ||
+                            (tool_ == Tool::Eraser && erase_mode_ == EraseMode::Point))) {
     // Single-cell tools: show brush ghost (or red tint for point eraser).
     if (tool_ == Tool::Eraser) {
       outline_cell(col, row, Color{235, 90, 90, 255}, 2.0f);
@@ -1047,10 +1065,22 @@ void GameLayer::HandleEditorMouse() {
     dragging_ = false;
     return;
   }
-  auto cell_opt = board::ScreenToCell(GetMousePosition());
+  // Clamp the cursor to the board so a drag preview keeps tracking the mouse
+  // when it slips past the playfield edge. `in_board` stays gated on the real
+  // hit-test so single-click actions don't fire from dead zones.
+  const Vector2 mp = GetMousePosition();
+  auto cell_opt = board::ScreenToCell(mp);
   const bool in_board = cell_opt.has_value();
-  const int col = in_board ? cell_opt->first : 0;
-  const int row = in_board ? cell_opt->second : 0;
+  int col, row;
+  if (in_board) {
+    col = cell_opt->first;
+    row = cell_opt->second;
+  } else {
+    const Rectangle br = board::BoardRect();
+    const float pitch = board::Pitch();
+    col = std::clamp(static_cast<int>((mp.x - br.x) / pitch), 0, board::kCols - 1);
+    row = std::clamp(static_cast<int>((mp.y - br.y) / pitch), 0, board::kRows - 1);
+  }
 
   const bool lmb_pressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
   const bool lmb_released = IsMouseButtonReleased(MOUSE_BUTTON_LEFT);
@@ -1101,7 +1131,7 @@ void GameLayer::HandleEditorMouse() {
         drag_start_y_ = row;
       }
       if (lmb_released && dragging_) {
-        if (in_board) commit_shape(false);
+        commit_shape(false);
         dragging_ = false;
       }
       if (rmb_pressed) dragging_ = false;  // cancel
@@ -1122,7 +1152,7 @@ void GameLayer::HandleEditorMouse() {
         drag_start_y_ = row;
       }
       if (lmb_released && dragging_) {
-        if (in_board) CutRegionToClipboard(drag_start_x_, drag_start_y_, col, row);
+        CutRegionToClipboard(drag_start_x_, drag_start_y_, col, row);
         dragging_ = false;
       }
       if (rmb_pressed) dragging_ = false;
@@ -1151,7 +1181,7 @@ void GameLayer::HandleEditorMouse() {
             drag_start_y_ = row;
           }
           if (lmb_released && dragging_) {
-            if (in_board) commit_shape(true);
+            commit_shape(true);
             dragging_ = false;
           }
           if (rmb_pressed) dragging_ = false;
