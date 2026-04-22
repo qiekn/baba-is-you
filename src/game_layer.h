@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <filesystem>
 #include <optional>
 #include <string>
@@ -158,6 +159,9 @@ class GameLayer : public Layer {
   Tool tool_ = Tool::Brush;
   EraseMode erase_mode_ = EraseMode::Point;
   int palette_layer_ = 1;  // 0 = backgrounds, 1 = objects, 2 = text
+
+  // Tool icons, indexed by Tool enum (Eraser sub-modes reuse the same art).
+  std::array<Texture2D, 7> tool_icons_{};
 
   // Shape / select drag state. When `dragging_` is true, `drag_start_` holds
   // the anchor cell and the current mouse cell is the live endpoint.

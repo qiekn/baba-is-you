@@ -59,18 +59,6 @@ void DrawSpriteInCell(const Texture2D& tex, Rectangle cell, Color color) {
   DrawTexturePro(tex, src, cell, {0.0f, 0.0f}, 0.0f, color);
 }
 
-// Tool/sub-mode icons drawn procedurally on top of a regular ImGui::Button.
-// Each toolbar button uses one of these so we don't ship any extra art.
-enum class ToolGlyph : std::uint8_t {
-  Pen,
-  Line,
-  RectOutline,
-  RectFilled,
-  Select,
-  Bucket,
-  Eraser,
-};
-
 // 4-bit neighbor mask: right=1, up=2, left=4, down=8. Matches the variant
 // number encoded in Baba Is You sprite filenames (wall_<mask>_<frame>.png).
 int ComputeTileMask(const entt::registry& registry, ObjectId id, int x, int y) {
@@ -109,6 +97,20 @@ std::optional<Color> GameLayer::LevelEdge() const {
 
 void GameLayer::OnAttach() {
   sprites_.LoadAll(kSpritesDir);
+  // Editor toolbar icons. Indices must match the Tool enum order.
+  const char* kToolIconPaths[7] = {
+      "icon/brush.png",        // Tool::Brush
+      "icon/line.png",         // Tool::Line
+      "icon/rect-outline.png", // Tool::RectOutline
+      "icon/rect-full.png",    // Tool::RectFilled
+      "icon/select.png",       // Tool::Select
+      "icon/paint.png",        // Tool::Bucket
+      "icon/eraser.png",       // Tool::Eraser
+  };
+  for (std::size_t i = 0; i < tool_icons_.size(); ++i) {
+    tool_icons_[i] = LoadTexture(kToolIconPaths[i]);
+    if (tool_icons_[i].id != 0) SetTextureFilter(tool_icons_[i], TEXTURE_FILTER_POINT);
+  }
   LoadWorld(kWorldFile, world_);
   LoadProgress(kProgressFile, progress_);
   // Scan the imported-level directory (may not exist in a fresh checkout).
@@ -138,6 +140,10 @@ void GameLayer::OnAttach() {
 
 void GameLayer::OnDetach() {
   sprites_.Unload();
+  for (auto& t : tool_icons_) {
+    if (t.id != 0) UnloadTexture(t);
+    t = Texture2D{};
+  }
   registry_.clear();
   UnloadTrack();
 }
@@ -716,86 +722,16 @@ void GameLayer::DrawEditorPanel() {
 
 namespace {
 
-// Renders a tiny glyph centered in `rect`. Uses the window's draw list so we
-// can stamp vector icons on top of a regular ImGui::Button frame.
-void DrawToolGlyph(ImDrawList* dl, const ImVec2& center, float size, ImU32 col,
-                   ToolGlyph glyph) {
-  const float h = size * 0.5f;
-  switch (glyph) {
-    case ToolGlyph::Pen: {
-      // A slanted pencil: body + tip.
-      ImVec2 a{center.x - h * 0.7f, center.y + h * 0.7f};
-      ImVec2 b{center.x + h * 0.3f, center.y - h * 0.3f};
-      dl->AddLine(a, b, col, 2.2f);
-      dl->AddLine({center.x + h * 0.3f, center.y - h * 0.3f},
-                  {center.x + h * 0.7f, center.y - h * 0.7f}, col, 2.2f);
-      break;
-    }
-    case ToolGlyph::Line: {
-      dl->AddLine({center.x - h * 0.8f, center.y + h * 0.8f},
-                  {center.x + h * 0.8f, center.y - h * 0.8f}, col, 2.0f);
-      break;
-    }
-    case ToolGlyph::RectOutline: {
-      dl->AddRect({center.x - h * 0.8f, center.y - h * 0.8f},
-                  {center.x + h * 0.8f, center.y + h * 0.8f}, col, 0.0f, 0, 2.0f);
-      break;
-    }
-    case ToolGlyph::RectFilled: {
-      dl->AddRectFilled({center.x - h * 0.8f, center.y - h * 0.8f},
-                        {center.x + h * 0.8f, center.y + h * 0.8f}, col);
-      break;
-    }
-    case ToolGlyph::Select: {
-      // Dashed rectangle: draw four gap-separated segments per side.
-      const float x0 = center.x - h * 0.8f;
-      const float y0 = center.y - h * 0.8f;
-      const float x1 = center.x + h * 0.8f;
-      const float y1 = center.y + h * 0.8f;
-      const float step = (x1 - x0) / 5.0f;
-      for (int i = 0; i < 5; i += 2) {
-        dl->AddLine({x0 + step * i, y0}, {x0 + step * (i + 1), y0}, col, 1.6f);
-        dl->AddLine({x0 + step * i, y1}, {x0 + step * (i + 1), y1}, col, 1.6f);
-        dl->AddLine({x0, y0 + step * i}, {x0, y0 + step * (i + 1)}, col, 1.6f);
-        dl->AddLine({x1, y0 + step * i}, {x1, y0 + step * (i + 1)}, col, 1.6f);
-      }
-      break;
-    }
-    case ToolGlyph::Bucket: {
-      // Triangle bucket silhouette + drop.
-      ImVec2 t0{center.x - h * 0.8f, center.y - h * 0.2f};
-      ImVec2 t1{center.x + h * 0.8f, center.y - h * 0.2f};
-      ImVec2 t2{center.x, center.y + h * 0.7f};
-      dl->AddTriangle(t0, t1, t2, col, 1.6f);
-      dl->AddCircleFilled({center.x + h * 0.7f, center.y + h * 0.6f}, h * 0.15f, col);
-      break;
-    }
-    case ToolGlyph::Eraser: {
-      // Rotated square with a diagonal line showing worn corner.
-      ImVec2 pts[4] = {
-          {center.x - h * 0.8f, center.y},
-          {center.x, center.y - h * 0.8f},
-          {center.x + h * 0.8f, center.y},
-          {center.x, center.y + h * 0.8f},
-      };
-      dl->AddPolyline(pts, 4, col, ImDrawFlags_Closed, 1.8f);
-      dl->AddLine({center.x - h * 0.4f, center.y - h * 0.4f},
-                  {center.x + h * 0.4f, center.y + h * 0.4f}, col, 1.6f);
-      break;
-    }
-  }
-}
-
-bool ToolIconButton(const char* id, ToolGlyph glyph, bool selected,
+bool ToolIconButton(const char* id, const Texture2D& icon, bool selected,
                     const char* tooltip, float size) {
   if (selected) ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.5f, 0.9f, 1.0f));
-  const bool clicked = ImGui::Button(id, {size, size});
+  bool clicked = false;
+  if (icon.id != 0) {
+    clicked = ImGui::ImageButton(id, (ImTextureID)(intptr_t)icon.id, {size, size});
+  } else {
+    clicked = ImGui::Button(id, {size, size});
+  }
   if (selected) ImGui::PopStyleColor();
-  ImDrawList* dl = ImGui::GetWindowDrawList();
-  const ImVec2 p0 = ImGui::GetItemRectMin();
-  const ImVec2 p1 = ImGui::GetItemRectMax();
-  const ImVec2 c{(p0.x + p1.x) * 0.5f, (p0.y + p1.y) * 0.5f};
-  DrawToolGlyph(dl, c, size, ImGui::GetColorU32(ImGuiCol_Text), glyph);
   if (tooltip && ImGui::IsItemHovered()) ImGui::SetTooltip("%s", tooltip);
   return clicked;
 }
@@ -808,49 +744,51 @@ void GameLayer::DrawToolbar() {
 
   struct ToolEntry {
     Tool tool;
-    ToolGlyph glyph;
     const char* id;
     const char* tip;
   };
   const ToolEntry entries[] = {
-      {Tool::Brush, ToolGlyph::Pen, "##t_brush", "Brush (pen)"},
-      {Tool::Line, ToolGlyph::Line, "##t_line", "Line"},
-      {Tool::RectOutline, ToolGlyph::RectOutline, "##t_rect", "Rectangle outline"},
-      {Tool::RectFilled, ToolGlyph::RectFilled, "##t_rectf", "Filled rectangle"},
-      {Tool::Select, ToolGlyph::Select, "##t_sel", "Select / cut / paste"},
-      {Tool::Bucket, ToolGlyph::Bucket, "##t_fill", "Paint bucket (flood)"},
-      {Tool::Eraser, ToolGlyph::Eraser, "##t_erase", "Eraser"},
+      {Tool::Brush, "##t_brush", "Brush (pen)"},
+      {Tool::Line, "##t_line", "Line"},
+      {Tool::RectOutline, "##t_rect", "Rectangle outline"},
+      {Tool::RectFilled, "##t_rectf", "Filled rectangle"},
+      {Tool::Select, "##t_sel", "Select / cut / paste"},
+      {Tool::Bucket, "##t_fill", "Paint bucket (flood)"},
+      {Tool::Eraser, "##t_erase", "Eraser"},
   };
   for (std::size_t i = 0; i < sizeof(entries) / sizeof(entries[0]); ++i) {
     if (i > 0) ImGui::SameLine();
     const auto& e = entries[i];
-    if (ToolIconButton(e.id, e.glyph, tool_ == e.tool, e.tip, kBtn)) {
+    const Texture2D& icon = tool_icons_[static_cast<int>(e.tool)];
+    if (ToolIconButton(e.id, icon, tool_ == e.tool, e.tip, kBtn)) {
       tool_ = e.tool;
       dragging_ = false;
       if (tool_ != Tool::Select) DiscardClipboard();
     }
   }
 
-  // Eraser sub-mode selector: shape it reuses when Eraser is active.
+  // Eraser sub-mode selector: the shape it reuses when Eraser is active.
+  // Each sub-mode reuses the Tool icon of its equivalent shape.
   if (tool_ == Tool::Eraser) {
     ImGui::TextUnformatted("Eraser mode");
     struct ModeEntry {
       EraseMode mode;
-      ToolGlyph glyph;
+      Tool icon_tool;  // which tool_icons_ entry to draw
       const char* id;
       const char* tip;
     };
     const ModeEntry modes[] = {
-        {EraseMode::Point, ToolGlyph::Pen, "##e_pt", "Single cell"},
-        {EraseMode::Line, ToolGlyph::Line, "##e_ln", "Line"},
-        {EraseMode::RectOutline, ToolGlyph::RectOutline, "##e_ro", "Rectangle outline"},
-        {EraseMode::RectFilled, ToolGlyph::RectFilled, "##e_rf", "Filled rectangle"},
-        {EraseMode::Bucket, ToolGlyph::Bucket, "##e_bk", "Flood fill erase"},
+        {EraseMode::Point, Tool::Brush, "##e_pt", "Single cell"},
+        {EraseMode::Line, Tool::Line, "##e_ln", "Line"},
+        {EraseMode::RectOutline, Tool::RectOutline, "##e_ro", "Rectangle outline"},
+        {EraseMode::RectFilled, Tool::RectFilled, "##e_rf", "Filled rectangle"},
+        {EraseMode::Bucket, Tool::Bucket, "##e_bk", "Flood fill erase"},
     };
     for (std::size_t i = 0; i < sizeof(modes) / sizeof(modes[0]); ++i) {
       if (i > 0) ImGui::SameLine();
       const auto& m = modes[i];
-      if (ToolIconButton(m.id, m.glyph, erase_mode_ == m.mode, m.tip, kBtn)) {
+      const Texture2D& icon = tool_icons_[static_cast<int>(m.icon_tool)];
+      if (ToolIconButton(m.id, icon, erase_mode_ == m.mode, m.tip, kBtn)) {
         erase_mode_ = m.mode;
         dragging_ = false;
       }
