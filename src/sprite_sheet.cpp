@@ -10,25 +10,31 @@ Texture2D LoadSpritePixelArt(const std::filesystem::path& path) {
   if (img.data == nullptr) {
     return Texture2D{};
   }
-  // Sprites ship in two formats: most frames are white-on-black RGB (no alpha
-  // channel), where we want luminance to become the mask. A few PNGs (e.g.
-  // baba_0_1.png) are RGBA with the silhouette baked into the alpha channel
-  // and black RGB everywhere — for those, luminance is zero so we must read
-  // the existing alpha instead. Detect the source format before normalizing.
-  const bool source_has_alpha = (img.format == PIXELFORMAT_UNCOMPRESSED_R8G8B8A8 ||
-                                 img.format == PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA);
+  // Sprites ship in two flavours:
+  //   1) White-on-black RGB (most files). The mask is luminance.
+  //   2) RGBA with the silhouette in the alpha channel and black RGB
+  //      (e.g. baba_0_1.png). The mask is alpha.
+  // Some (1)-style files are still saved as RGBA with alpha=255 everywhere,
+  // so "source has alpha channel" is not enough — we need to detect whether
+  // alpha actually varies. If it does, treat it as the mask; otherwise use
+  // luminance.
   ImageFormat(&img, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
   auto* bytes = static_cast<unsigned char*>(img.data);
   const int count = img.width * img.height;
+  unsigned char alpha_min = 255, alpha_max = 0;
+  for (int i = 0; i < count; ++i) {
+    const unsigned char a = bytes[i * 4 + 3];
+    alpha_min = std::min(alpha_min, a);
+    alpha_max = std::max(alpha_max, a);
+  }
+  const bool alpha_carries_mask = (alpha_max > alpha_min);
   for (int i = 0; i < count; ++i) {
     const unsigned char r = bytes[i * 4 + 0];
     const unsigned char g = bytes[i * 4 + 1];
     const unsigned char b = bytes[i * 4 + 2];
     const unsigned char a = bytes[i * 4 + 3];
     const unsigned char lum = static_cast<unsigned char>((r + g + b) / 3);
-    // Take whichever channel actually carries the silhouette so DrawTexturePro's
-    // tint can multiply onto a clean white shape regardless of source encoding.
-    const unsigned char mask = source_has_alpha ? std::max(lum, a) : lum;
+    const unsigned char mask = alpha_carries_mask ? a : lum;
     bytes[i * 4 + 0] = 255;
     bytes[i * 4 + 1] = 255;
     bytes[i * 4 + 2] = 255;
