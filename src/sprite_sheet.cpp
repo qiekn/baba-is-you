@@ -61,7 +61,7 @@ bool SpriteSheet::LoadAll(const std::filesystem::path& sprites_dir) {
 
   for (int i = 0; i < kObjectCount; ++i) {
     const auto id = static_cast<ObjectId>(i);
-    const std::string name{NameOf(id)};
+    const std::string name{InfoOf(id).sprite};
 
     if (IsAutoTiled(id)) {
       for (int v = 0; v < 16; ++v) load_variant(name, i, v);
@@ -75,7 +75,9 @@ bool SpriteSheet::LoadAll(const std::filesystem::path& sprites_dir) {
   }
 
   for (int i = 0; i < kTextCount; ++i) {
-    const std::string name = "text_" + std::string{NameOf(static_cast<TextId>(i))};
+    // TextInfo::name is the on-disk basename — most are "text_<short>" but a
+    // few (e.g. "default") drop the prefix.
+    const std::string name{InfoOf(static_cast<TextId>(i)).name};
     for (int f = 0; f < kFrameCount; ++f) {
       const std::filesystem::path p = sprites_dir / (name + "_0_" + std::to_string(f + 1) + ".png");
       auto tex = LoadSpritePixelArt(p);

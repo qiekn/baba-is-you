@@ -145,7 +145,9 @@ def gen(values_lua, out_dir):
         'inline constexpr int kTextCount = static_cast<int>(TextId::kCount);',
         '',
         'struct ObjectInfo {',
-        '  std::string_view name;    // sprite base ("baba", "wall", ...)',
+        '  std::string_view name;    // canonical id ("baba", "wall", ...)',
+        '  std::string_view sprite;  // on-disk sprite basename — usually == name, but',
+        '                            // some objects reuse another\'s sprite (lava→water).',
         '  int tile_x, tile_y;       // palette tile coord from values.lua',
         '  int colour_x, colour_y;   // palette colour coord',
         '  int layer;                // render layer (higher = on top)',
@@ -226,8 +228,9 @@ def gen(values_lua, out_dir):
         cx, cy = r.get('colour', [0, 3])
         layer = r.get('layer', 16)
         tr, tg, tb = tint_for(r.get('colour'))
+        sprite = r.get('sprite', r['name'])
         ids_cpp.append(
-            f'  {{"{r["name"]}", {tx}, {ty}, {cx}, {cy}, {layer}, '
+            f'  {{"{r["name"]}", "{sprite}", {tx}, {ty}, {cx}, {cy}, {layer}, '
             f'{tiling_lit(r.get("tiling", -1))}, {tr}, {tg}, {tb}}},'
         )
     ids_cpp.append('};')
@@ -309,9 +312,12 @@ def gen(values_lua, out_dir):
 
     # ------------------------------------------------- sprite manifest
     manifest = []
+    seen_manifest = set()
     for r in ordered_objects:
         tiling = r.get('tiling', -1)
-        name = r['name']
+        # Use the sprite override (lava uses water's sprite). Multiple objects
+        # can share a sprite, so dedupe to avoid wasted copy_sprites.py work.
+        name = r.get('sprite', r['name'])
         variants = []
         if tiling == 1:  # auto-tile 0..15
             variants = list(range(16))
@@ -323,7 +329,11 @@ def gen(values_lua, out_dir):
             variants = [0]
         for v in variants:
             for f in (1, 2, 3):
-                manifest.append(f'{name}_{v}_{f}.png')
+                entry = f'{name}_{v}_{f}.png'
+                if entry in seen_manifest:
+                    continue
+                seen_manifest.add(entry)
+                manifest.append(entry)
     for r in ordered_texts:
         for f in (1, 2, 3):
             manifest.append(f'{r["name"]}_0_{f}.png')

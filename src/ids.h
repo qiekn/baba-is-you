@@ -165,7 +165,9 @@ inline constexpr int kObjectCount = static_cast<int>(ObjectId::kCount);
 inline constexpr int kTextCount = static_cast<int>(TextId::kCount);
 
 struct ObjectInfo {
-  std::string_view name;    // sprite base ("baba", "wall", ...)
+  std::string_view name;    // canonical id ("baba", "wall", ...)
+  std::string_view sprite;  // on-disk sprite basename — usually == name, but
+                            // some objects reuse another's sprite (lava→water).
   int tile_x, tile_y;       // palette tile coord from values.lua
   int colour_x, colour_y;   // palette colour coord
   int layer;                // render layer (higher = on top)
