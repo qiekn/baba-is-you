@@ -54,15 +54,18 @@ class GameLayer : public Layer {
   void RunWinDefeat();
 
   // Particles (visual only — not part of ECS)
+  enum class ParticleStyle : std::uint8_t { Sparkle, Smoke };
   struct Particle {
     Vector2 pos;
     float max_size;
     float life;
     float max_life;
     float rot_deg;
+    ParticleStyle style = ParticleStyle::Sparkle;
   };
   void UpdateParticles(float dt);
   void DrawParticles() const;
+  void SpawnSmokeAt(int cell_x, int cell_y);
 
   // Audio
   void LoadTrack(int index);
@@ -197,6 +200,13 @@ class GameLayer : public Layer {
   int track_index_ = 0;
   float volume_ = 0.4f;
   bool muted_ = false;
+
+  // Step SFX — synthesized once on attach (the original game's move.ogg is
+  // bundled inside Assets.dat and not redistributable, so we generate a tiny
+  // thump procedurally instead).
+  Sound step_sound_{};
+  bool step_sound_loaded_ = false;
+  float sfx_volume_ = 0.6f;
 
   // World / progression
   World world_;

@@ -4,6 +4,7 @@
 #include <array>
 #include <cctype>
 #include <cmath>
+#include <cstdlib>
 #include <cstring>
 #include <string>
 
@@ -77,6 +78,38 @@ int ComputeTileMask(const entt::registry& registry, ObjectId id, int x, int y) {
   return mask;
 }
 
+// Build a tiny synthesized "step" thump: a short sine pop with a noise
+// transient and an exponential decay envelope. ~110ms, mono 22.05kHz.
+// The original game's move.ogg lives inside Assets.dat and isn't redistributable,
+// so we synthesize a similar percussive cue at runtime.
+Sound SynthStepSound() {
+  constexpr int kSampleRate = 22050;
+  constexpr float kDuration = 0.11f;
+  const int n = static_cast<int>(kSampleRate * kDuration);
+  Wave w{};
+  w.frameCount = static_cast<unsigned int>(n);
+  w.sampleRate = kSampleRate;
+  w.sampleSize = 16;
+  w.channels = 1;
+  auto* samples = static_cast<short*>(std::malloc(sizeof(short) * n));
+  if (!samples) return Sound{};
+  for (int i = 0; i < n; ++i) {
+    const float t = static_cast<float>(i) / kSampleRate;
+    const float env = std::exp(-28.0f * t);
+    const float noise =
+        static_cast<float>(GetRandomValue(-100, 100)) / 100.0f * std::exp(-90.0f * t);
+    // Slight downward pitch sweep gives the thump some body.
+    const float freq = 140.0f - 40.0f * t / kDuration;
+    const float tone = std::sin(2.0f * PI * freq * t);
+    const float v = (tone * 0.55f + noise * 0.45f) * env;
+    samples[i] = static_cast<short>(std::clamp(v, -1.0f, 1.0f) * 11000.0f);
+  }
+  w.data = samples;
+  Sound s = LoadSoundFromWave(w);
+  UnloadWave(w);
+  return s;
+}
+
 }  // namespace
 
 GameLayer::GameLayer() : Layer("GameLayer") {}
@@ -136,6 +169,11 @@ void GameLayer::OnAttach() {
   }
   LoadLevelFromPath(kDefaultLevel);
   LoadTrack(track_index_);
+  if (IsAudioDeviceReady()) {
+    step_sound_ = SynthStepSound();
+    step_sound_loaded_ = (step_sound_.frameCount > 0);
+    if (step_sound_loaded_) SetSoundVolume(step_sound_, sfx_volume_);
+  }
 }
 
 void GameLayer::OnDetach() {
@@ -146,6 +184,10 @@ void GameLayer::OnDetach() {
   }
   registry_.clear();
   UnloadTrack();
+  if (step_sound_loaded_) {
+    UnloadSound(step_sound_);
+    step_sound_loaded_ = false;
+  }
 }
 
 void GameLayer::OnUpdate(float dt) {
@@ -235,13 +277,17 @@ void GameLayer::OnUpdate(float dt) {
 void GameLayer::OnRender() {
   auto draw_object = [&](entt::entity e, const Cell& cell, const ObjectBlock& object) {
     int variant = 0;
+    int frame = current_frame_;
     if (IsAutoTiled(object.id)) {
       variant = ComputeTileMask(registry_, object.id, cell.x, cell.y);
     } else if (IsDirectional(object.id)) {
       const Direction dir = registry_.try_get<Facing>(e) ? registry_.get<Facing>(e).dir : Direction::Right;
       variant = DirectionToVariant(dir);
+      // Directional characters animate per-step rather than via the global
+      // idle cycle, so legs only shuffle when the entity actually moves.
+      if (auto* af = registry_.try_get<AnimFrame>(e)) frame = af->frame;
     }
-    const auto& tex = sprites_.Get(object.id, current_frame_, variant);
+    const auto& tex = sprites_.Get(object.id, frame, variant);
     DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(object.id));
   };
 
@@ -474,11 +520,23 @@ bool GameLayer::TryMove(entt::entity who, Direction dir) {
   const int tx = c.x + dx;
   const int ty = c.y + dy;
   if (!CanEnter(tx, ty, dx, dy)) return false;
+  const int from_x = c.x;
+  const int from_y = c.y;
   PushChain(tx, ty, dx, dy);
   auto& mut = registry_.get<Cell>(who);
   mut.x = tx;
   mut.y = ty;
   if (auto* facing = registry_.try_get<Facing>(who)) facing->dir = dir;
+  // Step the walk frame so directional sprites visibly animate per-move.
+  if (auto* af = registry_.try_get<AnimFrame>(who)) {
+    af->frame = (af->frame % 3) + 1;
+  }
+  // Dust puff at the vacated cell — only for directional walkers (Baba & co.)
+  // so pushed boxes don't spam particles.
+  if (auto* obj = registry_.try_get<ObjectBlock>(who); obj && IsDirectional(obj->id)) {
+    SpawnSmokeAt(from_x, from_y);
+    if (step_sound_loaded_ && !muted_) PlaySound(step_sound_);
+  }
   return true;
 }
 
@@ -580,8 +638,16 @@ void GameLayer::UpdateParticles(float dt) {
 
 void GameLayer::DrawParticles() const {
   for (const auto& p : particles_) {
-    const float age = 1.0f - (p.life / p.max_life);               // 0 -> 1
-    const float pulse = 1.0f - std::abs(age - 0.5f) * 2.0f;        // 0 -> 1 -> 0
+    const float t = 1.0f - (p.life / p.max_life);  // 0 -> 1 over lifetime
+    if (p.style == ParticleStyle::Smoke) {
+      // Dust puff: grow + fade out.
+      const float radius = p.max_size * (0.4f + 0.6f * t);
+      const unsigned char alpha = static_cast<unsigned char>(180.0f * (1.0f - t));
+      DrawCircleV(p.pos, radius, Color{210, 200, 180, alpha});
+      continue;
+    }
+    // Sparkle: pulse + spin.
+    const float pulse = 1.0f - std::abs(t - 0.5f) * 2.0f;        // 0 -> 1 -> 0
     const float size = p.max_size * pulse;
     if (size < 1.0f) continue;
     const float thick = std::max(1.5f, size * 0.22f);
@@ -592,6 +658,24 @@ void GameLayer::DrawParticles() const {
     const Rectangle vert = {p.pos.x, p.pos.y, thick, size};
     DrawRectanglePro(horiz, {size * 0.5f, thick * 0.5f}, p.rot_deg, color);
     DrawRectanglePro(vert, {thick * 0.5f, size * 0.5f}, p.rot_deg, color);
+  }
+}
+
+void GameLayer::SpawnSmokeAt(int cell_x, int cell_y) {
+  const Rectangle r = board::CellRect(cell_x, cell_y);
+  // Two or three little puffs so a step reads as a small cloud, not a single dot.
+  const int n = GetRandomValue(2, 3);
+  for (int i = 0; i < n; ++i) {
+    Particle p;
+    p.pos = {
+        r.x + r.width * 0.5f + static_cast<float>(GetRandomValue(-6, 6)),
+        r.y + r.height * 0.7f + static_cast<float>(GetRandomValue(-4, 4)),
+    };
+    p.max_size = r.width * 0.18f + static_cast<float>(GetRandomValue(-2, 3));
+    p.life = p.max_life = 0.35f + 0.01f * GetRandomValue(-5, 8);
+    p.rot_deg = 0.0f;
+    p.style = ParticleStyle::Smoke;
+    particles_.push_back(p);
   }
 }
 
@@ -910,6 +994,9 @@ void GameLayer::DrawSettingsPanel() {
     ImGui::EndCombo();
   }
   ImGui::SliderFloat("Volume", &volume_, 0.0f, 1.0f, "%.2f");
+  if (ImGui::SliderFloat("SFX volume", &sfx_volume_, 0.0f, 1.0f, "%.2f")) {
+    if (step_sound_loaded_) SetSoundVolume(step_sound_, sfx_volume_);
+  }
   ImGui::Checkbox("Mute", &muted_);
   ImGui::SameLine();
   if (music_loaded_) {
