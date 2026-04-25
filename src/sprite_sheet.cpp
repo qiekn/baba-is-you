@@ -19,36 +19,27 @@ Texture2D LoadSpritePixelArt(const std::filesystem::path& path) {
   auto* bytes = static_cast<unsigned char*>(img.data);
   const int count = img.width * img.height;
 
-  // Decide where the silhouette mask comes from. The original game ships
-  // sprites in two flavours and stb_image normalises both to RGBA:
-  //   1. RGB + tRNS chunk — stb expands it to RGBA, so alpha already encodes
-  //      the silhouette and RGB keeps grayscale shading inside the body
-  //      (e.g. baba's eyes are darker than the body fill so the tint
-  //      multiplication produces a darker pupil).
-  //   2. Plain RGB white-on-black — no transparency info, alpha is uniformly
-  //      255 after format conversion. Fall back to luminance and force RGB
-  //      to white so the tint can paint a clean shape without black bleed.
-  unsigned char alpha_min = 255, alpha_max = 0;
+  // Original sprites encode the silhouette in *two* ways depending on the
+  // asset, and we have to satisfy both:
+  //   - Characters (baba/keke/me): silhouette in alpha (RGB+tRNS expanded by
+  //     stb_image), interior shading like darker eyes baked into the RGB
+  //     grayscale. We must keep the body opaque or eyes punch holes.
+  //   - Auto-tile pieces (wall_*): the structural rounded corner is encoded
+  //     as pure-black RGB pixels with alpha left at 255 (only 1-3 pixels per
+  //     corner sprite have alpha < 255). If we treated alpha as the mask, the
+  //     rounded corner would render as a black square edge instead of fading
+  //     to background.
+  // Common rule that handles both: pure-black RGB ⇒ transparent; otherwise
+  // keep the source alpha. The RGB grayscale stays intact so DrawTexturePro's
+  // tint multiplies into the right shading (darker eyes, darker brick lines).
   for (int i = 0; i < count; ++i) {
-    const unsigned char a = bytes[i * 4 + 3];
-    alpha_min = std::min(alpha_min, a);
-    alpha_max = std::max(alpha_max, a);
-  }
-  const bool alpha_carries_mask = (alpha_max > alpha_min);
-  if (!alpha_carries_mask) {
-    for (int i = 0; i < count; ++i) {
-      const unsigned char r = bytes[i * 4 + 0];
-      const unsigned char g = bytes[i * 4 + 1];
-      const unsigned char b = bytes[i * 4 + 2];
-      const unsigned char lum = static_cast<unsigned char>((r + g + b) / 3);
-      bytes[i * 4 + 0] = 255;
-      bytes[i * 4 + 1] = 255;
-      bytes[i * 4 + 2] = 255;
-      bytes[i * 4 + 3] = lum;
+    const unsigned char r = bytes[i * 4 + 0];
+    const unsigned char g = bytes[i * 4 + 1];
+    const unsigned char b = bytes[i * 4 + 2];
+    if (r == 0 && g == 0 && b == 0) {
+      bytes[i * 4 + 3] = 0;
     }
   }
-  // Otherwise leave the data intact: alpha is already the mask and the
-  // grayscale RGB will multiply correctly against the tint.
 
   Texture2D tex = LoadTextureFromImage(img);
   UnloadImage(img);
