@@ -198,6 +198,16 @@ void GameLayer::OnUpdate(float dt) {
     anim_timer_ -= period;
     current_frame_ = (current_frame_ % 3) + 1;
   }
+  // Per-entity idle wobble for directional walkers — keeps the original 3-frame
+  // jitter going while standing still. TryMove also bumps `frame` on a successful
+  // step, so movement still advances the cycle in lockstep with the input.
+  for (auto [e, af] : registry_.view<AnimFrame>().each()) {
+    af.t += dt;
+    while (af.t >= period) {
+      af.t -= period;
+      af.frame = (af.frame % 3) + 1;
+    }
+  }
 
   // Recompute rules every frame so the editor sees live feedback.
   RecomputeRules();
@@ -530,6 +540,7 @@ bool GameLayer::TryMove(entt::entity who, Direction dir) {
   // Step the walk frame so directional sprites visibly animate per-move.
   if (auto* af = registry_.try_get<AnimFrame>(who)) {
     af->frame = (af->frame % 3) + 1;
+    af->t = 0.0f;  // restart the idle clock so the next ambient tick is a full period away
   }
   // Dust puff at the vacated cell — only for directional walkers (Baba & co.)
   // so pushed boxes don't spam particles.

@@ -10,10 +10,13 @@ Texture2D LoadSpritePixelArt(const std::filesystem::path& path) {
   if (img.data == nullptr) {
     return Texture2D{};
   }
-  // Sprites ship as white-on-black RGB. Reinterpret each pixel's luminance as
-  // alpha and force RGB to white; that way DrawTexturePro's tint parameter
-  // multiplies directly into the visible color without the black background
-  // bleeding through at the edges.
+  // Sprites ship in two formats: most frames are white-on-black RGB (no alpha
+  // channel), where we want luminance to become the mask. A few PNGs (e.g.
+  // baba_0_1.png) are RGBA with the silhouette baked into the alpha channel
+  // and black RGB everywhere — for those, luminance is zero so we must read
+  // the existing alpha instead. Detect the source format before normalizing.
+  const bool source_has_alpha = (img.format == PIXELFORMAT_UNCOMPRESSED_R8G8B8A8 ||
+                                 img.format == PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA);
   ImageFormat(&img, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
   auto* bytes = static_cast<unsigned char*>(img.data);
   const int count = img.width * img.height;
@@ -21,11 +24,15 @@ Texture2D LoadSpritePixelArt(const std::filesystem::path& path) {
     const unsigned char r = bytes[i * 4 + 0];
     const unsigned char g = bytes[i * 4 + 1];
     const unsigned char b = bytes[i * 4 + 2];
+    const unsigned char a = bytes[i * 4 + 3];
     const unsigned char lum = static_cast<unsigned char>((r + g + b) / 3);
+    // Take whichever channel actually carries the silhouette so DrawTexturePro's
+    // tint can multiply onto a clean white shape regardless of source encoding.
+    const unsigned char mask = source_has_alpha ? std::max(lum, a) : lum;
     bytes[i * 4 + 0] = 255;
     bytes[i * 4 + 1] = 255;
     bytes[i * 4 + 2] = 255;
-    bytes[i * 4 + 3] = lum;
+    bytes[i * 4 + 3] = mask;
   }
 
   Texture2D tex = LoadTextureFromImage(img);
