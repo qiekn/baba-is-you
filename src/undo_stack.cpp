@@ -14,8 +14,8 @@ Snapshot CaptureSnapshot(const entt::registry& registry) {
     if (const auto* facing = registry.try_get<Facing>(e)) {
       row.facing = facing->dir;
     }
-    if (const auto* kind = registry.try_get<Kind>(e)) {
-      row.id = kind->id;
+    if (const auto* object = registry.try_get<ObjectBlock>(e)) {
+      row.id = object->id;
     } else if (const auto* text = registry.try_get<TextBlock>(e)) {
       row.id = text->id;
     } else {
@@ -35,7 +35,7 @@ void RestoreSnapshot(entt::registry& registry, const Snapshot& snapshot) {
     registry.emplace<Facing>(e, row.facing);
     registry.emplace<AnimFrame>(e);
     if (std::holds_alternative<ObjectId>(row.id)) {
-      registry.emplace<Kind>(e, std::get<ObjectId>(row.id));
+      registry.emplace<ObjectBlock>(e, std::get<ObjectId>(row.id));
     } else {
       registry.emplace<TextBlock>(e, std::get<TextId>(row.id));
     }

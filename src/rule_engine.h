@@ -36,6 +36,6 @@ class RuleBoard {
 std::vector<Rule> ParseRules(const RuleBoard& board);
 
 // Clears all IsYou/IsWin/IsStop/IsPush/IsMove/IsDefeat tags, then re-applies
-// tags to entities whose Kind matches a rule subject. Text entities are always
+// tags to entities whose ObjectBlock matches a rule subject. Text entities are always
 // tagged IsPush.
 void ApplyRules(entt::registry& registry, const std::vector<Rule>& rules);

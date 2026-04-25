@@ -7,7 +7,7 @@ struct Cell {
   int y = 0;
 };
 
-struct Kind {
+struct ObjectBlock {
   ObjectId id;
 };
 

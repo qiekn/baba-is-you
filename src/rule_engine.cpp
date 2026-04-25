@@ -52,9 +52,9 @@ std::vector<Rule> ParseRules(const RuleBoard& board) {
 namespace {
 
 template <typename Tag>
-void ApplyTagToKind(entt::registry& r, ObjectId target) {
-  for (auto [e, kind] : r.view<const Kind>().each()) {
-    if (kind.id == target) r.emplace_or_replace<Tag>(e);
+void ApplyTagToObject(entt::registry& r, ObjectId target) {
+  for (auto [e, object] : r.view<const ObjectBlock>().each()) {
+    if (object.id == target) r.emplace_or_replace<Tag>(e);
   }
 }
 
@@ -79,22 +79,22 @@ void ApplyRules(entt::registry& registry, const std::vector<Rule>& rules) {
 
     switch (rule.predicate) {
       case TextId::You:
-        ApplyTagToKind<IsYou>(registry, *subject);
+        ApplyTagToObject<IsYou>(registry, *subject);
         break;
       case TextId::Win:
-        ApplyTagToKind<IsWin>(registry, *subject);
+        ApplyTagToObject<IsWin>(registry, *subject);
         break;
       case TextId::Stop:
-        ApplyTagToKind<IsStop>(registry, *subject);
+        ApplyTagToObject<IsStop>(registry, *subject);
         break;
       case TextId::Push:
-        ApplyTagToKind<IsPush>(registry, *subject);
+        ApplyTagToObject<IsPush>(registry, *subject);
         break;
       case TextId::Move:
-        ApplyTagToKind<IsMove>(registry, *subject);
+        ApplyTagToObject<IsMove>(registry, *subject);
         break;
       case TextId::Defeat:
-        ApplyTagToKind<IsDefeat>(registry, *subject);
+        ApplyTagToObject<IsDefeat>(registry, *subject);
         break;
       default:
         // Noun predicates (transformation) are follow-up.

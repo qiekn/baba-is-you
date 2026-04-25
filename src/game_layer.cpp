@@ -64,8 +64,8 @@ void DrawSpriteInCell(const Texture2D& tex, Rectangle cell, Color color) {
 int ComputeTileMask(const entt::registry& registry, ObjectId id, int x, int y) {
   auto has_same = [&](int nx, int ny) {
     if (nx < 0 || nx >= board::kCols || ny < 0 || ny >= board::kRows) return false;
-    for (auto [e, cell, kind] : registry.view<const Cell, const Kind>().each()) {
-      if (cell.x == nx && cell.y == ny && kind.id == id) return true;
+    for (auto [e, cell, object] : registry.view<const Cell, const ObjectBlock>().each()) {
+      if (cell.x == nx && cell.y == ny && object.id == id) return true;
     }
     return false;
   };
@@ -233,16 +233,16 @@ void GameLayer::OnUpdate(float dt) {
 }
 
 void GameLayer::OnRender() {
-  auto draw_kind = [&](entt::entity e, const Cell& cell, const Kind& kind) {
+  auto draw_object = [&](entt::entity e, const Cell& cell, const ObjectBlock& object) {
     int variant = 0;
-    if (IsAutoTiled(kind.id)) {
-      variant = ComputeTileMask(registry_, kind.id, cell.x, cell.y);
-    } else if (IsDirectional(kind.id)) {
+    if (IsAutoTiled(object.id)) {
+      variant = ComputeTileMask(registry_, object.id, cell.x, cell.y);
+    } else if (IsDirectional(object.id)) {
       const Direction dir = registry_.try_get<Facing>(e) ? registry_.get<Facing>(e).dir : Direction::Right;
       variant = DirectionToVariant(dir);
     }
-    const auto& tex = sprites_.Get(kind.id, current_frame_, variant);
-    DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(kind.id));
+    const auto& tex = sprites_.Get(object.id, current_frame_, variant);
+    DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(object.id));
   };
 
   // Gather everything with its engine layer number so we can draw strictly
@@ -256,8 +256,8 @@ void GameLayer::OnRender() {
   };
   std::vector<Draw> draws;
   draws.reserve(registry_.storage<Cell>().size());
-  for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
-    draws.push_back({LayerOf(kind.id), e, cell.x, cell.y, 0});
+  for (auto [e, cell, object] : registry_.view<const Cell, const ObjectBlock>().each()) {
+    draws.push_back({LayerOf(object.id), e, cell.x, cell.y, 0});
   }
   for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
     draws.push_back({LayerOf(text.id), e, cell.x, cell.y, 1});
@@ -266,8 +266,8 @@ void GameLayer::OnRender() {
             [](const Draw& a, const Draw& b) { return a.layer < b.layer; });
   for (const Draw& d : draws) {
     if (d.kind == 0) {
-      const auto& kind = registry_.get<const Kind>(d.e);
-      draw_kind(d.e, registry_.get<const Cell>(d.e), kind);
+      const auto& object = registry_.get<const ObjectBlock>(d.e);
+      draw_object(d.e, registry_.get<const Cell>(d.e), object);
     } else {
       const auto& text = registry_.get<const TextBlock>(d.e);
       const auto& tex = sprites_.Get(text.id, current_frame_);
@@ -376,11 +376,11 @@ Level GameLayer::ExtractLevelFromRegistry() const {
   Level lvl;
   lvl.cols = board::kCols;
   lvl.rows = board::kRows;
-  for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
+  for (auto [e, cell, object] : registry_.view<const Cell, const ObjectBlock>().each()) {
     LevelTile tile;
     tile.x = cell.x;
     tile.y = cell.y;
-    tile.kind = kind.id;
+    tile.kind = object.id;
     lvl.tiles.push_back(tile);
   }
   for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
@@ -398,7 +398,7 @@ void GameLayer::ClearRegistry() { registry_.clear(); }
 void GameLayer::SpawnObject(ObjectId id, int x, int y) {
   auto e = registry_.create();
   registry_.emplace<Cell>(e, x, y);
-  registry_.emplace<Kind>(e, id);
+  registry_.emplace<ObjectBlock>(e, id);
   registry_.emplace<Facing>(e);
   registry_.emplace<AnimFrame>(e);
 }
@@ -642,21 +642,19 @@ void GameLayer::DrawScenePanel() {
     ImGui::Separator();
   }
 
-  int object_count = 0;
-  for ([[maybe_unused]] auto [e, k] : registry_.view<const Kind>().each()) ++object_count;
-  int text_count = 0;
-  for ([[maybe_unused]] auto [e, t] : registry_.view<const TextBlock>().each()) ++text_count;
+  int object_count = static_cast<int>(registry_.view<const ObjectBlock>().size());
+  int text_count = static_cast<int>(registry_.view<const TextBlock>().size());
 
   ImGui::Text("Entities: %d objects, %d text", object_count, text_count);
   ImGui::Separator();
 
   if (ImGui::TreeNodeEx("Objects", ImGuiTreeNodeFlags_DefaultOpen)) {
-    for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
+    for (auto [e, cell, object] : registry_.view<const Cell, const ObjectBlock>().each()) {
       const bool you = registry_.all_of<IsYou>(e);
       const bool push = registry_.all_of<IsPush>(e);
       const bool stop = registry_.all_of<IsStop>(e);
       const bool win = registry_.all_of<IsWin>(e);
-      ImGui::Text("%s @ (%d,%d)%s%s%s%s", PrettyName(kind.id), cell.x, cell.y, you ? " [YOU]" : "",
+      ImGui::Text("%s @ (%d,%d)%s%s%s%s", PrettyName(object.id), cell.x, cell.y, you ? " [YOU]" : "",
                   push ? " [PUSH]" : "", stop ? " [STOP]" : "", win ? " [WIN]" : "");
     }
     ImGui::TreePop();
@@ -1204,8 +1202,8 @@ void GameLayer::PlaceBrushAt(int col, int row) {
   // Don't duplicate the exact same tile.
   if (std::holds_alternative<ObjectId>(brush_)) {
     const ObjectId id = std::get<ObjectId>(brush_);
-    for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
-      if (cell.x == col && cell.y == row && kind.id == id) return;
+    for (auto [e, cell, object] : registry_.view<const Cell, const ObjectBlock>().each()) {
+      if (cell.x == col && cell.y == row && object.id == id) return;
     }
     SpawnObject(id, col, row);
   } else {
@@ -1290,8 +1288,8 @@ std::vector<std::pair<int, int>> GameLayer::RasterRectFilled(int x0, int y0, int
 
 std::vector<std::variant<ObjectId, TextId>> GameLayer::CellContents(int x, int y) const {
   std::vector<std::variant<ObjectId, TextId>> out;
-  for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
-    if (cell.x == x && cell.y == y) out.emplace_back(kind.id);
+  for (auto [e, cell, object] : registry_.view<const Cell, const ObjectBlock>().each()) {
+    if (cell.x == x && cell.y == y) out.emplace_back(object.id);
   }
   for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
     if (cell.x == x && cell.y == y) out.emplace_back(text.id);
@@ -1332,9 +1330,9 @@ void GameLayer::CutRegionToClipboard(int x0, int y0, int x1, int y1) {
   const int ly = std::min(y0, y1), ry = std::max(y0, y1);
 
   std::vector<entt::entity> doomed;
-  for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
+  for (auto [e, cell, object] : registry_.view<const Cell, const ObjectBlock>().each()) {
     if (cell.x >= lx && cell.x <= rx && cell.y >= ly && cell.y <= ry) {
-      clipboard_.push_back({cell.x - lx, cell.y - ly, kind.id});
+      clipboard_.push_back({cell.x - lx, cell.y - ly, object.id});
       doomed.push_back(e);
     }
   }
@@ -1356,8 +1354,8 @@ void GameLayer::PasteClipboardAt(int col, int row) {
     if (std::holds_alternative<ObjectId>(t.kind)) {
       const auto id = std::get<ObjectId>(t.kind);
       bool exists = false;
-      for (auto [e, cell, kind] : registry_.view<const Cell, const Kind>().each()) {
-        if (cell.x == x && cell.y == y && kind.id == id) {
+      for (auto [e, cell, object] : registry_.view<const Cell, const ObjectBlock>().each()) {
+        if (cell.x == x && cell.y == y && object.id == id) {
           exists = true;
           break;
         }

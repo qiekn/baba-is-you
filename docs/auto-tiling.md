@@ -49,7 +49,7 @@ which sums `2 ^ (i - 1)` for each of the 4 neighbour directions
   warnings for non-tiled kinds.
 - **Neighbour scan** — `ComputeTileMask` in `src/game_layer.cpp` reads the
   registry every frame and checks the four cardinal cells. A neighbour counts
-  as "same" iff another entity with the *same* `Kind` exists at that cell.
+  as "same" iff another entity with the *same* `ObjectBlock` exists at that cell.
   Board edges do **not** count — walls that sit on the border naturally show
   an edge sprite.
 - **Render** — `GameLayer::OnRender` routes through a lambda that passes the
