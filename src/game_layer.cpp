@@ -365,7 +365,7 @@ void GameLayer::LoadLevelFromPath(const std::filesystem::path& path) {
   BuildRegistryFromLevel();
   undo_.Clear();
   won_ = false;
-  RecomputeRules();
+  RecomputeRules(true);
 }
 
 void GameLayer::ResetToInitial() {
@@ -374,7 +374,7 @@ void GameLayer::ResetToInitial() {
   BuildRegistryFromLevel();
   undo_.Clear();
   won_ = false;
-  RecomputeRules();
+  RecomputeRules(true);
 }
 
 void GameLayer::SaveLevelToPath(const std::filesystem::path& path) {
@@ -438,12 +438,17 @@ void GameLayer::SpawnText(TextId id, int x, int y) {
 // Rules
 // ---------------------------------------------------------------------------
 
-void GameLayer::RecomputeRules() {
+void GameLayer::RecomputeRules(bool apply_transformations) {
   RuleBoard rb(board::kCols, board::kRows);
   for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
     rb.Set(cell.x, cell.y, text.id);
   }
   rules_ = ParseRules(rb);
+  if (apply_transformations && ApplyTransformations(registry_, rules_)) {
+    // ObjectBlock.ids changed — re-parse just to be safe (text positions are
+    // unchanged, but the rule list is the same so this is essentially free)
+    // and re-apply tags so they match the new id distribution.
+  }
   ApplyRules(registry_, rules_);
 }
 
@@ -536,7 +541,7 @@ void GameLayer::Step(Direction dir) {
     undo_.Pop(discard);
   }
 
-  RecomputeRules();
+  RecomputeRules(true);
   RunWinDefeat();
 }
 

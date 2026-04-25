@@ -39,3 +39,11 @@ std::vector<Rule> ParseRules(const RuleBoard& board);
 // tags to entities whose ObjectBlock matches a rule subject. Text entities are always
 // tagged IsPush.
 void ApplyRules(entt::registry& registry, const std::vector<Rule>& rules);
+
+// Mutates ObjectBlock.id for entities whose current id matches the subject of
+// a "Noun is Noun" rule (e.g. "wall is rock" turns every wall into a rock).
+// Captures the source set up-front so cyclic rules (wall is rock + rock is
+// wall) atomically swap. Identity rules (wall is wall) are skipped. If a noun
+// is the subject of multiple transformations the first one wins (MVP).
+// Returns true if any entity was retagged.
+bool ApplyTransformations(entt::registry& registry, const std::vector<Rule>& rules);

@@ -1,5 +1,9 @@
 #include "rule_engine.h"
 
+#include <unordered_map>
+#include <utility>
+#include <vector>
+
 #include "components.h"
 
 RuleBoard::RuleBoard(int cols, int rows) : cols_(cols), rows_(rows), cells_(static_cast<size_t>(cols * rows)) {}
@@ -97,8 +101,33 @@ void ApplyRules(entt::registry& registry, const std::vector<Rule>& rules) {
         ApplyTagToObject<IsDefeat>(registry, *subject);
         break;
       default:
-        // Noun predicates (transformation) are follow-up.
+        // Noun predicates (transformation) are handled by ApplyTransformations.
         break;
     }
   }
+}
+
+bool ApplyTransformations(entt::registry& registry, const std::vector<Rule>& rules) {
+  std::unordered_map<ObjectId, ObjectId> map;
+  for (const Rule& rule : rules) {
+    auto subj = NounToObject(rule.subject);
+    if (!subj) continue;
+    auto pred = NounToObject(rule.predicate);
+    if (!pred) continue;       // not a noun predicate (Property handled elsewhere)
+    if (*subj == *pred) continue;  // identity, no-op
+    map.try_emplace(*subj, *pred);
+  }
+  if (map.empty()) return false;
+
+  // Snapshot first so cyclic rules ("wall is rock" + "rock is wall") swap
+  // atomically instead of one rule overwriting the other on the second pass.
+  std::vector<std::pair<entt::entity, ObjectId>> changes;
+  for (auto [e, ob] : registry.view<const ObjectBlock>().each()) {
+    auto it = map.find(ob.id);
+    if (it != map.end()) changes.emplace_back(e, it->second);
+  }
+  for (auto& [e, new_id] : changes) {
+    registry.get<ObjectBlock>(e).id = new_id;
+  }
+  return !changes.empty();
 }

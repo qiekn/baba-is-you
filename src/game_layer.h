@@ -47,7 +47,11 @@ class GameLayer : public Layer {
 
   // Turn step
   void Step(Direction dir);
-  void RecomputeRules();
+  // Re-parses text rules from the board and re-applies tag components. When
+  // `apply_transformations` is true, also mutates ObjectBlock.id for entities
+  // matching "Noun is Noun" rules (called on Step/level load; not on the
+  // per-frame editor preview to avoid cyclic-rule oscillation).
+  void RecomputeRules(bool apply_transformations = false);
   bool TryMove(entt::entity who, Direction dir);
   bool CanEnter(int x, int y, int dx, int dy);
   void PushChain(int x, int y, int dx, int dy);
