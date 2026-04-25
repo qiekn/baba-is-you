@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <filesystem>
+#include "raylib.h"
 
 #include <GLFW/glfw3.h>
 #include <imgui.h>
