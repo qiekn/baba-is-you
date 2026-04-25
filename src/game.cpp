@@ -100,16 +100,20 @@ void Game::Init() {
   const WindowState state = LoadWindowState(kScreenWidth, kScreenHeight);
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI);
-  InitWindow(state.w, state.h, "baba");
+  InitWindow(state.w, state.h, "baba is you");
   SetWindowPosition(state.x, state.y);
   SetWindowIconFromSvg("assets/icons/favicon.svg");
   SetTargetFPS(kTargetFps);
   InitAudioDevice();
 
+  // Initialize layers
+
   auto imgui_layer = std::make_unique<ImGuiLayer>();
-  imgui_layer_ = imgui_layer.get();
   auto game_layer = std::make_unique<GameLayer>();
+
+  imgui_layer_ = imgui_layer.get();
   game_layer_ = game_layer.get();
+
   layers_.PushLayer(std::move(game_layer));
   layers_.PushOverlay(std::move(imgui_layer));
 }
@@ -121,8 +125,35 @@ void Game::Tick() {
 
 void Game::Update() {
   const float dt = GetFrameTime();
+  if (IsKeyPressed(KEY_F11)) {
+    ToggleBorderless();
+  }
   for (auto& layer : layers_) {
     layer->OnUpdate(dt);
+  }
+}
+
+void Game::ToggleBorderless() {
+  if (!borderless_) {
+    windowed_pos_ = GetWindowPosition();
+    windowed_size_ = {(float)GetScreenWidth(), (float)GetScreenHeight()};
+
+    const int monitor = GetCurrentMonitor();
+    const Vector2 mpos = GetMonitorPosition(monitor);
+    const int mw = GetMonitorWidth(monitor);
+    const int mh = GetMonitorHeight(monitor);
+
+    SetWindowState(FLAG_WINDOW_UNDECORATED);
+    SetWindowPosition((int)mpos.x, (int)mpos.y);
+    // +1 px so Windows doesn't auto-promote this to exclusive fullscreen
+    // (WS_POPUP + exact-monitor-size triggers fullscreen optimizations).
+    SetWindowSize(mw, mh + 1);
+    borderless_ = true;
+  } else {
+    ClearWindowState(FLAG_WINDOW_UNDECORATED);
+    SetWindowSize((int)windowed_size_.x, (int)windowed_size_.y);
+    SetWindowPosition((int)windowed_pos_.x, (int)windowed_pos_.y);
+    borderless_ = false;
   }
 }
 
@@ -149,6 +180,7 @@ void Game::Render() {
 }
 
 void Game::Shutdown() {
+  if (borderless_) ToggleBorderless();
   SaveWindowState();
   layers_.Clear();  // detach layers before the GL context goes away
   CloseAudioDevice();
