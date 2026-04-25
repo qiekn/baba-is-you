@@ -4,7 +4,6 @@
 #include <array>
 #include <cctype>
 #include <cmath>
-#include <cstdlib>
 #include <cstring>
 #include <string>
 
@@ -23,6 +22,8 @@ constexpr const char* kLevelsDir = "assets/levels";
 constexpr const char* kImportedDir = "assets/imported";
 constexpr const char* kWorldFile = "assets/worlds/tutorial.json";
 constexpr const char* kProgressFile = "progress.json";
+
+constexpr const char* kStepSoundPath = "assets/sfx/044.ogg";
 
 struct MusicTrack {
   const char* label;
@@ -76,38 +77,6 @@ int ComputeTileMask(const entt::registry& registry, ObjectId id, int x, int y) {
   if (has_same(x - 1, y)) mask |= 4;
   if (has_same(x, y + 1)) mask |= 8;
   return mask;
-}
-
-// Build a tiny synthesized "step" thump: a short sine pop with a noise
-// transient and an exponential decay envelope. ~110ms, mono 22.05kHz.
-// The original game's move.ogg lives inside Assets.dat and isn't redistributable,
-// so we synthesize a similar percussive cue at runtime.
-Sound SynthStepSound() {
-  constexpr int kSampleRate = 22050;
-  constexpr float kDuration = 0.11f;
-  const int n = static_cast<int>(kSampleRate * kDuration);
-  Wave w{};
-  w.frameCount = static_cast<unsigned int>(n);
-  w.sampleRate = kSampleRate;
-  w.sampleSize = 16;
-  w.channels = 1;
-  auto* samples = static_cast<short*>(std::malloc(sizeof(short) * n));
-  if (!samples) return Sound{};
-  for (int i = 0; i < n; ++i) {
-    const float t = static_cast<float>(i) / kSampleRate;
-    const float env = std::exp(-28.0f * t);
-    const float noise =
-        static_cast<float>(GetRandomValue(-100, 100)) / 100.0f * std::exp(-90.0f * t);
-    // Slight downward pitch sweep gives the thump some body.
-    const float freq = 140.0f - 40.0f * t / kDuration;
-    const float tone = std::sin(2.0f * PI * freq * t);
-    const float v = (tone * 0.55f + noise * 0.45f) * env;
-    samples[i] = static_cast<short>(std::clamp(v, -1.0f, 1.0f) * 11000.0f);
-  }
-  w.data = samples;
-  Sound s = LoadSoundFromWave(w);
-  UnloadWave(w);
-  return s;
 }
 
 }  // namespace
@@ -170,7 +139,7 @@ void GameLayer::OnAttach() {
   LoadLevelFromPath(kDefaultLevel);
   LoadTrack(track_index_);
   if (IsAudioDeviceReady()) {
-    step_sound_ = SynthStepSound();
+    step_sound_ = LoadSound(kStepSoundPath);
     step_sound_loaded_ = (step_sound_.frameCount > 0);
     if (step_sound_loaded_) SetSoundVolume(step_sound_, sfx_volume_);
   }

@@ -201,9 +201,8 @@ class GameLayer : public Layer {
   float volume_ = 0.4f;
   bool muted_ = false;
 
-  // Step SFX — synthesized once on attach (the original game's move.ogg is
-  // bundled inside Assets.dat and not redistributable, so we generate a tiny
-  // thump procedurally instead).
+  // Step SFX — short ogg loaded once on attach and played on each successful
+  // directional move.
   Sound step_sound_{};
   bool step_sound_loaded_ = false;
   float sfx_volume_ = 0.6f;
