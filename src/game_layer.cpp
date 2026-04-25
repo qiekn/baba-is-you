@@ -167,15 +167,12 @@ void GameLayer::OnUpdate(float dt) {
     anim_timer_ -= period;
     current_frame_ = (current_frame_ % 3) + 1;
   }
-  // Per-entity idle wobble for directional walkers — keeps the original 3-frame
-  // jitter going while standing still. TryMove also bumps `frame` on a successful
-  // step, so movement still advances the cycle in lockstep with the input.
+  // Walk-cycle decay: if a directional walker hasn't stepped recently, return
+  // to the idle pose (variant offset 0) so they don't freeze mid-stride.
+  constexpr float kWalkSettleSeconds = 0.18f;
   for (auto [e, af] : registry_.view<AnimFrame>().each()) {
-    af.t += dt;
-    while (af.t >= period) {
-      af.t -= period;
-      af.frame = (af.frame % 3) + 1;
-    }
+    af.since_step += dt;
+    if (af.since_step > kWalkSettleSeconds) af.walk_phase = 0;
   }
 
   // Recompute rules every frame so the editor sees live feedback.
@@ -261,10 +258,11 @@ void GameLayer::OnRender() {
       variant = ComputeTileMask(registry_, object.id, cell.x, cell.y);
     } else if (IsDirectional(object.id)) {
       const Direction dir = registry_.try_get<Facing>(e) ? registry_.get<Facing>(e).dir : Direction::Right;
-      variant = DirectionToVariant(dir);
-      // Directional characters animate per-step rather than via the global
-      // idle cycle, so legs only shuffle when the entity actually moves.
-      if (auto* af = registry_.try_get<AnimFrame>(e)) frame = af->frame;
+      // Sprites are laid out as 4 direction-bases × 8 walk-phase offsets in
+      // baba_aa_b.png — pick the right walk pose within the current facing.
+      const int base = DirectionToVariant(dir);
+      const int phase = registry_.try_get<AnimFrame>(e) ? registry_.get<AnimFrame>(e).walk_phase : 0;
+      variant = base + phase;
     }
     const auto& tex = sprites_.Get(object.id, frame, variant);
     DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(object.id));
@@ -508,8 +506,8 @@ bool GameLayer::TryMove(entt::entity who, Direction dir) {
   if (auto* facing = registry_.try_get<Facing>(who)) facing->dir = dir;
   // Step the walk frame so directional sprites visibly animate per-move.
   if (auto* af = registry_.try_get<AnimFrame>(who)) {
-    af->frame = (af->frame % 3) + 1;
-    af->t = 0.0f;  // restart the idle clock so the next ambient tick is a full period away
+    af->walk_phase = (af->walk_phase + 1) % 4;
+    af->since_step = 0.0f;
   }
   // Dust puff at the vacated cell — only for directional walkers (Baba & co.)
   // so pushed boxes don't spam particles.
