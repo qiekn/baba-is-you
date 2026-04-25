@@ -17,12 +17,17 @@ class LayerStack {
   LayerStack(const LayerStack&) = delete;
   LayerStack& operator=(const LayerStack&) = delete;
 
-  void PushLayer(std::unique_ptr<Layer> layer);
-  void PushOverlay(std::unique_ptr<Layer> overlay);
+  void push_layer(std::unique_ptr<Layer> layer);
+  void push_overlay(std::unique_ptr<Layer> overlay);
+
+  // Detach + destroy the matching layer. The Layer* is the handle returned
+  // by push_*; passing a pointer that isn't in the stack is a no-op.
+  void pop_layer(Layer* layer);
+  void pop_overlay(Layer* overlay);
 
   // Detach and destroy every layer in reverse order. Call this before tearing
   // down resources that layers depend on (GL context, window, etc.).
-  void Clear();
+  void clear();
 
   auto begin() { return layers_.begin(); }
   auto end() { return layers_.end(); }

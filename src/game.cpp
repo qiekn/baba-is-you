@@ -114,8 +114,8 @@ void Game::Init() {
   imgui_layer_ = imgui_layer.get();
   game_layer_ = game_layer.get();
 
-  layers_.PushLayer(std::move(game_layer));
-  layers_.PushOverlay(std::move(imgui_layer));
+  layers_.push_layer(std::move(game_layer));
+  layers_.push_overlay(std::move(imgui_layer));
 }
 
 void Game::Tick() {
@@ -182,7 +182,7 @@ void Game::Render() {
 void Game::Shutdown() {
   if (borderless_) ToggleBorderless();
   SaveWindowState();
-  layers_.Clear();  // detach layers before the GL context goes away
+  layers_.clear();  // detach layers before the GL context goes away
   CloseAudioDevice();
   CloseWindow();
 }
