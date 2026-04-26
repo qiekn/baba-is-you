@@ -535,6 +535,9 @@ void GameLayer::Step(Direction dir) {
     if (TryMove(e, dir)) any_moved = true;
   }
 
+  // Autonomous movers run every turn, regardless of whether YOU moved.
+  if (StepMovers()) any_moved = true;
+
   if (!any_moved) {
     // Discard the no-op snapshot to avoid spamming undo history.
     Snapshot discard;
@@ -543,6 +546,33 @@ void GameLayer::Step(Direction dir) {
 
   RecomputeRules(true);
   RunWinDefeat();
+}
+
+bool GameLayer::StepMovers() {
+  // Snapshot the mover set up-front: transformations during this turn could
+  // shift ids around, but we only autonomously move entities that were tagged
+  // IsMove at the start of the move phase.
+  std::vector<entt::entity> movers;
+  for (auto e : registry_.view<const IsMove>()) movers.push_back(e);
+
+  bool any = false;
+  for (auto e : movers) {
+    auto* facing = registry_.try_get<Facing>(e);
+    if (!facing) continue;
+    if (TryMove(e, facing->dir)) {
+      any = true;
+    } else {
+      // Bump into something — reverse and wait until next turn to try the
+      // new direction. Matches Baba Is You's "move bounce" behaviour.
+      switch (facing->dir) {
+        case Direction::Right: facing->dir = Direction::Left; break;
+        case Direction::Left:  facing->dir = Direction::Right; break;
+        case Direction::Up:    facing->dir = Direction::Down; break;
+        case Direction::Down:  facing->dir = Direction::Up; break;
+      }
+    }
+  }
+  return any;
 }
 
 void GameLayer::RunWinDefeat() {

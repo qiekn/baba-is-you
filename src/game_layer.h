@@ -55,6 +55,10 @@ class GameLayer : public Layer {
   bool TryMove(entt::entity who, Direction dir);
   bool CanEnter(int x, int y, int dx, int dy);
   void PushChain(int x, int y, int dx, int dy);
+  // Advances every IsMove entity one cell in its facing direction. Blocked
+  // movers flip 180° and stay put for the turn (next turn they try the new
+  // direction). Returns true if any mover successfully stepped.
+  bool StepMovers();
   void RunWinDefeat();
 
   // Particles (visual only — not part of ECS)
