@@ -77,6 +77,20 @@ void ApplyRules(entt::registry& registry, const std::vector<Rule>& rules) {
     registry.emplace_or_replace<IsPush>(e);
   }
 
+  // Layer-2 default: objects in the "main" engine-layer band (walls, rocks,
+  // characters, etc.) act as pushable solids by default — that gives them a
+  // collision volume and lets YOU shove them around without needing an
+  // explicit "X is push" rule. Background tiles (layer < 14) stay walk-
+  // through, and float-layer entries (layer >= 20, e.g. line/cursor) opt
+  // out so overlays don't suddenly block movement. Explicit "X is stop"
+  // rules still win in CanEnter because IsStop is checked first.
+  for (auto [e, ob] : registry.view<const ObjectBlock>().each()) {
+    const int layer = LayerOf(ob.id);
+    if (layer >= 14 && layer < 20) {
+      registry.emplace_or_replace<IsPush>(e);
+    }
+  }
+
   for (const Rule& rule : rules) {
     auto subject = NounToObject(rule.subject);
     if (!subject) continue;
