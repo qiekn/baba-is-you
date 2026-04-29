@@ -215,48 +215,80 @@ def parse_l(path):
     if d[:8] != b'ACHTUNG!':
         raise RuntimeError(f'{path}: missing ACHTUNG! magic')
 
-    layr = d.find(b'LAYR')
-    if layr < 0:
-        raise RuntimeError(f'{path}: no LAYR chunk')
-
-    # nlayers = uint16 at layr+8, subheader_size = uint32 at layr+10.
-    # For levels with sub_sz < 35 there are 9 trailing bytes + a 2-byte tail
-    # (0xff 0x02) before MAIN, so scan ahead rather than computing the offset.
-    nlayers = struct.unpack('<H', d[layr + 8:layr + 10])[0]
+    # Layout matches BabaIsYouEditor: 8-byte magic, uint16 version,
+    # then block stream (MAP/LAYR...).
+    pos = 8
+    if pos + 2 > len(d):
+        raise RuntimeError(f'{path}: truncated header')
+    version = struct.unpack('<H', d[pos:pos + 2])[0]
+    pos += 2
 
     layers = []
-    cursor = layr + 14  # subheader start
-    for i in range(nlayers):
-        if i == 0:
-            sub_sz = struct.unpack('<I', d[layr + 10:layr + 14])[0]
-        else:
-            sub_sz = struct.unpack('<I', d[cursor:cursor + 4])[0]
-            cursor += 4
-        sub = d[cursor:cursor + sub_sz]
-        cursor += sub_sz
-        w = struct.unpack('<H', sub[0:2])[0]
-        # Subheader offset 4 holds tile pixel size, NOT grid row count. The
-        # true row count falls out of the MAIN payload length: it's column-
-        # major with stride `rows`, so `rows = (len(main)//2) / w` (computed
-        # below once MAIN is decompressed).
+    while pos + 8 <= len(d):
+        block = struct.unpack('<I', d[pos:pos + 4])[0]
+        pos += 8  # block id + block payload-size/aux field
 
-        main_off = d.find(b'MAIN', cursor)
-        if main_off < 0:
-            raise RuntimeError(f'{path}: no MAIN for layer {i}')
-        main_sz = struct.unpack('<I', d[main_off + 4:main_off + 8])[0]
-        main = zlib.decompress(d[main_off + 8:main_off + 8 + main_sz])
-        rows = (len(main) // 2) // max(w, 1)
+        # "MAP " block: 2-byte field we currently don't use.
+        if block == 0x2050414D:
+            if pos + 2 > len(d):
+                raise RuntimeError(f'{path}: truncated MAP block')
+            pos += 2
+            continue
 
-        data_off = main_off + 8 + main_sz
-        if d[data_off:data_off + 4] != b'DATA':
-            raise RuntimeError(f'{path}: expected DATA at {data_off}')
-        # DATA: 4-byte sub_count, 1-byte type marker, 4-byte size, zlib
-        data_sz = struct.unpack('<I', d[data_off + 9:data_off + 13])[0]
-        data = zlib.decompress(d[data_off + 13:data_off + 13 + data_sz])
-        cursor = data_off + 13 + data_sz
+        # "LAYR" block: one or more layer payloads.
+        if block == 0x5259414C:
+            if pos + 2 > len(d):
+                raise RuntimeError(f'{path}: truncated LAYR header')
+            nlayers = struct.unpack('<H', d[pos:pos + 2])[0]
+            pos += 2
 
-        layers.append(Layer(w, rows, main, data))
-    return layers
+            for i in range(nlayers):
+                if pos + 8 > len(d):
+                    raise RuntimeError(f'{path}: truncated layer {i} dims')
+                w = struct.unpack('<i', d[pos:pos + 4])[0]
+                h = struct.unpack('<i', d[pos + 4:pos + 8])[0]
+                pos += 8
+
+                # Layer subheader size varies by version.
+                if version >= 258:
+                    pos += 4
+                pos += 25
+                if version == 260:
+                    pos += 2
+                elif version == 261:
+                    pos += 3
+
+                if pos + 1 + 8 > len(d):
+                    raise RuntimeError(f'{path}: truncated layer {i} chunk header')
+                data_blocks = d[pos]
+                pos += 1
+
+                if d[pos:pos + 4] != b'MAIN':
+                    raise RuntimeError(f'{path}: expected MAIN for layer {i}')
+                main_sz = struct.unpack('<I', d[pos + 4:pos + 8])[0]
+                pos += 8
+                if pos + main_sz > len(d):
+                    raise RuntimeError(f'{path}: truncated MAIN payload for layer {i}')
+                main = zlib.decompress(d[pos:pos + main_sz])
+                pos += main_sz
+
+                data = b''
+                if data_blocks == 2:
+                    if pos + 13 > len(d) or d[pos:pos + 4] != b'DATA':
+                        raise RuntimeError(f'{path}: expected DATA for layer {i}')
+                    # DATA: 4-byte sub-count, 1-byte marker, 4-byte size, zlib
+                    data_sz = struct.unpack('<I', d[pos + 9:pos + 13])[0]
+                    pos += 13
+                    if pos + data_sz > len(d):
+                        raise RuntimeError(f'{path}: truncated DATA payload for layer {i}')
+                    data = zlib.decompress(d[pos:pos + data_sz])
+                    pos += data_sz
+
+                layers.append(Layer(w, h, main, data))
+
+            return layers
+
+    raise RuntimeError(f'{path}: no LAYR block found')
 
 
 # ---------------------------------------------------------------------------
@@ -280,8 +312,7 @@ def extract_tiles(layer, tile_map, unknown=None):
     """Walk the MAIN uint16 stream and emit {x, y, kind, name} records.
     Cells equal to 0 (floor default) or 0xFFFF (empty) are skipped.
 
-    MMF2's tilemap is stored column-major at stride = layer.h, so cell
-    (x, y) = main[x * layer.h + y]."""
+    MAIN is stored row-major, so cell (x, y) = main[y * layer.w + x]."""
     w, h = layer.w, layer.h
     count = len(layer.main) // 2
     cells = struct.unpack(f'<{count}H', layer.main)
@@ -289,7 +320,7 @@ def extract_tiles(layer, tile_map, unknown=None):
     used = 0
     for x in range(w):
         for y in range(h):
-            idx = x * h + y
+            idx = y * w + x
             if idx >= count:
                 continue
             v = cells[idx]
@@ -321,14 +352,14 @@ def trim_to_bbox(tiles, w, h, pad=1):
     ys = [t['y'] for t in tiles]
     min_x, max_x = min(xs), max(xs)
     min_y, max_y = min(ys), max(ys)
-    # Only trim if we can shave at least ~4 cells off either side.
-    # Otherwise leave the stored dimensions alone so playable levels don't
-    # lose their perimeter framing.
+    # Keep a 1-cell gutter around content. Trim whenever we can remove at
+    # least 1 cell from both sides of either axis; otherwise preserve the
+    # stored dimensions to avoid over-tight boards.
     lead_x = max(0, min_x - pad)
     trail_x = max(0, (w - 1) - (max_x + pad))
     lead_y = max(0, min_y - pad)
     trail_y = max(0, (h - 1) - (max_y + pad))
-    if lead_x + trail_x < 4 and lead_y + trail_y < 4:
+    if lead_x + trail_x < 2 and lead_y + trail_y < 2:
         return tiles, w, h
     new_tiles = [{**t, 'x': t['x'] - lead_x, 'y': t['y'] - lead_y} for t in tiles]
     return new_tiles, w - lead_x - trail_x, h - lead_y - trail_y
