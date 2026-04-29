@@ -7,9 +7,8 @@ namespace board {
 float Pitch() {
   const float avail_w = GetScreenWidth() - 2 * kBoardPadding;
   const float avail_h = GetScreenHeight() - 2 * kBoardPadding - kBoardOffsetY;
-  const float fit = std::min(avail_w / std::max(kCols, 1),
-                             avail_h / std::max(kRows, 1));
-  return std::min(kCellPitch, fit);
+  return std::min(avail_w / std::max(kCols, 1),
+                  avail_h / std::max(kRows, 1));
 }
 
 Rectangle BoardRect() {
