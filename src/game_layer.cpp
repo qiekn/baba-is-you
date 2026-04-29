@@ -136,7 +136,13 @@ void GameLayer::OnAttach() {
                 return split(a) < split(b);
               });
   }
-  LoadLevelFromPath(kDefaultLevel);
+  // Boot into level 0 of the world (e.g. tutorial's "01-intro"). If the world
+  // file is missing or empty, fall back to the bundled starter level.
+  if (!world_.levels.empty()) {
+    LoadLevelFromPath(std::filesystem::path{kLevelsDir} / (world_.levels[0].id + ".json"));
+  } else {
+    LoadLevelFromPath(kDefaultLevel);
+  }
   LoadTrack(track_index_);
   if (IsAudioDeviceReady()) {
     step_sound_ = LoadSound(kStepSoundPath);
