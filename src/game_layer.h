@@ -33,6 +33,11 @@ class GameLayer : public Layer {
   // outer fill around the playfield.
   std::optional<Color> LevelBackground() const;
   std::optional<Color> LevelEdge() const;
+  bool* ShowScenePanelPtr() { return &show_scene_panel_; }
+  bool* ShowRulesPanelPtr() { return &show_rules_panel_; }
+  bool* ShowEditorPanelPtr() { return &show_editor_panel_; }
+  bool* ShowWorldPanelPtr() { return &show_world_panel_; }
+  bool* ShowSettingsPanelPtr() { return &show_settings_panel_; }
 
   // Iris (eye-blink) transition shown between levels. Drawn last so it sits
   // on top of ImGui panels too. No-op when no transition is active.
@@ -96,7 +101,7 @@ class GameLayer : public Layer {
   void DrawEditorPanel();
   void DrawSettingsPanel();
   void DrawWorldPanel();
-  static std::string GuessNextLevelFileName();
+  void RefreshBuiltInLevels();
 
   // Editor
   enum class Tool : std::uint8_t {
@@ -199,6 +204,7 @@ class GameLayer : public Layer {
   char save_name_[64] = "001.json";
 
   int selected_level_ = 0;
+  std::vector<std::string> builtin_level_files_;
 
   // Imported-level browser (assets/imported/)
   std::vector<std::string> imported_stems_;
@@ -246,6 +252,11 @@ class GameLayer : public Layer {
   Progress progress_;
   std::string current_level_id_;
   bool win_handled_ = false;
+  bool show_scene_panel_ = true;
+  bool show_rules_panel_ = true;
+  bool show_editor_panel_ = true;
+  bool show_world_panel_ = true;
+  bool show_settings_panel_ = true;
 
   // Iris transition between levels. Closing collapses the elliptical opening
   // toward the screen center; at full black we swap to `transition_target_`;

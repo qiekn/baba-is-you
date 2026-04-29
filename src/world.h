@@ -6,8 +6,7 @@
 #include <vector>
 
 struct WorldLevel {
-  std::string id;    // matches JSON filename stem, e.g. "001"
-  std::string name;  // display text
+  std::string id;  // matches JSON filename stem, e.g. "001"
 };
 
 struct World {

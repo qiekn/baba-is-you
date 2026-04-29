@@ -11,7 +11,8 @@ namespace board {
 inline int kCols = 24;
 inline int kRows = 18;
 inline constexpr float kBoardPadding = 28.0f;
-inline constexpr float kBoardOffsetY = 12.0f;
+inline constexpr float kBoardOffsetY = 14.0f;
+inline constexpr float kBoardVerticalMargin = 30.0f;
 inline constexpr float kGridLineThickness = 1.0f;
 
 // Pixel size of a single cell for the currently loaded board, sized so the

@@ -5,8 +5,6 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
-#include <iomanip>
-#include <sstream>
 #include <string>
 
 #include <imgui.h>
@@ -46,18 +44,12 @@ constexpr MusicTrack kTracks[] = {
 };
 constexpr int kTrackCount = static_cast<int>(sizeof(kTracks) / sizeof(kTracks[0]));
 
-struct LevelEntry {
-  const char* label;
-  const char* file;
-};
-
-constexpr LevelEntry kBuiltinLevels[] = {
-    {"001", "001.json"},
-    {"002", "002.json"},
-    {"003", "003.json"},
-    {"004", "004.json"},
-};
-constexpr int kBuiltinLevelCount = static_cast<int>(sizeof(kBuiltinLevels) / sizeof(kBuiltinLevels[0]));
+std::string ResolveCampaignLevelName(const WorldLevel& lvl) {
+  Level loaded;
+  const auto path = std::filesystem::path{kLevelsDir} / (lvl.id + ".json");
+  if (LoadLevelFromJson(path, loaded) && !loaded.name.empty()) return loaded.name;
+  return lvl.id;
+}
 
 // Draw a sprite texture fitted to a board cell, tinted with `color`.
 void DrawSpriteInCell(const Texture2D& tex, Rectangle cell, Color color) {
@@ -88,28 +80,6 @@ int ComputeTileMask(const entt::registry& registry, ObjectId id, int x, int y) {
 
 GameLayer::GameLayer() : Layer("GameLayer") {}
 
-std::string GameLayer::GuessNextLevelFileName() {
-  std::error_code ec;
-  if (!std::filesystem::is_directory(kLevelsDir, ec)) return "001.json";
-
-  int max_id = 0;
-  for (const auto& entry : std::filesystem::directory_iterator(kLevelsDir, ec)) {
-    if (!entry.is_regular_file()) continue;
-    if (entry.path().extension() != ".json") continue;
-    const std::string stem = entry.path().stem().string();
-    if (stem.empty()) continue;
-    if (!std::all_of(stem.begin(), stem.end(),
-                     [](unsigned char c) { return std::isdigit(c) != 0; })) {
-      continue;
-    }
-    max_id = std::max(max_id, std::stoi(stem));
-  }
-
-  std::ostringstream oss;
-  oss << std::setw(3) << std::setfill('0') << (max_id + 1) << ".json";
-  return oss.str();
-}
-
 std::optional<Color> GameLayer::LevelBackground() const {
   if (level_.bg_r < 0) return std::nullopt;
   return Color{static_cast<unsigned char>(level_.bg_r),
@@ -126,6 +96,7 @@ std::optional<Color> GameLayer::LevelEdge() const {
 
 void GameLayer::OnAttach() {
   sprites_.LoadAll(kSpritesDir);
+  RefreshBuiltInLevels();
   // Editor toolbar icons. Indices must match the Tool enum order.
   const char* kToolIconPaths[7] = {
       "icon/brush.png",        // Tool::Brush
@@ -453,11 +424,11 @@ void GameLayer::OnImGuiRender() {
     ImGui::EndPopup();
   }
 
-  DrawScenePanel();
-  DrawRulesPanel();
-  DrawEditorPanel();
-  DrawWorldPanel();
-  DrawSettingsPanel();
+  if (show_scene_panel_) DrawScenePanel();
+  if (show_rules_panel_) DrawRulesPanel();
+  if (show_editor_panel_) DrawEditorPanel();
+  if (show_world_panel_) DrawWorldPanel();
+  if (show_settings_panel_) DrawSettingsPanel();
 }
 
 // ---------------------------------------------------------------------------
@@ -512,6 +483,7 @@ void GameLayer::SaveLevelToPath(const std::filesystem::path& path) {
   level_ = current;
   initial_level_ = current;
   current_level_id_ = path.stem().string();
+  RefreshBuiltInLevels();
 }
 
 void GameLayer::BuildRegistryFromLevel() {
@@ -1051,9 +1023,6 @@ void GameLayer::DrawEditorPanel() {
   ImGui::SameLine();
   if (ImGui::Button("Save")) {
     SaveLevelToPath(std::filesystem::path{kLevelsDir} / save_name_);
-    const std::string next = GuessNextLevelFileName();
-    std::strncpy(save_name_, next.c_str(), sizeof(save_name_) - 1);
-    save_name_[sizeof(save_name_) - 1] = '\0';
   }
 
   ImGui::End();
@@ -1741,30 +1710,38 @@ void GameLayer::DrawWorldPanel() {
   }
 
   if (ImGui::CollapsingHeader("Built-in", ImGuiTreeNodeFlags_DefaultOpen)) {
-    const char* lvl_label = kBuiltinLevels[std::clamp(selected_level_, 0, kBuiltinLevelCount - 1)].label;
-    if (ImGui::BeginCombo("##builtin", lvl_label)) {
-      for (int i = 0; i < kBuiltinLevelCount; ++i) {
-        const bool selected = (i == selected_level_);
-        if (ImGui::Selectable(kBuiltinLevels[i].label, selected)) {
-          selected_level_ = i;
-          LoadLevelFromPath(std::filesystem::path{kLevelsDir} / kBuiltinLevels[i].file);
+    RefreshBuiltInLevels();
+    if (builtin_level_files_.empty()) {
+      ImGui::TextDisabled("(no levels/*.json found)");
+    } else {
+      selected_level_ = std::clamp(selected_level_, 0, static_cast<int>(builtin_level_files_.size()) - 1);
+      const char* lvl_label = builtin_level_files_[selected_level_].c_str();
+      if (ImGui::BeginCombo("##builtin", lvl_label)) {
+        for (int i = 0; i < static_cast<int>(builtin_level_files_.size()); ++i) {
+          const bool selected = (i == selected_level_);
+          if (ImGui::Selectable(builtin_level_files_[i].c_str(), selected)) {
+            selected_level_ = i;
+            LoadLevelFromPath(std::filesystem::path{kLevelsDir} / builtin_level_files_[i]);
+          }
+          if (selected) ImGui::SetItemDefaultFocus();
         }
-        if (selected) ImGui::SetItemDefaultFocus();
+        ImGui::EndCombo();
       }
-      ImGui::EndCombo();
-    }
-    if (ImGui::Button("Prev##b")) {
-      selected_level_ = (selected_level_ - 1 + kBuiltinLevelCount) % kBuiltinLevelCount;
-      LoadLevelFromPath(std::filesystem::path{kLevelsDir} / kBuiltinLevels[selected_level_].file);
-    }
-    ImGui::SameLine();
-    if (ImGui::Button("Next##b")) {
-      selected_level_ = (selected_level_ + 1) % kBuiltinLevelCount;
-      LoadLevelFromPath(std::filesystem::path{kLevelsDir} / kBuiltinLevels[selected_level_].file);
-    }
-    ImGui::SameLine();
-    if (ImGui::Button("Reload Starter")) {
-      LoadLevelFromPath(kDefaultLevel);
+      if (ImGui::Button("Prev##b")) {
+        const int n = static_cast<int>(builtin_level_files_.size());
+        selected_level_ = (selected_level_ - 1 + n) % n;
+        LoadLevelFromPath(std::filesystem::path{kLevelsDir} / builtin_level_files_[selected_level_]);
+      }
+      ImGui::SameLine();
+      if (ImGui::Button("Next##b")) {
+        const int n = static_cast<int>(builtin_level_files_.size());
+        selected_level_ = (selected_level_ + 1) % n;
+        LoadLevelFromPath(std::filesystem::path{kLevelsDir} / builtin_level_files_[selected_level_]);
+      }
+      ImGui::SameLine();
+      if (ImGui::Button("Reload Current##b")) {
+        LoadLevelFromPath(std::filesystem::path{kLevelsDir} / builtin_level_files_[selected_level_]);
+      }
     }
   }
 
@@ -1824,6 +1801,7 @@ void GameLayer::DrawWorldPanel() {
 
     for (std::size_t i = 0; i < world_.levels.size(); ++i) {
       const auto& lvl = world_.levels[i];
+      const std::string display_name = ResolveCampaignLevelName(lvl);
       const bool unlocked = IsUnlocked(i);
       const bool completed = progress_.completed.contains(lvl.id);
       const bool current = (lvl.id == current_level_id_);
@@ -1831,11 +1809,11 @@ void GameLayer::DrawWorldPanel() {
       ImGui::PushID(static_cast<int>(i));
       const char* badge = completed ? "[*]" : (unlocked ? "[ ]" : "[X]");
       if (current) {
-        ImGui::TextColored(ImVec4(0.4f, 0.9f, 0.4f, 1.0f), "%s %s", badge, lvl.name.c_str());
+        ImGui::TextColored(ImVec4(0.4f, 0.9f, 0.4f, 1.0f), "%s %s", badge, display_name.c_str());
       } else if (unlocked) {
-        ImGui::Text("%s %s", badge, lvl.name.c_str());
+        ImGui::Text("%s %s", badge, display_name.c_str());
       } else {
-        ImGui::TextDisabled("%s %s", badge, lvl.name.c_str());
+        ImGui::TextDisabled("%s %s", badge, display_name.c_str());
       }
       ImGui::SameLine();
       ImGui::BeginDisabled(!unlocked);
@@ -1855,4 +1833,34 @@ void GameLayer::DrawWorldPanel() {
   }
 
   ImGui::End();
+}
+
+void GameLayer::RefreshBuiltInLevels() {
+  builtin_level_files_.clear();
+  std::error_code ec;
+  if (!std::filesystem::is_directory(kLevelsDir, ec)) return;
+  for (const auto& entry : std::filesystem::directory_iterator(kLevelsDir, ec)) {
+    if (!entry.is_regular_file()) continue;
+    if (entry.path().extension() != ".json") continue;
+    builtin_level_files_.push_back(entry.path().filename().string());
+  }
+  auto key = [](const std::string& file) -> std::pair<long long, std::string> {
+    const std::string stem = std::filesystem::path(file).stem().string();
+    std::size_t i = 0;
+    while (i < stem.size() && std::isdigit(static_cast<unsigned char>(stem[i]))) ++i;
+    long long n = (i > 0) ? std::stoll(stem.substr(0, i)) : -1;
+    return {n, stem.substr(i)};
+  };
+  std::sort(builtin_level_files_.begin(), builtin_level_files_.end(),
+            [&](const std::string& a, const std::string& b) { return key(a) < key(b); });
+
+  const std::string current_file = current_level_id_.empty() ? "" : (current_level_id_ + ".json");
+  if (!current_file.empty()) {
+    for (int i = 0; i < static_cast<int>(builtin_level_files_.size()); ++i) {
+      if (builtin_level_files_[i] == current_file) {
+        selected_level_ = i;
+        break;
+      }
+    }
+  }
 }

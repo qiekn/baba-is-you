@@ -6,7 +6,7 @@ namespace board {
 
 float Pitch() {
   const float avail_w = GetScreenWidth() - 2 * kBoardPadding;
-  const float avail_h = GetScreenHeight() - 2 * kBoardPadding - kBoardOffsetY;
+  const float avail_h = GetScreenHeight() - 2 * (kBoardPadding + kBoardVerticalMargin);
   return std::min(avail_w / std::max(kCols, 1),
                   avail_h / std::max(kRows, 1));
 }

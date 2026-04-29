@@ -117,6 +117,11 @@ void Game::Init() {
 
   imgui_layer_ = imgui_layer.get();
   game_layer_ = game_layer.get();
+  imgui_layer_->BindGamePanelToggles(game_layer_->ShowScenePanelPtr(),
+                                     game_layer_->ShowRulesPanelPtr(),
+                                     game_layer_->ShowEditorPanelPtr(),
+                                     game_layer_->ShowWorldPanelPtr(),
+                                     game_layer_->ShowSettingsPanelPtr());
 
   layers_.push_layer(std::move(game_layer));
   layers_.push_overlay(std::move(imgui_layer));
@@ -196,12 +201,7 @@ void Game::Shutdown() {
 
 void Game::DrawGridBackground() const {
   const Rectangle board = board::BoardRect();
-  const Rectangle board_background = {
-      board.x - board::kBoardPadding,
-      board.y - board::kBoardPadding,
-      board.width + board::kBoardPadding * 2.0f,
-      board.height + board::kBoardPadding * 2.0f,
-  };
+  const Rectangle board_background = board;
 
   DrawRectangleRounded(board_background, 0.04f, 10, imgui_layer_->BoardBackgroundColor());
 

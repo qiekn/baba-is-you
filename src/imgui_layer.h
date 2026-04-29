@@ -27,6 +27,7 @@ class ImGuiLayer : public Layer {
   Color BoardBackgroundColor() const { return ToRaylibColor(board_background_color_); }
   Color BoardGridBorderColor() const { return ToRaylibColor(board_grid_border_color_); }
   bool ShowGrid() const { return show_grid_; }
+  void BindGamePanelToggles(bool* scene, bool* rules, bool* editor, bool* world, bool* settings);
 
  private:
   struct ColorValue {
@@ -67,6 +68,11 @@ class ImGuiLayer : public Layer {
   bool show_themes_ = true;
   bool show_demo_ = false;
   bool show_grid_ = true;
+  bool* show_scene_panel_ = nullptr;
+  bool* show_rules_panel_ = nullptr;
+  bool* show_editor_panel_ = nullptr;
+  bool* show_world_panel_ = nullptr;
+  bool* show_settings_panel_ = nullptr;
 
   int selected_theme_ = 0;
   ColorValue background_color_{};

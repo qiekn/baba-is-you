@@ -57,6 +57,15 @@ const ImGuiLayer::Theme ImGuiLayer::kThemes[7] = {
 
 ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") {}
 
+void ImGuiLayer::BindGamePanelToggles(bool* scene, bool* rules, bool* editor,
+                                      bool* world, bool* settings) {
+  show_scene_panel_ = scene;
+  show_rules_panel_ = rules;
+  show_editor_panel_ = editor;
+  show_world_panel_ = world;
+  show_settings_panel_ = settings;
+}
+
 void ImGuiLayer::OnAttach() {
   const float dpi_scale = GetDpiScale();
 
@@ -140,6 +149,15 @@ void ImGuiLayer::DrawMainMenuBar() {
   }
 
   if (ImGui::BeginMenu("View")) {
+    if (show_scene_panel_) ImGui::MenuItem("Scene", nullptr, show_scene_panel_);
+    if (show_rules_panel_) ImGui::MenuItem("Rules", nullptr, show_rules_panel_);
+    if (show_editor_panel_) ImGui::MenuItem("Editor", nullptr, show_editor_panel_);
+    if (show_world_panel_) ImGui::MenuItem("World", nullptr, show_world_panel_);
+    if (show_settings_panel_) ImGui::MenuItem("Settings", nullptr, show_settings_panel_);
+    if (show_scene_panel_ || show_rules_panel_ || show_editor_panel_ ||
+        show_world_panel_ || show_settings_panel_) {
+      ImGui::Separator();
+    }
     ImGui::MenuItem("Viewport", nullptr, &show_viewport_);
     ImGui::MenuItem("Inspector", nullptr, &show_inspector_);
     ImGui::MenuItem("Themes", nullptr, &show_themes_);
