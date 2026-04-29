@@ -26,6 +26,7 @@ class ImGuiLayer : public Layer {
   Color BackgroundColor() const { return ToRaylibColor(background_color_); }
   Color BoardBackgroundColor() const { return ToRaylibColor(board_background_color_); }
   Color BoardGridBorderColor() const { return ToRaylibColor(board_grid_border_color_); }
+  float GridOpacity() const { return grid_opacity_; }
   bool ShowGrid() const { return show_grid_; }
   void BindGamePanelToggles(bool* scene, bool* rules, bool* editor, bool* world, bool* settings);
 
@@ -68,6 +69,7 @@ class ImGuiLayer : public Layer {
   bool show_themes_ = true;
   bool show_demo_ = false;
   bool show_grid_ = true;
+  float grid_opacity_ = 0.2f;
   bool* show_scene_panel_ = nullptr;
   bool* show_rules_panel_ = nullptr;
   bool* show_editor_panel_ = nullptr;

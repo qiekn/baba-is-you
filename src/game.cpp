@@ -8,6 +8,7 @@
 #define NANOSVGRAST_IMPLEMENTATION
 #include <nanosvgrast.h>
 
+#include <algorithm>
 #include <array>
 #include <cstdio>
 #include <memory>
@@ -175,6 +176,7 @@ void Game::Render() {
   for (auto& layer : layers_) {
     layer->OnRender();
   }
+  DrawGridOverlay();
   rlDrawRenderBatchActive();
 
   imgui_layer_->Begin();
@@ -214,20 +216,31 @@ void Game::DrawGridBackground() const {
     }
   }
 
-  if (!imgui_layer_->ShowGrid()) return;
+}
 
-  const Color border = imgui_layer_->BoardGridBorderColor();
+void Game::DrawGridOverlay() const {
+  if (!imgui_layer_->ShowGrid()) return;
+  const Rectangle board = board::BoardRect();
+  Color border = imgui_layer_->BoardGridBorderColor();
+  const float opacity = std::clamp(imgui_layer_->GridOpacity(), 0.0f, 1.0f);
+  border.a = static_cast<unsigned char>(border.a * opacity);
   const float t = board::kGridLineThickness;
   const float pitch = board::Pitch();
 
-  // Single-line grid: each interior boundary is drawn once, so adjacent cells
-  // share an edge instead of floating inside inset rectangles.
+  // Draw all verticals first. Extend by half-thickness at top/bottom so the
+  // outer corners stay complete even when horizontals avoid overlaps.
   for (int col = 0; col <= board::kCols; ++col) {
     const float x = board.x + col * pitch - t * 0.5f;
-    DrawRectangleRec({x, board.y, t, board.height}, border);
+    DrawRectangleRec({x, board.y - t * 0.5f, t, board.height + t}, border);
   }
+  // Draw horizontals as segmented spans between vertical lines so grid
+  // intersections are not painted twice (keeps opacity uniform).
   for (int row = 0; row <= board::kRows; ++row) {
     const float y = board.y + row * pitch - t * 0.5f;
-    DrawRectangleRec({board.x, y, board.width, t}, border);
+    for (int col = 0; col < board::kCols; ++col) {
+      const float x = board.x + col * pitch + t * 0.5f;
+      const float w = std::max(0.0f, pitch - t);
+      DrawRectangleRec({x, y, w, t}, border);
+    }
   }
 }

@@ -10,12 +10,14 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
+#include "board.h"
+
 const ImGuiLayer::Theme ImGuiLayer::kThemes[7] = {
     {
         "Default",
         {0.051f, 0.063f, 0.106f, 1.0f},
         {0.0f, 0.0f, 0.0f, 1.0f},
-        {0.55f, 0.62f, 0.78f, 0.06f},
+        {200.0f / 255.0f, 200.0f / 255.0f, 200.0f / 255.0f, 100.0f / 255.0f},
     },
     {
         "Classic Sand",
@@ -234,6 +236,9 @@ void ImGuiLayer::DrawThemesPanel() {
   ImGui::ColorEdit4("Board Background", board_background_color_.data());
   ImGui::ColorEdit4("Grid Border", board_grid_border_color_.data());
   ImGui::Checkbox("Show Grid", &show_grid_);
+  ImGui::SliderFloat("Grid Thickness", &board::kGridLineThickness, 0.5f, 4.0f, "%.2f px");
+  ImGui::SliderFloat("Grid Opacity", &grid_opacity_, 0.0f, 1.0f, "%.2f");
+  ImGui::TextDisabled("Tip: Ctrl + Left Click a slider to type a value.");
   ImGui::Separator();
   ImGui::Text("%.1f FPS (%.2f ms)", ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
 

@@ -22,6 +22,7 @@ struct Game {
   void Shutdown();
 
   void DrawGridBackground() const;
+  void DrawGridOverlay() const;
 
   void ToggleBorderless();
 
