@@ -26,6 +26,8 @@ constexpr const char* kProgressFile = "progress.json";
 constexpr const char* kStepSoundPath = "assets/sfx/044.ogg";
 constexpr const char* kWinSoundPath = "assets/sfx/021.ogg";
 constexpr const char* kDeadMusicPath = "assets/sfx/037.ogg";
+constexpr const char* kDefeatSoundPath = "assets/sfx/100.ogg";
+constexpr const char* kSinkSoundPath = "assets/sfx/106.ogg";
 
 struct MusicTrack {
   const char* label;
@@ -153,6 +155,12 @@ void GameLayer::OnAttach() {
     win_sound_ = LoadSound(kWinSoundPath);
     win_sound_loaded_ = (win_sound_.frameCount > 0);
     if (win_sound_loaded_) SetSoundVolume(win_sound_, sfx_volume_);
+    defeat_sound_ = LoadSound(kDefeatSoundPath);
+    defeat_sound_loaded_ = (defeat_sound_.frameCount > 0);
+    if (defeat_sound_loaded_) SetSoundVolume(defeat_sound_, sfx_volume_);
+    sink_sound_ = LoadSound(kSinkSoundPath);
+    sink_sound_loaded_ = (sink_sound_.frameCount > 0);
+    if (sink_sound_loaded_) SetSoundVolume(sink_sound_, sfx_volume_);
     dead_music_ = LoadMusicStream(kDeadMusicPath);
     if (dead_music_.stream.buffer != nullptr) {
       dead_music_.looping = true;
@@ -177,6 +185,14 @@ void GameLayer::OnDetach() {
   if (win_sound_loaded_) {
     UnloadSound(win_sound_);
     win_sound_loaded_ = false;
+  }
+  if (defeat_sound_loaded_) {
+    UnloadSound(defeat_sound_);
+    defeat_sound_loaded_ = false;
+  }
+  if (sink_sound_loaded_) {
+    UnloadSound(sink_sound_);
+    sink_sound_loaded_ = false;
   }
   if (dead_music_loaded_) {
     StopMusicStream(dead_music_);
@@ -697,6 +713,31 @@ void GameLayer::RunWinDefeat() {
     }
   }
   for (auto e : doomed) registry_.destroy(e);
+  if (!doomed.empty() && defeat_sound_loaded_ && !muted_) PlaySound(defeat_sound_);
+
+  // SINK: any cell where a SINK entity overlaps a different non-empty entity
+  // sinks both. Mirrors Baba Is You: water swallows what walks into it
+  // (and the water tile too). Pure SINK-on-SINK stacks don't trigger.
+  std::vector<entt::entity> sunk;
+  auto sink_view = registry_.view<const Cell, const IsSink>();
+  for (auto [se, sc] : sink_view.each()) {
+    bool has_partner = false;
+    for (auto [other, oc] : registry_.view<const Cell>().each()) {
+      if (other == se) continue;
+      if (registry_.all_of<IsSink>(other)) continue;
+      if (oc.x != sc.x || oc.y != sc.y) continue;
+      has_partner = true;
+      sunk.push_back(other);
+    }
+    if (has_partner) sunk.push_back(se);
+  }
+  // De-duplicate (a SINK over multiple partners gets queued once per pair).
+  std::sort(sunk.begin(), sunk.end());
+  sunk.erase(std::unique(sunk.begin(), sunk.end()), sunk.end());
+  for (auto e : sunk) {
+    if (registry_.valid(e)) registry_.destroy(e);
+  }
+  if (!sunk.empty() && sink_sound_loaded_ && !muted_) PlaySound(sink_sound_);
 }
 
 std::optional<std::string> GameLayer::NextLevelId() const {
@@ -1155,6 +1196,8 @@ void GameLayer::DrawSettingsPanel() {
   if (ImGui::SliderFloat("SFX volume", &sfx_volume_, 0.0f, 1.0f, "%.2f")) {
     if (step_sound_loaded_) SetSoundVolume(step_sound_, sfx_volume_);
     if (win_sound_loaded_) SetSoundVolume(win_sound_, sfx_volume_);
+    if (defeat_sound_loaded_) SetSoundVolume(defeat_sound_, sfx_volume_);
+    if (sink_sound_loaded_) SetSoundVolume(sink_sound_, sfx_volume_);
   }
   ImGui::Checkbox("Mute", &muted_);
   ImGui::SameLine();

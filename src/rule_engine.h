@@ -35,9 +35,8 @@ class RuleBoard {
 // should force-tag them separately.
 std::vector<Rule> ParseRules(const RuleBoard& board);
 
-// Clears all IsYou/IsWin/IsStop/IsPush/IsMove/IsDefeat tags, then re-applies
-// tags to entities whose ObjectBlock matches a rule subject. Text entities are always
-// tagged IsPush.
+// Clears all derived rule tags, then re-applies tags to entities whose
+// ObjectBlock matches a rule subject. Text entities are always tagged IsPush.
 void ApplyRules(entt::registry& registry, const std::vector<Rule>& rules);
 
 // Mutates ObjectBlock.id for entities whose current id matches the subject of

@@ -231,6 +231,13 @@ class GameLayer : public Layer {
   Sound win_sound_{};
   bool win_sound_loaded_ = false;
 
+  // Defeat / sink SFX — short stings layered over the regular music when YOU
+  // dies on a DEFEAT cell or any object overlaps a SINK cell.
+  Sound defeat_sound_{};
+  bool defeat_sound_loaded_ = false;
+  Sound sink_sound_{};
+  bool sink_sound_loaded_ = false;
+
   // World / progression
   World world_;
   Progress progress_;

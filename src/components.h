@@ -35,3 +35,6 @@ struct IsStop {};
 struct IsPush {};
 struct IsMove {};
 struct IsDefeat {};
+struct IsSink {};
+struct IsHot {};
+struct IsMelt {};
