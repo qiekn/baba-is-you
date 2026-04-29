@@ -998,8 +998,15 @@ void GameLayer::DrawRulesPanel() {
   if (rules_.empty()) {
     ImGui::TextDisabled("No active rules. Place text blocks to form NOUN IS PROPERTY.");
   } else {
+    auto to_upper = [](const char* s) {
+      std::string out = s ? s : "";
+      for (char& c : out) c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
+      return out;
+    };
     for (const auto& rule : rules_) {
-      ImGui::Text("%s . IS . %s", PrettyName(rule.subject), PrettyName(rule.predicate));
+      const std::string subject = to_upper(PrettyName(rule.subject));
+      const std::string predicate = to_upper(PrettyName(rule.predicate));
+      ImGui::Text("%s . IS . %s", subject.c_str(), predicate.c_str());
     }
   }
   ImGui::Separator();
