@@ -181,6 +181,27 @@ void GameLayer::OnUpdate(float dt) {
     if (af.since_step > kWalkSettleSeconds) af.walk_phase = 0;
   }
 
+  // Iris transition: collapse the elliptical opening, swap level at full
+  // black, then re-open it. Input and rule updates are suspended while a
+  // transition runs so the player can't move during it.
+  if (transition_state_ != TransitionState::None) {
+    transition_t_ += dt / kTransitionPhaseSeconds;
+    if (transition_state_ == TransitionState::Closing && transition_t_ >= 1.0f) {
+      LoadLevelFromPath(std::filesystem::path{kLevelsDir} / (transition_target_ + ".json"));
+      transition_state_ = TransitionState::Opening;
+      transition_t_ = 0.0f;
+    } else if (transition_state_ == TransitionState::Opening && transition_t_ >= 1.0f) {
+      transition_state_ = TransitionState::None;
+      transition_t_ = 0.0f;
+      transition_target_.clear();
+    }
+    if (music_loaded_) {
+      SetMusicVolume(music_, muted_ ? 0.0f : volume_);
+      UpdateMusicStream(music_);
+    }
+    return;
+  }
+
   // Recompute rules every frame so the editor sees live feedback.
   RecomputeRules();
 
@@ -598,6 +619,16 @@ void GameLayer::RunWinDefeat() {
             MarkLevelCompleted(current_level_id_);
             win_handled_ = true;
           }
+          // Kick off the eye-blink transition to the next world level. If
+          // we're already on the last level there's nothing to advance to —
+          // just stay on the win screen.
+          if (transition_state_ == TransitionState::None) {
+            if (auto next = NextLevelId()) {
+              transition_state_ = TransitionState::Closing;
+              transition_t_ = 0.0f;
+              transition_target_ = *next;
+            }
+          }
         }
         return;
       }
@@ -617,6 +648,62 @@ void GameLayer::RunWinDefeat() {
     }
   }
   for (auto e : doomed) registry_.destroy(e);
+}
+
+std::optional<std::string> GameLayer::NextLevelId() const {
+  if (current_level_id_.empty() || world_.levels.empty()) return std::nullopt;
+  for (std::size_t i = 0; i + 1 < world_.levels.size(); ++i) {
+    if (world_.levels[i].id == current_level_id_) {
+      return world_.levels[i + 1].id;
+    }
+  }
+  return std::nullopt;
+}
+
+void GameLayer::DrawTransitionOverlay() const {
+  if (transition_state_ == TransitionState::None) return;
+  // `cover` ramps 0 -> 1 while Closing (eye shuts) and 1 -> 0 while Opening
+  // (eye re-opens). Smoothstep gives the eye-blink a soft accel/settle
+  // instead of a linear slide.
+  float cover = transition_state_ == TransitionState::Closing ? transition_t_
+                                                              : (1.0f - transition_t_);
+  cover = std::clamp(cover, 0.0f, 1.0f);
+  cover = cover * cover * (3.0f - 2.0f * cover);
+
+  const float w = static_cast<float>(GetScreenWidth());
+  const float h = static_cast<float>(GetScreenHeight());
+  const float cx = w * 0.5f;
+  const float cy = h * 0.5f;
+
+  // Eye-shaped opening: an ellipse with the same aspect as the screen, sized
+  // so the fully-open shape circumscribes the screen rectangle (axes 0.75 of
+  // each dimension safely contains the corners). At cover = 1 it collapses
+  // to a point.
+  const float openA = w * 0.75f;
+  const float openB = h * 0.75f;
+  const float a = openA * (1.0f - cover);
+  const float b = openB * (1.0f - cover);
+
+  // Outer skirt — far enough that the black fan reaches every corner from
+  // every angle.
+  const float farR = std::max(w, h) * 1.5f;
+
+  // Build the dark region as a strip of triangles between the ellipse and
+  // a far ring. raylib's 2D mode doesn't backface-cull, so winding doesn't
+  // matter here.
+  constexpr int kSegments = 96;
+  for (int i = 0; i < kSegments; ++i) {
+    const float t0 = static_cast<float>(i) / kSegments * 2.0f * PI;
+    const float t1 = static_cast<float>(i + 1) / kSegments * 2.0f * PI;
+    const float c0 = std::cos(t0), s0 = std::sin(t0);
+    const float c1 = std::cos(t1), s1 = std::sin(t1);
+    const Vector2 inner0{cx + a * c0, cy + b * s0};
+    const Vector2 inner1{cx + a * c1, cy + b * s1};
+    const Vector2 outer0{cx + farR * c0, cy + farR * s0};
+    const Vector2 outer1{cx + farR * c1, cy + farR * s1};
+    DrawTriangle(inner0, outer0, inner1, BLACK);
+    DrawTriangle(inner1, outer0, outer1, BLACK);
+  }
 }
 
 // ---------------------------------------------------------------------------

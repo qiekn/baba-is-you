@@ -34,6 +34,10 @@ class GameLayer : public Layer {
   std::optional<Color> LevelBackground() const;
   std::optional<Color> LevelEdge() const;
 
+  // Iris (eye-blink) transition shown between levels. Drawn last so it sits
+  // on top of ImGui panels too. No-op when no transition is active.
+  void DrawTransitionOverlay() const;
+
  private:
   // Level / registry
   void LoadLevelFromPath(const std::filesystem::path& path);
@@ -220,4 +224,17 @@ class GameLayer : public Layer {
   Progress progress_;
   std::string current_level_id_;
   bool win_handled_ = false;
+
+  // Iris transition between levels. Closing collapses the elliptical opening
+  // toward the screen center; at full black we swap to `transition_target_`;
+  // Opening reverses it. Input and turn updates pause while State != None.
+  enum class TransitionState : std::uint8_t { None, Closing, Opening };
+  TransitionState transition_state_ = TransitionState::None;
+  float transition_t_ = 0.0f;            // 0..1 progress within the current phase
+  std::string transition_target_;        // world level id to load at the black moment
+  static constexpr float kTransitionPhaseSeconds = 0.45f;
+
+  // Returns the id of the world level that follows `current_level_id_`, or
+  // nullopt if we're on the last level (or unrelated to the world list).
+  std::optional<std::string> NextLevelId() const;
 };
