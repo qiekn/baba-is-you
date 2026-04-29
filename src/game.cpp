@@ -106,6 +106,10 @@ void Game::Init() {
   SetTargetFPS(kTargetFps);
   InitAudioDevice();
 
+  // Default to borderless fullscreen — F11 toggles back to the windowed state
+  // captured here (loaded from window.state).
+  ToggleBorderless();
+
   // Initialize layers
 
   auto imgui_layer = std::make_unique<ImGuiLayer>();
