@@ -341,7 +341,7 @@ def extract_tiles(layer, tile_map, unknown=None):
     return tiles, used
 
 
-def trim_to_bbox(tiles, w, h, pad=1):
+def trim_to_bbox(tiles, w, h, pad=0):
     """Shrink the grid around its content so levels with huge empty margins
     (e.g. the overworld, which stores 20x35 cells but only uses rows 12-22)
     don't render as tall vertical boards. Returns a possibly-smaller (tiles,
@@ -352,17 +352,14 @@ def trim_to_bbox(tiles, w, h, pad=1):
     ys = [t['y'] for t in tiles]
     min_x, max_x = min(xs), max(xs)
     min_y, max_y = min(ys), max(ys)
-    # Keep a 1-cell gutter around content. Trim whenever we can remove at
-    # least 1 cell from both sides of either axis; otherwise preserve the
-    # stored dimensions to avoid over-tight boards.
-    lead_x = max(0, min_x - pad)
-    trail_x = max(0, (w - 1) - (max_x + pad))
-    lead_y = max(0, min_y - pad)
-    trail_y = max(0, (h - 1) - (max_y + pad))
-    if lead_x + trail_x < 2 and lead_y + trail_y < 2:
-        return tiles, w, h
-    new_tiles = [{**t, 'x': t['x'] - lead_x, 'y': t['y'] - lead_y} for t in tiles]
-    return new_tiles, w - lead_x - trail_x, h - lead_y - trail_y
+    # Strict crop to content bounds (optionally expanded by `pad` cells).
+    # This avoids importing levels with an extra 1-cell ring around the map.
+    left = max(0, min_x - pad)
+    right = min(w - 1, max_x + pad)
+    top = max(0, min_y - pad)
+    bottom = min(h - 1, max_y + pad)
+    new_tiles = [{**t, 'x': t['x'] - left, 'y': t['y'] - top} for t in tiles]
+    return new_tiles, right - left + 1, bottom - top + 1
 
 
 def convert(l_path, values_lua, out_path):

@@ -1,24 +1,72 @@
 {
-  "cols": 13,
-  "rows": 11,
+  "cols": 11,
+  "rows": 9,
   "tiles": [
     {
-      "x": 1,
-      "y": 1,
+      "x": 0,
+      "y": 0,
       "kind": "text",
       "name": "baba"
     },
     {
-      "x": 1,
+      "x": 0,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 0,
       "y": 3,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 0,
+      "y": 8,
+      "kind": "text",
+      "name": "wall"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 1,
+      "y": 2,
       "kind": "object",
       "name": "wall"
     },
     {
       "x": 1,
-      "y": 4,
+      "y": 3,
       "kind": "object",
       "name": "tile"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "kind": "object",
+      "name": "baba"
     },
     {
       "x": 1,
@@ -30,109 +78,97 @@
       "x": 1,
       "y": 6,
       "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 1,
-      "y": 7,
-      "kind": "object",
       "name": "wall"
     },
     {
       "x": 1,
-      "y": 9,
-      "kind": "text",
-      "name": "wall"
-    },
-    {
-      "x": 2,
-      "y": 1,
+      "y": 8,
       "kind": "text",
       "name": "is"
     },
     {
       "x": 2,
-      "y": 3,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 2,
-      "y": 4,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 2,
-      "y": 5,
-      "kind": "object",
-      "name": "baba"
-    },
-    {
-      "x": 2,
-      "y": 6,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 2,
-      "y": 7,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 2,
-      "y": 9,
-      "kind": "text",
-      "name": "is"
-    },
-    {
-      "x": 3,
-      "y": 1,
+      "y": 0,
       "kind": "text",
       "name": "you"
     },
     {
-      "x": 3,
-      "y": 3,
+      "x": 2,
+      "y": 2,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 3,
+      "x": 2,
+      "y": 3,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 2,
       "y": 4,
       "kind": "object",
       "name": "tile"
     },
     {
-      "x": 3,
+      "x": 2,
       "y": 5,
       "kind": "object",
       "name": "tile"
     },
     {
-      "x": 3,
+      "x": 2,
       "y": 6,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 3,
-      "y": 7,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 3,
-      "y": 9,
+      "x": 2,
+      "y": 8,
       "kind": "text",
       "name": "stop"
     },
     {
+      "x": 3,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
       "x": 4,
       "y": 3,
       "kind": "object",
-      "name": "wall"
+      "name": "tile"
     },
     {
       "x": 4,
@@ -150,11 +186,11 @@
       "x": 4,
       "y": 6,
       "kind": "object",
-      "name": "tile"
+      "name": "wall"
     },
     {
-      "x": 4,
-      "y": 7,
+      "x": 5,
+      "y": 2,
       "kind": "object",
       "name": "wall"
     },
@@ -162,59 +198,59 @@
       "x": 5,
       "y": 3,
       "kind": "object",
-      "name": "wall"
+      "name": "rock"
     },
     {
       "x": 5,
-      "y": 4,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 5,
-      "y": 5,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 5,
-      "y": 6,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 5,
-      "y": 7,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 6,
-      "y": 3,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 6,
       "y": 4,
       "kind": "object",
       "name": "rock"
     },
     {
-      "x": 6,
+      "x": 5,
       "y": 5,
       "kind": "object",
       "name": "rock"
     },
     {
-      "x": 6,
+      "x": 5,
       "y": 6,
       "kind": "object",
-      "name": "rock"
+      "name": "wall"
     },
     {
       "x": 6,
-      "y": 7,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 2,
       "kind": "object",
       "name": "wall"
     },
@@ -222,7 +258,7 @@
       "x": 7,
       "y": 3,
       "kind": "object",
-      "name": "wall"
+      "name": "tile"
     },
     {
       "x": 7,
@@ -240,61 +276,73 @@
       "x": 7,
       "y": 6,
       "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 7,
-      "y": 7,
-      "kind": "object",
       "name": "wall"
     },
     {
       "x": 8,
-      "y": 3,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 8,
-      "y": 4,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 8,
-      "y": 5,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 8,
-      "y": 6,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 8,
-      "y": 7,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 9,
-      "y": 1,
+      "y": 0,
       "kind": "text",
       "name": "flag"
     },
     {
-      "x": 9,
+      "x": 8,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
       "y": 3,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "kind": "text",
+      "name": "rock"
+    },
+    {
+      "x": 9,
+      "y": 0,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 9,
+      "y": 2,
       "kind": "object",
       "name": "wall"
     },
     {
       "x": 9,
-      "y": 4,
+      "y": 3,
       "kind": "object",
       "name": "tile"
+    },
+    {
+      "x": 9,
+      "y": 4,
+      "kind": "object",
+      "name": "flag"
     },
     {
       "x": 9,
@@ -306,101 +354,53 @@
       "x": 9,
       "y": 6,
       "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 9,
-      "y": 7,
-      "kind": "object",
       "name": "wall"
     },
     {
       "x": 9,
-      "y": 9,
-      "kind": "text",
-      "name": "rock"
-    },
-    {
-      "x": 10,
-      "y": 1,
+      "y": 8,
       "kind": "text",
       "name": "is"
     },
     {
       "x": 10,
-      "y": 3,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 10,
-      "y": 4,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 10,
-      "y": 5,
-      "kind": "object",
-      "name": "flag"
-    },
-    {
-      "x": 10,
-      "y": 6,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 10,
-      "y": 7,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 10,
-      "y": 9,
-      "kind": "text",
-      "name": "is"
-    },
-    {
-      "x": 11,
-      "y": 1,
+      "y": 0,
       "kind": "text",
       "name": "win"
     },
     {
-      "x": 11,
-      "y": 3,
+      "x": 10,
+      "y": 2,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 11,
+      "x": 10,
+      "y": 3,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 10,
       "y": 4,
       "kind": "object",
       "name": "tile"
     },
     {
-      "x": 11,
+      "x": 10,
       "y": 5,
       "kind": "object",
       "name": "tile"
     },
     {
-      "x": 11,
+      "x": 10,
       "y": 6,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 11,
-      "y": 7,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 11,
-      "y": 9,
+      "x": 10,
+      "y": 8,
       "kind": "text",
       "name": "push"
     }
