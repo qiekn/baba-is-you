@@ -24,6 +24,7 @@ constexpr const char* kWorldFile = "assets/worlds/tutorial.json";
 constexpr const char* kProgressFile = "progress.json";
 
 constexpr const char* kStepSoundPath = "assets/sfx/044.ogg";
+constexpr const char* kWinSoundPath = "assets/sfx/021.ogg";
 
 struct MusicTrack {
   const char* label;
@@ -148,6 +149,9 @@ void GameLayer::OnAttach() {
     step_sound_ = LoadSound(kStepSoundPath);
     step_sound_loaded_ = (step_sound_.frameCount > 0);
     if (step_sound_loaded_) SetSoundVolume(step_sound_, sfx_volume_);
+    win_sound_ = LoadSound(kWinSoundPath);
+    win_sound_loaded_ = (win_sound_.frameCount > 0);
+    if (win_sound_loaded_) SetSoundVolume(win_sound_, sfx_volume_);
   }
 }
 
@@ -162,6 +166,10 @@ void GameLayer::OnDetach() {
   if (step_sound_loaded_) {
     UnloadSound(step_sound_);
     step_sound_loaded_ = false;
+  }
+  if (win_sound_loaded_) {
+    UnloadSound(win_sound_);
+    win_sound_loaded_ = false;
   }
 }
 
@@ -619,6 +627,7 @@ void GameLayer::RunWinDefeat() {
             MarkLevelCompleted(current_level_id_);
             win_handled_ = true;
           }
+          if (win_sound_loaded_ && !muted_) PlaySound(win_sound_);
           // Kick off the eye-blink transition to the next world level. If
           // we're already on the last level there's nothing to advance to —
           // just stay on the win screen.
@@ -1102,6 +1111,7 @@ void GameLayer::DrawSettingsPanel() {
   ImGui::SliderFloat("Volume", &volume_, 0.0f, 1.0f, "%.2f");
   if (ImGui::SliderFloat("SFX volume", &sfx_volume_, 0.0f, 1.0f, "%.2f")) {
     if (step_sound_loaded_) SetSoundVolume(step_sound_, sfx_volume_);
+    if (win_sound_loaded_) SetSoundVolume(win_sound_, sfx_volume_);
   }
   ImGui::Checkbox("Mute", &muted_);
   ImGui::SameLine();

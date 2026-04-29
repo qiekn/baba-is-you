@@ -219,6 +219,10 @@ class GameLayer : public Layer {
   bool step_sound_loaded_ = false;
   float sfx_volume_ = 0.6f;
 
+  // Win SFX — fanfare played the moment YOU first reaches WIN on a level.
+  Sound win_sound_{};
+  bool win_sound_loaded_ = false;
+
   // World / progression
   World world_;
   Progress progress_;
