@@ -235,6 +235,7 @@ void ImGuiLayer::DrawThemesPanel() {
   ImGui::ColorEdit4("Background Color", background_color_.data());
   ImGui::ColorEdit4("Board Background", board_background_color_.data());
   ImGui::ColorEdit4("Grid Border", board_grid_border_color_.data());
+  ImGui::Checkbox("Scale To Level", &board::kScaleToLevel);
   ImGui::Checkbox("Show Grid", &show_grid_);
   ImGui::SliderFloat("Grid Thickness", &board::kGridLineThickness, 0.5f, 4.0f, "%.2f px");
   ImGui::SliderFloat("Grid Opacity", &grid_opacity_, 0.0f, 1.0f, "%.2f");

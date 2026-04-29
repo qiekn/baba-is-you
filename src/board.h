@@ -10,6 +10,9 @@ namespace board {
 // Mutable so the game can resize the board to match whatever level is loaded.
 inline int kCols = 24;
 inline int kRows = 18;
+inline constexpr int kBaseCols = 24;
+inline constexpr int kBaseRows = 18;
+inline bool kScaleToLevel = true;
 inline constexpr float kBoardPadding = 28.0f;
 inline constexpr float kBoardOffsetY = 14.0f;
 inline constexpr float kBoardVerticalMargin = 30.0f;
@@ -21,6 +24,10 @@ float Pitch();
 
 // Screen-space rectangle that the board occupies (not including padding).
 Rectangle BoardRect();
+
+// Grid dimensions used for rendering and hit-testing.
+int RenderCols();
+int RenderRows();
 
 // Screen-space rectangle for the interior of one cell — what a sprite should
 // fill. Accepts out-of-range indices and clamps; callers should sanity-check

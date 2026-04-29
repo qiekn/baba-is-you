@@ -189,18 +189,20 @@ void Game::DrawGridOverlay() const {
   border.a = static_cast<unsigned char>(border.a * opacity);
   const float t = board::kGridLineThickness;
   const float pitch = board::Pitch();
+  const int cols = board::RenderCols();
+  const int rows = board::RenderRows();
 
   // Draw all verticals first. Extend by half-thickness at top/bottom so the
   // outer corners stay complete even when horizontals avoid overlaps.
-  for (int col = 0; col <= board::kCols; ++col) {
+  for (int col = 0; col <= cols; ++col) {
     const float x = board.x + col * pitch - t * 0.5f;
     DrawRectangleRec({x, board.y - t * 0.5f, t, board.height + t}, border);
   }
   // Draw horizontals as segmented spans between vertical lines so grid
   // intersections are not painted twice (keeps opacity uniform).
-  for (int row = 0; row <= board::kRows; ++row) {
+  for (int row = 0; row <= rows; ++row) {
     const float y = board.y + row * pitch - t * 0.5f;
-    for (int col = 0; col < board::kCols; ++col) {
+    for (int col = 0; col < cols; ++col) {
       const float x = board.x + col * pitch + t * 0.5f;
       const float w = std::max(0.0f, pitch - t);
       DrawRectangleRec({x, y, w, t}, border);
