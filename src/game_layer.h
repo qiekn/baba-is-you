@@ -213,6 +213,14 @@ class GameLayer : public Layer {
   float volume_ = 0.4f;
   bool muted_ = false;
 
+  // Dead-state ambience: when no entity carries the IsYou tag (all YOU
+  // characters destroyed or "X is you" unwritten), the regular track is
+  // paused and this loop plays instead. Z-undo restoring an IsYou flips
+  // back automatically.
+  Music dead_music_{};
+  bool dead_music_loaded_ = false;
+  bool playing_dead_ = false;
+
   // Step SFX — short ogg loaded once on attach and played on each successful
   // directional move.
   Sound step_sound_{};

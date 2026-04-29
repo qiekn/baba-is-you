@@ -25,6 +25,7 @@ constexpr const char* kProgressFile = "progress.json";
 
 constexpr const char* kStepSoundPath = "assets/sfx/044.ogg";
 constexpr const char* kWinSoundPath = "assets/sfx/021.ogg";
+constexpr const char* kDeadMusicPath = "assets/sfx/037.ogg";
 
 struct MusicTrack {
   const char* label;
@@ -152,6 +153,12 @@ void GameLayer::OnAttach() {
     win_sound_ = LoadSound(kWinSoundPath);
     win_sound_loaded_ = (win_sound_.frameCount > 0);
     if (win_sound_loaded_) SetSoundVolume(win_sound_, sfx_volume_);
+    dead_music_ = LoadMusicStream(kDeadMusicPath);
+    if (dead_music_.stream.buffer != nullptr) {
+      dead_music_.looping = true;
+      dead_music_loaded_ = true;
+      SetMusicVolume(dead_music_, muted_ ? 0.0f : volume_);
+    }
   }
 }
 
@@ -170,6 +177,11 @@ void GameLayer::OnDetach() {
   if (win_sound_loaded_) {
     UnloadSound(win_sound_);
     win_sound_loaded_ = false;
+  }
+  if (dead_music_loaded_) {
+    StopMusicStream(dead_music_);
+    UnloadMusicStream(dead_music_);
+    dead_music_loaded_ = false;
   }
 }
 
@@ -203,7 +215,10 @@ void GameLayer::OnUpdate(float dt) {
       transition_t_ = 0.0f;
       transition_target_.clear();
     }
-    if (music_loaded_) {
+    if (playing_dead_ && dead_music_loaded_) {
+      SetMusicVolume(dead_music_, muted_ ? 0.0f : volume_);
+      UpdateMusicStream(dead_music_);
+    } else if (music_loaded_) {
       SetMusicVolume(music_, muted_ ? 0.0f : volume_);
       UpdateMusicStream(music_);
     }
@@ -213,9 +228,34 @@ void GameLayer::OnUpdate(float dt) {
   // Recompute rules every frame so the editor sees live feedback.
   RecomputeRules();
 
+  // Stuck-state ambience: any frame where no entity holds IsYou (everyone
+  // dead, or "X is you" never written / broken) plays a separate music
+  // stream. Restoring an IsYou via Z-undo flips back automatically.
+  bool any_you = false;
+  for (auto e : registry_.view<const IsYou>()) {
+    (void)e;
+    any_you = true;
+    break;
+  }
+  if (!any_you && !playing_dead_) {
+    if (music_loaded_) PauseMusicStream(music_);
+    if (dead_music_loaded_) {
+      SeekMusicStream(dead_music_, 0.0f);
+      PlayMusicStream(dead_music_);
+    }
+    playing_dead_ = true;
+  } else if (any_you && playing_dead_) {
+    if (dead_music_loaded_) StopMusicStream(dead_music_);
+    if (music_loaded_) ResumeMusicStream(music_);
+    playing_dead_ = false;
+  }
+
   UpdateParticles(dt);
 
-  if (music_loaded_) {
+  if (playing_dead_ && dead_music_loaded_) {
+    SetMusicVolume(dead_music_, muted_ ? 0.0f : volume_);
+    UpdateMusicStream(dead_music_);
+  } else if (music_loaded_) {
     SetMusicVolume(music_, muted_ ? 0.0f : volume_);
     UpdateMusicStream(music_);
   }
@@ -809,6 +849,9 @@ void GameLayer::LoadTrack(int index) {
   track_index_ = index;
   SetMusicVolume(music_, muted_ ? 0.0f : volume_);
   PlayMusicStream(music_);
+  // Mid-stuck-state track changes: keep dead ambience audible by parking
+  // the new track in a paused state. Resume happens when an IsYou returns.
+  if (playing_dead_) PauseMusicStream(music_);
 }
 
 void GameLayer::UnloadTrack() {
