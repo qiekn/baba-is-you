@@ -66,6 +66,7 @@ bool SaveLevelToJson(const std::filesystem::path& path, const Level& level) {
   json doc;
   doc["cols"] = level.cols;
   doc["rows"] = level.rows;
+  doc["name"] = level.name;
   json tiles = json::array();
   for (const auto& tile : level.tiles) {
     json node;

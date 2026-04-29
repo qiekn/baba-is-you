@@ -1,6 +1,7 @@
 {
   "cols": 24,
   "rows": 18,
+  "name": "Break The Rule",
   "tiles": [
     {
       "x": 0,
@@ -483,19 +484,19 @@
       "name": "wall"
     },
     {
-      "x": 3,
+      "x": 2,
       "y": 3,
       "kind": "text",
       "name": "baba"
     },
     {
-      "x": 4,
+      "x": 3,
       "y": 3,
       "kind": "text",
       "name": "is"
     },
     {
-      "x": 5,
+      "x": 4,
       "y": 3,
       "kind": "text",
       "name": "you"
@@ -520,109 +521,103 @@
     },
     {
       "x": 10,
-      "y": 14,
+      "y": 3,
       "kind": "text",
       "name": "wall"
     },
     {
       "x": 11,
-      "y": 14,
+      "y": 3,
       "kind": "text",
       "name": "is"
     },
     {
       "x": 12,
-      "y": 14,
+      "y": 3,
       "kind": "text",
       "name": "stop"
     },
     {
-      "x": 12,
-      "y": 2,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 12,
-      "y": 3,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 12,
+      "x": 14,
       "y": 4,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 12,
+      "x": 14,
       "y": 5,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 12,
+      "x": 14,
       "y": 6,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 12,
+      "x": 14,
       "y": 7,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 12,
+      "x": 14,
       "y": 8,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 12,
+      "x": 14,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
       "y": 10,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 12,
+      "x": 14,
       "y": 11,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 12,
+      "x": 14,
       "y": 12,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 12,
+      "x": 14,
       "y": 13,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 12,
+      "x": 14,
       "y": 14,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 12,
+      "x": 14,
       "y": 15,
       "kind": "object",
       "name": "wall"
     },
     {
       "x": 5,
-      "y": 9,
+      "y": 10,
       "kind": "object",
       "name": "baba"
     },
     {
       "x": 19,
-      "y": 9,
+      "y": 10,
       "kind": "object",
       "name": "flag"
     }

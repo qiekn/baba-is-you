@@ -96,6 +96,7 @@ class GameLayer : public Layer {
   void DrawEditorPanel();
   void DrawSettingsPanel();
   void DrawWorldPanel();
+  static std::string GuessNextLevelFileName();
 
   // Editor
   enum class Tool : std::uint8_t {
@@ -193,8 +194,10 @@ class GameLayer : public Layer {
   };
   std::vector<ClipTile> clipboard_;
 
-  // Save-as buffer
-  char save_name_[64] = "custom.json";
+  // Save/load buffers
+  char level_name_[128] = "";
+  char save_name_[64] = "001.json";
+
   int selected_level_ = 0;
 
   // Imported-level browser (assets/imported/)

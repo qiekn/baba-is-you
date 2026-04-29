@@ -22,7 +22,7 @@ bool LoadWorld(const std::filesystem::path& path, World& out) {
     for (const auto& node : *it) {
       WorldLevel lvl;
       lvl.id = node.value("id", "");
-      lvl.label = node.value("label", lvl.id);
+      lvl.name = node.value("name", node.value("label", lvl.id));
       if (!lvl.id.empty()) w.levels.push_back(std::move(lvl));
     }
   }

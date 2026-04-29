@@ -1,9 +1,9 @@
 {
   "title": "Tutorial",
   "levels": [
-    { "id": "01-intro", "label": "1 - Walk To The Flag" },
-    { "id": "02-walls", "label": "2 - Find The Gap" },
-    { "id": "03-push",  "label": "3 - Push Through" },
-    { "id": "04-break", "label": "4 - Break The Rule" }
+    { "id": "001", "name": "Walk To The Flag" },
+    { "id": "002", "name": "Find The Gap" },
+    { "id": "003", "name": "Push Through" },
+    { "id": "004", "name": "Break The Rule" }
   ]
 }

@@ -5,6 +5,8 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
+#include <iomanip>
+#include <sstream>
 #include <string>
 
 #include <imgui.h>
@@ -16,7 +18,7 @@
 namespace {
 
 constexpr float kAnimFps = 6.0f;  // cycle 1->2->3 every ~0.5s
-constexpr const char* kDefaultLevel = "assets/levels/starter.json";
+constexpr const char* kDefaultLevel = "assets/levels/001.json";
 constexpr const char* kSpritesDir = "assets/sprites";
 constexpr const char* kLevelsDir = "assets/levels";
 constexpr const char* kImportedDir = "assets/imported";
@@ -50,11 +52,10 @@ struct LevelEntry {
 };
 
 constexpr LevelEntry kBuiltinLevels[] = {
-    {"Starter", "starter.json"},
-    {"01 Intro", "01-intro.json"},
-    {"02 Walls", "02-walls.json"},
-    {"03 Push", "03-push.json"},
-    {"04 Break", "04-break.json"},
+    {"001", "001.json"},
+    {"002", "002.json"},
+    {"003", "003.json"},
+    {"004", "004.json"},
 };
 constexpr int kBuiltinLevelCount = static_cast<int>(sizeof(kBuiltinLevels) / sizeof(kBuiltinLevels[0]));
 
@@ -86,6 +87,28 @@ int ComputeTileMask(const entt::registry& registry, ObjectId id, int x, int y) {
 }  // namespace
 
 GameLayer::GameLayer() : Layer("GameLayer") {}
+
+std::string GameLayer::GuessNextLevelFileName() {
+  std::error_code ec;
+  if (!std::filesystem::is_directory(kLevelsDir, ec)) return "001.json";
+
+  int max_id = 0;
+  for (const auto& entry : std::filesystem::directory_iterator(kLevelsDir, ec)) {
+    if (!entry.is_regular_file()) continue;
+    if (entry.path().extension() != ".json") continue;
+    const std::string stem = entry.path().stem().string();
+    if (stem.empty()) continue;
+    if (!std::all_of(stem.begin(), stem.end(),
+                     [](unsigned char c) { return std::isdigit(c) != 0; })) {
+      continue;
+    }
+    max_id = std::max(max_id, std::stoi(stem));
+  }
+
+  std::ostringstream oss;
+  oss << std::setw(3) << std::setfill('0') << (max_id + 1) << ".json";
+  return oss.str();
+}
 
 std::optional<Color> GameLayer::LevelBackground() const {
   if (level_.bg_r < 0) return std::nullopt;
@@ -452,6 +475,11 @@ void GameLayer::LoadLevelFromPath(const std::filesystem::path& path) {
   board::kCols = level_.cols;
   board::kRows = level_.rows;
   current_level_id_ = path.stem().string();
+  const std::string filename = path.filename().string();
+  std::strncpy(save_name_, filename.c_str(), sizeof(save_name_) - 1);
+  save_name_[sizeof(save_name_) - 1] = '\0';
+  std::strncpy(level_name_, level_.name.c_str(), sizeof(level_name_) - 1);
+  level_name_[sizeof(level_name_) - 1] = '\0';
   win_handled_ = false;
   BuildRegistryFromLevel();
   undo_.Clear();
@@ -470,9 +498,20 @@ void GameLayer::ResetToInitial() {
 
 void GameLayer::SaveLevelToPath(const std::filesystem::path& path) {
   Level current = ExtractLevelFromRegistry();
+  current.name = level_.name;
+  current.bg_r = level_.bg_r;
+  current.bg_g = level_.bg_g;
+  current.bg_b = level_.bg_b;
+  current.edge_r = level_.edge_r;
+  current.edge_g = level_.edge_g;
+  current.edge_b = level_.edge_b;
   if (!SaveLevelToJson(path, current)) {
     TraceLog(LOG_WARNING, "Failed to save level: %s", path.string().c_str());
+    return;
   }
+  level_ = current;
+  initial_level_ = current;
+  current_level_id_ = path.stem().string();
 }
 
 void GameLayer::BuildRegistryFromLevel() {
@@ -490,6 +529,13 @@ Level GameLayer::ExtractLevelFromRegistry() const {
   Level lvl;
   lvl.cols = board::kCols;
   lvl.rows = board::kRows;
+  lvl.name = level_.name;
+  lvl.bg_r = level_.bg_r;
+  lvl.bg_g = level_.bg_g;
+  lvl.bg_b = level_.bg_b;
+  lvl.edge_r = level_.edge_r;
+  lvl.edge_g = level_.edge_g;
+  lvl.edge_b = level_.edge_b;
   for (auto [e, cell, object] : registry_.view<const Cell, const ObjectBlock>().each()) {
     LevelTile tile;
     tile.x = cell.x;
@@ -995,6 +1041,9 @@ void GameLayer::DrawEditorPanel() {
   DrawPalette();
 
   ImGui::Separator();
+  if (ImGui::InputText("Name", level_name_, sizeof(level_name_))) {
+    level_.name = level_name_;
+  }
   ImGui::InputText("File", save_name_, sizeof(save_name_));
   if (ImGui::Button("Load")) {
     LoadLevelFromPath(std::filesystem::path{kLevelsDir} / save_name_);
@@ -1002,6 +1051,9 @@ void GameLayer::DrawEditorPanel() {
   ImGui::SameLine();
   if (ImGui::Button("Save")) {
     SaveLevelToPath(std::filesystem::path{kLevelsDir} / save_name_);
+    const std::string next = GuessNextLevelFileName();
+    std::strncpy(save_name_, next.c_str(), sizeof(save_name_) - 1);
+    save_name_[sizeof(save_name_) - 1] = '\0';
   }
 
   ImGui::End();
@@ -1779,11 +1831,11 @@ void GameLayer::DrawWorldPanel() {
       ImGui::PushID(static_cast<int>(i));
       const char* badge = completed ? "[*]" : (unlocked ? "[ ]" : "[X]");
       if (current) {
-        ImGui::TextColored(ImVec4(0.4f, 0.9f, 0.4f, 1.0f), "%s %s", badge, lvl.label.c_str());
+        ImGui::TextColored(ImVec4(0.4f, 0.9f, 0.4f, 1.0f), "%s %s", badge, lvl.name.c_str());
       } else if (unlocked) {
-        ImGui::Text("%s %s", badge, lvl.label.c_str());
+        ImGui::Text("%s %s", badge, lvl.name.c_str());
       } else {
-        ImGui::TextDisabled("%s %s", badge, lvl.label.c_str());
+        ImGui::TextDisabled("%s %s", badge, lvl.name.c_str());
       }
       ImGui::SameLine();
       ImGui::BeginDisabled(!unlocked);

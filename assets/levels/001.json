@@ -1,6 +1,7 @@
 {
   "cols": 24,
   "rows": 18,
+  "name": "Walk To The Flag",
   "tiles": [
     { "x": 0, "y": 0, "kind": "object", "name": "wall" },
     { "x": 1, "y": 0, "kind": "object", "name": "wall" },
