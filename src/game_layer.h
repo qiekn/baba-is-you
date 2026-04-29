@@ -201,7 +201,7 @@ class GameLayer : public Layer {
 
   // Save/load buffers
   char level_name_[128] = "";
-  char save_name_[64] = "001.json";
+  char level_id_input_[32] = "0";
 
   int selected_level_ = 0;
   std::vector<std::string> builtin_level_files_;

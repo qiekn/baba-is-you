@@ -4,6 +4,7 @@
 #include <array>
 #include <cctype>
 #include <cmath>
+#include <cstdio>
 #include <cstring>
 #include <string>
 
@@ -49,6 +50,22 @@ std::string ResolveCampaignLevelName(const WorldLevel& lvl) {
   const auto path = std::filesystem::path{kLevelsDir} / (lvl.id + ".json");
   if (LoadLevelFromJson(path, loaded) && !loaded.name.empty()) return loaded.name;
   return lvl.id;
+}
+
+std::optional<int> ParseLevelNumber(const char* text) {
+  if (!text || text[0] == '\0') return std::nullopt;
+  for (std::size_t i = 0; text[i] != '\0'; ++i) {
+    if (!std::isdigit(static_cast<unsigned char>(text[i]))) return std::nullopt;
+  }
+  return std::stoi(text);
+}
+
+std::string LevelFileFromNumber(int level) {
+  if (level < 0) level = 0;
+  if (level > 999) level = 999;
+  char buf[16];
+  std::snprintf(buf, sizeof(buf), "%03d.json", level);
+  return buf;
 }
 
 // Draw a sprite texture fitted to a board cell, tinted with `color`.
@@ -446,9 +463,11 @@ void GameLayer::LoadLevelFromPath(const std::filesystem::path& path) {
   board::kCols = level_.cols;
   board::kRows = level_.rows;
   current_level_id_ = path.stem().string();
-  const std::string filename = path.filename().string();
-  std::strncpy(save_name_, filename.c_str(), sizeof(save_name_) - 1);
-  save_name_[sizeof(save_name_) - 1] = '\0';
+  if (!current_level_id_.empty() &&
+      std::all_of(current_level_id_.begin(), current_level_id_.end(),
+                  [](unsigned char c) { return std::isdigit(c) != 0; })) {
+    std::snprintf(level_id_input_, sizeof(level_id_input_), "%d", std::stoi(current_level_id_));
+  }
   std::strncpy(level_name_, level_.name.c_str(), sizeof(level_name_) - 1);
   level_name_[sizeof(level_name_) - 1] = '\0';
   win_handled_ = false;
@@ -1016,13 +1035,44 @@ void GameLayer::DrawEditorPanel() {
   if (ImGui::InputText("Name", level_name_, sizeof(level_name_))) {
     level_.name = level_name_;
   }
-  ImGui::InputText("File", save_name_, sizeof(save_name_));
+  ImGui::InputText("Level", level_id_input_, sizeof(level_id_input_),
+                   ImGuiInputTextFlags_CharsDecimal);
+
+  auto load_level_from_input = [&]() {
+    auto n = ParseLevelNumber(level_id_input_);
+    if (!n) return;
+    LoadLevelFromPath(std::filesystem::path{kLevelsDir} / LevelFileFromNumber(*n));
+  };
+  auto save_level_from_input = [&]() {
+    auto n = ParseLevelNumber(level_id_input_);
+    if (!n) return;
+    SaveLevelToPath(std::filesystem::path{kLevelsDir} / LevelFileFromNumber(*n));
+  };
+
   if (ImGui::Button("Load")) {
-    LoadLevelFromPath(std::filesystem::path{kLevelsDir} / save_name_);
+    load_level_from_input();
   }
   ImGui::SameLine();
   if (ImGui::Button("Save")) {
-    SaveLevelToPath(std::filesystem::path{kLevelsDir} / save_name_);
+    save_level_from_input();
+  }
+  ImGui::SameLine();
+  if (ImGui::Button("Prev")) {
+    auto n = ParseLevelNumber(level_id_input_);
+    if (n) {
+      const int prev = std::max(0, *n - 1);
+      std::snprintf(level_id_input_, sizeof(level_id_input_), "%d", prev);
+      load_level_from_input();
+    }
+  }
+  ImGui::SameLine();
+  if (ImGui::Button("Next")) {
+    auto n = ParseLevelNumber(level_id_input_);
+    if (n) {
+      const int next = std::min(999, *n + 1);
+      std::snprintf(level_id_input_, sizeof(level_id_input_), "%d", next);
+      load_level_from_input();
+    }
   }
 
   ImGui::End();
