@@ -396,7 +396,13 @@ void GameLayer::OnRender() {
     } else {
       const auto& text = registry_.get<const TextBlock>(d.e);
       const auto& tex = sprites_.Get(text.id, current_frame_);
-      DrawSpriteInCell(tex, board::CellRect(d.x, d.y), sprites_.TintFor(text.id));
+      Color tint = sprites_.TintFor(text.id);
+      if (!registry_.all_of<IsRuleActiveText>(d.e)) {
+        tint.r = static_cast<unsigned char>(tint.r * 0.60f);
+        tint.g = static_cast<unsigned char>(tint.g * 0.60f);
+        tint.b = static_cast<unsigned char>(tint.b * 0.60f);
+      }
+      DrawSpriteInCell(tex, board::CellRect(d.x, d.y), tint);
     }
   }
   // 4) Particles (sparkles for IsWin entities).
@@ -571,7 +577,45 @@ void GameLayer::RecomputeRules(bool apply_transformations) {
   for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
     rb.Set(cell.x, cell.y, text.id);
   }
+  registry_.clear<IsRuleActiveText>();
   rules_ = ParseRules(rb);
+  auto mark_text_at = [&](int x, int y) {
+    for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
+      if (cell.x == x && cell.y == y) {
+        registry_.emplace_or_replace<IsRuleActiveText>(e);
+      }
+    }
+  };
+  for (int y = 0; y < rb.Rows(); ++y) {
+    for (int x = 0; x + 2 < rb.Cols(); ++x) {
+      const auto a = rb.At(x, y);
+      const auto b = rb.At(x + 1, y);
+      const auto c = rb.At(x + 2, y);
+      if (!a || !b || !c) continue;
+      if (CategoryOf(*a) != TextCategory::Noun) continue;
+      if (*b != TextId::Is) continue;
+      const auto pred_cat = CategoryOf(*c);
+      if (pred_cat != TextCategory::Noun && pred_cat != TextCategory::Property) continue;
+      mark_text_at(x, y);
+      mark_text_at(x + 1, y);
+      mark_text_at(x + 2, y);
+    }
+  }
+  for (int x = 0; x < rb.Cols(); ++x) {
+    for (int y = 0; y + 2 < rb.Rows(); ++y) {
+      const auto a = rb.At(x, y);
+      const auto b = rb.At(x, y + 1);
+      const auto c = rb.At(x, y + 2);
+      if (!a || !b || !c) continue;
+      if (CategoryOf(*a) != TextCategory::Noun) continue;
+      if (*b != TextId::Is) continue;
+      const auto pred_cat = CategoryOf(*c);
+      if (pred_cat != TextCategory::Noun && pred_cat != TextCategory::Property) continue;
+      mark_text_at(x, y);
+      mark_text_at(x, y + 1);
+      mark_text_at(x, y + 2);
+    }
+  }
   if (apply_transformations && ApplyTransformations(registry_, rules_)) {
     // ObjectBlock.ids changed — re-parse just to be safe (text positions are
     // unchanged, but the rule list is the same so this is essentially free)
