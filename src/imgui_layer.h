@@ -59,7 +59,7 @@ class ImGuiLayer : public Layer {
   static float GetDpiScale();
 
   static constexpr float kImGuiBaseFontSize = 18.0f;
-  static const Theme kThemes[6];
+  static const Theme kThemes[7];
 
   bool visible_ = true;
   bool show_viewport_ = false;

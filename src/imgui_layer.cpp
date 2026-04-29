@@ -10,7 +10,13 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-const ImGuiLayer::Theme ImGuiLayer::kThemes[6] = {
+const ImGuiLayer::Theme ImGuiLayer::kThemes[7] = {
+    {
+        "Default",
+        {0.051f, 0.063f, 0.106f, 1.0f},
+        {0.0f, 0.0f, 0.0f, 1.0f},
+        {0.55f, 0.62f, 0.78f, 0.06f},
+    },
     {
         "Classic Sand",
         {0.91f, 0.90f, 0.86f, 1.0f},
