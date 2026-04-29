@@ -1,10 +1,10 @@
-# Refresh Tutorial Levels (000-007)
+# Refresh Levels (000-007)
 
 This note records exactly how `assets/levels/000.json` to `007.json` were refreshed from the original Baba data.
 
 ## Goal
 
-Update local tutorial levels to this order:
+Update local levels to this order:
 
 - `00` Baba Is You
 - `01` Where Do I Go?
