@@ -297,7 +297,40 @@ void GameLayer::OnUpdate(float dt) {
     return;
   }
 
+  if (!edit_mode_ && IsKeyPressed(KEY_E)) {
+    edit_mode_ = true;
+    dragging_ = false;
+    return;
+  }
+
   if (edit_mode_) {
+    // Editor mode keyboard shortcuts.
+    if (IsKeyPressed(KEY_Q)) {
+      edit_mode_ = false;
+      dragging_ = false;
+      return;
+    }
+
+    auto set_tool = [&](Tool t) {
+      tool_ = t;
+      dragging_ = false;
+      if (tool_ != Tool::Select) DiscardClipboard();
+    };
+    if (IsKeyPressed(KEY_ONE)) set_tool(Tool::Brush);
+    if (IsKeyPressed(KEY_TWO)) set_tool(Tool::Line);
+    if (IsKeyPressed(KEY_THREE)) set_tool(Tool::RectOutline);
+    if (IsKeyPressed(KEY_FOUR)) set_tool(Tool::RectFilled);
+    if (IsKeyPressed(KEY_FIVE)) set_tool(Tool::Select);
+    if (IsKeyPressed(KEY_SIX)) set_tool(Tool::Bucket);
+    if (IsKeyPressed(KEY_SEVEN)) set_tool(Tool::Eraser);
+
+    if (IsKeyPressed(KEY_B)) set_tool(Tool::Brush);
+    if (IsKeyPressed(KEY_L)) set_tool(Tool::Line);
+    if (IsKeyPressed(KEY_F)) set_tool(Tool::RectOutline);
+    if (IsKeyPressed(KEY_G)) set_tool(Tool::Bucket);
+    if (IsKeyPressed(KEY_E)) set_tool(Tool::Eraser);   // only in edit mode
+    if (IsKeyPressed(KEY_M)) set_tool(Tool::Select);
+
     // Mouse handling for edit mode now runs from OnImGuiRender (after
     // ImGui::NewFrame) so ImGui's WantCaptureMouse is current, not 1 frame
     // stale. Bail out of the gameplay input path regardless.
@@ -369,7 +402,17 @@ void GameLayer::OnRender() {
       variant = base + phase;
     }
     const auto& tex = sprites_.Get(object.id, frame, variant);
-    DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), sprites_.TintFor(object.id));
+    Color tint = sprites_.TintFor(object.id);
+    if (edit_mode_) {
+      const auto* dl = registry_.try_get<DrawLayer>(e);
+      const int slot = dl ? std::clamp(dl->slot, 1, 3) : 2;
+      if (slot != palette_layer_) {
+        tint.r = static_cast<unsigned char>(tint.r * 0.45f);
+        tint.g = static_cast<unsigned char>(tint.g * 0.45f);
+        tint.b = static_cast<unsigned char>(tint.b * 0.45f);
+      }
+    }
+    DrawSpriteInCell(tex, board::CellRect(cell.x, cell.y), tint);
   };
 
   // Gather everything with its engine layer number so we can draw strictly
@@ -407,6 +450,15 @@ void GameLayer::OnRender() {
       const auto& text = registry_.get<const TextBlock>(d.e);
       const auto& tex = sprites_.Get(text.id, current_frame_);
       Color tint = sprites_.TintFor(text.id);
+      if (edit_mode_) {
+        const auto* dl = registry_.try_get<DrawLayer>(d.e);
+        const int slot = dl ? std::clamp(dl->slot, 1, 3) : 2;
+        if (slot != palette_layer_) {
+          tint.r = static_cast<unsigned char>(tint.r * 0.45f);
+          tint.g = static_cast<unsigned char>(tint.g * 0.45f);
+          tint.b = static_cast<unsigned char>(tint.b * 0.45f);
+        }
+      }
       if (!registry_.all_of<IsRuleActiveText>(d.e)) {
         tint.r = static_cast<unsigned char>(tint.r * 0.60f);
         tint.g = static_cast<unsigned char>(tint.g * 0.60f);
@@ -1260,13 +1312,13 @@ void GameLayer::DrawToolbar() {
     const char* tip;
   };
   const ToolEntry entries[] = {
-      {Tool::Brush, "##t_brush", "Brush (pen)"},
-      {Tool::Line, "##t_line", "Line"},
-      {Tool::RectOutline, "##t_rect", "Rectangle outline"},
-      {Tool::RectFilled, "##t_rectf", "Filled rectangle"},
-      {Tool::Select, "##t_sel", "Select / cut / paste"},
-      {Tool::Bucket, "##t_fill", "Paint bucket (flood)"},
-      {Tool::Eraser, "##t_erase", "Eraser"},
+      {Tool::Brush, "##t_brush", "Brush (B, 1)"},
+      {Tool::Line, "##t_line", "Line (L, 2)"},
+      {Tool::RectOutline, "##t_rect", "Rectangle Outline (F, 3)"},
+      {Tool::RectFilled, "##t_rectf", "Filled Rectangle (4)"},
+      {Tool::Select, "##t_sel", "Select / Move (M, 5)"},
+      {Tool::Bucket, "##t_fill", "Paint Bucket (G, 6)"},
+      {Tool::Eraser, "##t_erase", "Eraser (E, 7)"},
   };
   for (std::size_t i = 0; i < sizeof(entries) / sizeof(entries[0]); ++i) {
     if (i > 0) ImGui::SameLine();
@@ -1716,7 +1768,7 @@ void GameLayer::HandleEditorMouse() {
       switch (erase_mode_) {
         case EraseMode::Point: {
           if (!in_board) return;
-          if (lmb_down) EraseAt(col, row);
+          if (lmb_down) EraseAt(col, row, true);
           break;
         }
         case EraseMode::Line:
@@ -1771,11 +1823,22 @@ void GameLayer::PlaceBrushAt(int col, int row) {
   undo_.Clear();
 }
 
-void GameLayer::EraseAt(int col, int row) {
+void GameLayer::EraseAt(int col, int row, bool only_current_layer) {
   std::vector<entt::entity> doomed;
-  for (auto [e, cell] : registry_.view<const Cell>().each()) {
-    if (cell.x == col && cell.y == row) doomed.push_back(e);
+  for (auto [e, cell, draw_layer] : registry_.view<const Cell, const DrawLayer>().each()) {
+    if (cell.x != col || cell.y != row) continue;
+    if (only_current_layer && draw_layer.slot != palette_layer_) continue;
+    doomed.push_back(e);
   }
+  // Backward compatibility for entities without DrawLayer.
+  for (auto [e, cell] : registry_.view<const Cell>().each()) {
+    if (registry_.all_of<DrawLayer>(e)) continue;
+    if (cell.x != col || cell.y != row) continue;
+    if (only_current_layer && 2 != palette_layer_) continue;
+    doomed.push_back(e);
+  }
+  std::sort(doomed.begin(), doomed.end());
+  doomed.erase(std::unique(doomed.begin(), doomed.end()), doomed.end());
   for (auto e : doomed) registry_.destroy(e);
   undo_.Clear();
 }
@@ -1790,7 +1853,7 @@ void GameLayer::PlaceAtCells(const std::vector<std::pair<int, int>>& cells) {
 void GameLayer::EraseAtCells(const std::vector<std::pair<int, int>>& cells) {
   for (const auto& [c, r] : cells) {
     if (c < 0 || c >= board::kCols || r < 0 || r >= board::kRows) continue;
-    EraseAt(c, r);
+    EraseAt(c, r, true);
   }
 }
 

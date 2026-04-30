@@ -130,7 +130,7 @@ class GameLayer : public Layer {
 
   // One-cell brush placement / erasure.
   void PlaceBrushAt(int col, int row);
-  void EraseAt(int col, int row);
+  void EraseAt(int col, int row, bool only_current_layer = true);
 
   // Multi-cell tool commits.
   void PlaceAtCells(const std::vector<std::pair<int, int>>& cells);
@@ -184,6 +184,7 @@ class GameLayer : public Layer {
   int palette_layer_ = 2;  // 1..3, placement layer for newly painted tiles
   int palette_text_group_ = 0;  // 0 = nouns, 1 = operators, 2 = properties
   char palette_filter_[64] = "";
+  bool palette_focus_search_ = false;
 
   // Tool icons, indexed by Tool enum (Eraser sub-modes reuse the same art).
   std::array<Texture2D, 7> tool_icons_{};
