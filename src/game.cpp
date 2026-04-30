@@ -140,6 +140,10 @@ void Game::Render() {
     layer->OnRender();
   }
   DrawGridOverlay();
+  // Draw transition while we're still in raylib's normal 2D render state.
+  // Rendering it after ImGui's OpenGL backend can leave driver state that
+  // prevents the raylib triangles from showing reliably.
+  if (game_layer_) game_layer_->DrawTransitionOverlay();
   rlDrawRenderBatchActive();
 
   imgui_layer_->Begin();
@@ -149,9 +153,6 @@ void Game::Render() {
     }
   }
   imgui_layer_->End();
-
-  // Iris transition draws last so the eye-blink covers ImGui panels too.
-  if (game_layer_) game_layer_->DrawTransitionOverlay();
 
   EndDrawing();
 }

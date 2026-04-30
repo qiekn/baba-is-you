@@ -234,7 +234,9 @@ void GameLayer::OnUpdate(float dt) {
   if (transition_state_ != TransitionState::None) {
     transition_t_ += dt / kTransitionPhaseSeconds;
     if (transition_state_ == TransitionState::Closing && transition_t_ >= 1.0f) {
-      LoadLevelFromPath(std::filesystem::path{kLevelsDir} / (transition_target_ + ".json"));
+      if (!transition_target_.empty()) {
+        LoadLevelFromPath(std::filesystem::path{kLevelsDir} / (transition_target_ + ".json"));
+      }
       transition_state_ = TransitionState::Opening;
       transition_t_ = 0.0f;
     } else if (transition_state_ == TransitionState::Opening && transition_t_ >= 1.0f) {
@@ -765,15 +767,13 @@ void GameLayer::RunWinDefeat() {
             win_handled_ = true;
           }
           if (win_sound_loaded_ && !muted_) PlaySound(win_sound_);
-          // Kick off the eye-blink transition to the next world level. If
-          // we're already on the last level there's nothing to advance to —
-          // just stay on the win screen.
+          // Kick off the eye-blink transition. If there's a next world level
+          // we load it at full black; otherwise it re-opens on the same level.
           if (transition_state_ == TransitionState::None) {
-            if (auto next = NextLevelId()) {
-              transition_state_ = TransitionState::Closing;
-              transition_t_ = 0.0f;
-              transition_target_ = *next;
-            }
+            transition_target_.clear();
+            if (auto next = NextLevelId()) transition_target_ = *next;
+            transition_state_ = TransitionState::Closing;
+            transition_t_ = 0.0f;
           }
         }
         return;
@@ -823,57 +823,81 @@ void GameLayer::RunWinDefeat() {
 
 std::optional<std::string> GameLayer::NextLevelId() const {
   if (current_level_id_.empty() || world_.levels.empty()) return std::nullopt;
-  for (std::size_t i = 0; i + 1 < world_.levels.size(); ++i) {
+
+  auto parse_numeric_id = [](const std::string& id) -> std::optional<int> {
+    if (id.empty()) return std::nullopt;
+    for (char c : id) {
+      if (!std::isdigit(static_cast<unsigned char>(c))) return std::nullopt;
+    }
+    return std::stoi(id);
+  };
+
+  std::optional<std::size_t> current_index;
+  for (std::size_t i = 0; i < world_.levels.size(); ++i) {
     if (world_.levels[i].id == current_level_id_) {
-      return world_.levels[i + 1].id;
+      current_index = i;
+      break;
     }
   }
-  return std::nullopt;
+  if (!current_index) {
+    const auto current_numeric = parse_numeric_id(current_level_id_);
+    if (current_numeric) {
+      for (std::size_t i = 0; i < world_.levels.size(); ++i) {
+        const auto world_numeric = parse_numeric_id(world_.levels[i].id);
+        if (world_numeric && *world_numeric == *current_numeric) {
+          current_index = i;
+          break;
+        }
+      }
+    }
+  }
+  if (!current_index) return std::nullopt;
+  if (*current_index + 1 >= world_.levels.size()) return std::nullopt;
+  return world_.levels[*current_index + 1].id;
 }
 
 void GameLayer::DrawTransitionOverlay() const {
   if (transition_state_ == TransitionState::None) return;
-  // `cover` ramps 0 -> 1 while Closing (eye shuts) and 1 -> 0 while Opening
-  // (eye re-opens). Smoothstep gives the eye-blink a soft accel/settle
-  // instead of a linear slide.
-  float cover = transition_state_ == TransitionState::Closing ? transition_t_
-                                                              : (1.0f - transition_t_);
-  cover = std::clamp(cover, 0.0f, 1.0f);
-  cover = cover * cover * (3.0f - 2.0f * cover);
+  auto ease_in_out = [](float t) {
+    t = std::clamp(t, 0.0f, 1.0f);
+    return t * t * (3.0f - 2.0f * t);  // smoothstep
+  };
+  const float eased_t = ease_in_out(transition_t_);
 
   const float w = static_cast<float>(GetScreenWidth());
   const float h = static_cast<float>(GetScreenHeight());
   const float cx = w * 0.5f;
   const float cy = h * 0.5f;
+  const float max_r = std::sqrt(cx * cx + cy * cy);
+  const float open01 = transition_state_ == TransitionState::Closing
+                           ? (1.0f - eased_t)
+                           : eased_t;
+  const float r = max_r * std::clamp(open01, 0.0f, 1.0f);
 
-  // Eye-shaped opening: an ellipse with the same aspect as the screen, sized
-  // so the fully-open shape circumscribes the screen rectangle (axes 0.75 of
-  // each dimension safely contains the corners). At cover = 1 it collapses
-  // to a point.
-  const float openA = w * 0.75f;
-  const float openB = h * 0.75f;
-  const float a = openA * (1.0f - cover);
-  const float b = openB * (1.0f - cover);
+  Color mask = BLACK;
+  if (auto bg = LevelBackground()) mask = *bg;
+  mask.a = 255;
 
-  // Outer skirt — far enough that the black fan reaches every corner from
-  // every angle.
-  const float farR = std::max(w, h) * 1.5f;
+  // Circular iris: shrink to center, then expand back out.
+  const int iw = std::max(1, static_cast<int>(std::ceil(w)));
+  const int ih = std::max(1, static_cast<int>(std::ceil(h)));
+  if (r <= 0.5f) {
+    DrawRectangle(0, 0, iw, ih, mask);
+    return;
+  }
+  if (r >= max_r - 0.5f) return;
 
-  // Build the dark region as a strip of triangles between the ellipse and
-  // a far ring. raylib's 2D mode doesn't backface-cull, so winding doesn't
-  // matter here.
-  constexpr int kSegments = 96;
-  for (int i = 0; i < kSegments; ++i) {
-    const float t0 = static_cast<float>(i) / kSegments * 2.0f * PI;
-    const float t1 = static_cast<float>(i + 1) / kSegments * 2.0f * PI;
-    const float c0 = std::cos(t0), s0 = std::sin(t0);
-    const float c1 = std::cos(t1), s1 = std::sin(t1);
-    const Vector2 inner0{cx + a * c0, cy + b * s0};
-    const Vector2 inner1{cx + a * c1, cy + b * s1};
-    const Vector2 outer0{cx + farR * c0, cy + farR * s0};
-    const Vector2 outer1{cx + farR * c1, cy + farR * s1};
-    DrawTriangle(inner0, outer0, inner1, BLACK);
-    DrawTriangle(inner1, outer0, outer1, BLACK);
+  for (int y = 0; y < ih; ++y) {
+    const float dy = (static_cast<float>(y) + 0.5f) - cy;
+    if (std::fabs(dy) >= r) {
+      DrawRectangle(0, y, iw, 1, mask);
+      continue;
+    }
+    const float half = std::sqrt(std::max(0.0f, r * r - dy * dy));
+    const int x0 = static_cast<int>(std::floor(cx - half));
+    const int x1 = static_cast<int>(std::ceil(cx + half));
+    if (x0 > 0) DrawRectangle(0, y, x0, 1, mask);
+    if (x1 < iw) DrawRectangle(x1, y, iw - x1, 1, mask);
   }
 }
 
