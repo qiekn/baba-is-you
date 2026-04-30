@@ -75,6 +75,8 @@ void ApplyRules(entt::registry& registry, const std::vector<Rule>& rules) {
   registry.clear<IsHot>();
   registry.clear<IsMelt>();
   registry.clear<IsFloat>();
+  registry.clear<IsOpen>();
+  registry.clear<IsShut>();
 
   // Text blocks are always pushable, regardless of rules.
   for (auto [e, _] : registry.view<const TextBlock>().each()) {
@@ -115,6 +117,12 @@ void ApplyRules(entt::registry& registry, const std::vector<Rule>& rules) {
         break;
       case TextId::Float:
         ApplyTagToObject<IsFloat>(registry, *subject);
+        break;
+      case TextId::Open:
+        ApplyTagToObject<IsOpen>(registry, *subject);
+        break;
+      case TextId::Shut:
+        ApplyTagToObject<IsShut>(registry, *subject);
         break;
       default:
         // Noun predicates (transformation) are handled by ApplyTransformations.

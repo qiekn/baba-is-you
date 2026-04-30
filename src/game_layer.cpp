@@ -790,6 +790,28 @@ void GameLayer::RunWinDefeat() {
   }
   if (!melted.empty() && defeat_sound_loaded_ && !muted_) PlaySound(defeat_sound_);
 
+  // OPEN/SHUT: when an OPEN overlaps a SHUT on the same float plane, both
+  // are destroyed (key unlocks door style).
+  std::vector<entt::entity> opened;
+  auto open_view = registry_.view<const Cell, const IsOpen>();
+  auto shut_view = registry_.view<const Cell, const IsShut>();
+  for (auto [oe, oc] : open_view.each()) {
+    const bool open_is_float = registry_.all_of<IsFloat>(oe);
+    for (auto [se, sc] : shut_view.each()) {
+      const bool shut_is_float = registry_.all_of<IsFloat>(se);
+      if (open_is_float != shut_is_float) continue;
+      if (oc.x != sc.x || oc.y != sc.y) continue;
+      opened.push_back(oe);
+      opened.push_back(se);
+    }
+  }
+  std::sort(opened.begin(), opened.end());
+  opened.erase(std::unique(opened.begin(), opened.end()), opened.end());
+  for (auto e : opened) {
+    if (registry_.valid(e)) registry_.destroy(e);
+  }
+  if (!opened.empty() && sink_sound_loaded_ && !muted_) PlaySound(sink_sound_);
+
   // Collect YOU entity cells.
   std::vector<std::tuple<int, int, bool>> you_cells;
   for (auto [e, cell] : registry_.view<const Cell, const IsYou>().each()) {
