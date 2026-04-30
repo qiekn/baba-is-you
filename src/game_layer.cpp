@@ -289,9 +289,6 @@ void GameLayer::OnUpdate(float dt) {
     UpdateMusicStream(music_);
   }
 
-  // Input: turn-based movement + undo.
-  if (ImGui::GetIO().WantCaptureKeyboard) return;
-
   if (IsKeyPressed(KEY_R)) {
     reset_requested_ = true;
     return;
@@ -342,6 +339,9 @@ void GameLayer::OnUpdate(float dt) {
     // stale. Bail out of the gameplay input path regardless.
     return;
   }
+
+  // Gameplay input should not trigger while typing in ImGui widgets.
+  if (ImGui::GetIO().WantCaptureKeyboard) return;
 
   if (IsKeyPressed(KEY_Z)) {
     Snapshot snap;
@@ -1405,9 +1405,7 @@ void GameLayer::DrawPalette() {
 
   constexpr float kBtn = 40.0f;
   const ImVec2 btn_size{kBtn, kBtn};
-  int col = 0;
-  const float avail = ImGui::GetContentRegionAvail().x;
-  const int cols = std::max(1, static_cast<int>(avail / (kBtn + ImGui::GetStyle().ItemSpacing.x)));
+  const float icon_item_w = kBtn + ImGui::GetStyle().FramePadding.x * 2.0f;
 
   auto tint_to_imvec = [](Color c) {
     return ImVec4(c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, 1.0f);
@@ -1457,7 +1455,6 @@ void GameLayer::DrawPalette() {
     const Texture2D& tex = sprites_.Get(id, current_frame_,
                                         IsDirectional(id) ? DirectionToVariant(Direction::Right) : 0);
     const bool selected = std::holds_alternative<ObjectId>(brush_) && std::get<ObjectId>(brush_) == id;
-    if (col > 0 && col < cols) ImGui::SameLine();
     if (selected) ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.5f, 0.9f, 1.0f));
     ImGui::PushID(static_cast<int>(id));
     bool clicked = false;
@@ -1471,13 +1468,15 @@ void GameLayer::DrawPalette() {
     ImGui::PopID();
     if (selected) ImGui::PopStyleColor();
     if (clicked) brush_ = id;
-    col = (col + 1) % cols;
+    const float last_x2 = ImGui::GetItemRectMax().x;
+    const float next_x2 = last_x2 + ImGui::GetStyle().ItemSpacing.x + icon_item_w;
+    const float visible_x2 = ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x;
+    if (next_x2 <= visible_x2) ImGui::SameLine();
   };
 
   auto button_for_text = [&](TextId id) {
     const Texture2D& tex = sprites_.Get(id, current_frame_);
     const bool selected = std::holds_alternative<TextId>(brush_) && std::get<TextId>(brush_) == id;
-    if (col > 0 && col < cols) ImGui::SameLine();
     if (selected) ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.5f, 0.9f, 1.0f));
     ImGui::PushID(static_cast<int>(id) + 10000);
     bool clicked = false;
@@ -1491,24 +1490,31 @@ void GameLayer::DrawPalette() {
     ImGui::PopID();
     if (selected) ImGui::PopStyleColor();
     if (clicked) brush_ = id;
-    col = (col + 1) % cols;
+    const float last_x2 = ImGui::GetItemRectMax().x;
+    const float next_x2 = last_x2 + ImGui::GetStyle().ItemSpacing.x + icon_item_w;
+    const float visible_x2 = ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x;
+    if (next_x2 <= visible_x2) ImGui::SameLine();
   };
 
-  if (palette_kind_ == 0) {
-    // Object palette is independent of layer selection.
-    for (int i = 0; i < kObjectCount; ++i) {
-      const auto id = static_cast<ObjectId>(i);
-      if (!matches_filter(PrettyName(id))) continue;
-      button_for_object(id);
-    }
-  } else {
-    for (int i = 0; i < kTextCount; ++i) {
-      const auto id = static_cast<TextId>(i);
-      if (!matches_text_group(id)) continue;
-      if (!matches_filter(PrettyName(id))) continue;
-      button_for_text(id);
+  const float list_h = std::max(180.0f, ImGui::GetContentRegionAvail().y);
+  if (ImGui::BeginChild("##palette_items", ImVec2(0, list_h), false)) {
+    if (palette_kind_ == 0) {
+      // Object palette is independent of layer selection.
+      for (int i = 0; i < kObjectCount; ++i) {
+        const auto id = static_cast<ObjectId>(i);
+        if (!matches_filter(PrettyName(id))) continue;
+        button_for_object(id);
+      }
+    } else {
+      for (int i = 0; i < kTextCount; ++i) {
+        const auto id = static_cast<TextId>(i);
+        if (!matches_text_group(id)) continue;
+        if (!matches_filter(PrettyName(id))) continue;
+        button_for_text(id);
+      }
     }
   }
+  ImGui::EndChild();
 }
 
 void GameLayer::DrawSettingsPanel() {
