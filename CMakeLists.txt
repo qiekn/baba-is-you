@@ -4,6 +4,12 @@ set(CMAKE_CXX_MODULE_STD OFF)
 
 project(baba LANGUAGES C CXX)
 
+# Default to Release for single-config generators when caller didn't specify
+# CMAKE_BUILD_TYPE (suppresses raylib's default-build warning too).
+if (NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
