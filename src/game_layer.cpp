@@ -689,7 +689,7 @@ bool GameLayer::TryMove(entt::entity who, Direction dir) {
   // Dust puff at the vacated cell — only for directional walkers (Baba & co.)
   // so pushed boxes don't spam particles.
   if (auto* obj = registry_.try_get<ObjectBlock>(who); obj && IsDirectional(obj->id)) {
-    SpawnSmokeAt(from_x, from_y);
+    SpawnSmokeAt(from_x, from_y, obj->id);
     if (step_sound_loaded_ && !muted_) PlaySound(step_sound_);
   }
   return true;
@@ -917,10 +917,15 @@ void GameLayer::DrawParticles() const {
   for (const auto& p : particles_) {
     const float t = 1.0f - (p.life / p.max_life);  // 0 -> 1 over lifetime
     if (p.style == ParticleStyle::Smoke) {
-      // Dust puff: grow + fade out.
-      const float radius = p.max_size * (0.4f + 0.6f * t);
-      const unsigned char alpha = static_cast<unsigned char>(180.0f * (1.0f - t));
-      DrawCircleV(p.pos, radius, Color{210, 200, 180, alpha});
+      // Pixel-art exhaust: chunky square puffs, expanding and fading.
+      const float size = p.max_size * (0.55f + 0.75f * t);
+      const float px = std::max(1.0f, std::round(size * 0.5f));
+      Color c = p.color;
+      c.a = static_cast<unsigned char>(190.0f * (1.0f - t));
+      const Rectangle a{std::round(p.pos.x - px), std::round(p.pos.y - px), px, px};
+      const Rectangle b{std::round(p.pos.x), std::round(p.pos.y - px * 0.5f), px, px};
+      DrawRectangleRec(a, c);
+      DrawRectangleRec(b, c);
       continue;
     }
     // Sparkle: pulse + spin.
@@ -938,8 +943,9 @@ void GameLayer::DrawParticles() const {
   }
 }
 
-void GameLayer::SpawnSmokeAt(int cell_x, int cell_y) {
+void GameLayer::SpawnSmokeAt(int cell_x, int cell_y, ObjectId source_id) {
   const Rectangle r = board::CellRect(cell_x, cell_y);
+  const Color base = sprites_.TintFor(source_id);
   // Two or three little puffs so a step reads as a small cloud, not a single dot.
   const int n = GetRandomValue(2, 3);
   for (int i = 0; i < n; ++i) {
@@ -951,6 +957,7 @@ void GameLayer::SpawnSmokeAt(int cell_x, int cell_y) {
     p.max_size = r.width * 0.18f + static_cast<float>(GetRandomValue(-2, 3));
     p.life = p.max_life = 0.35f + 0.01f * GetRandomValue(-5, 8);
     p.rot_deg = 0.0f;
+    p.color = base;
     p.style = ParticleStyle::Smoke;
     particles_.push_back(p);
   }

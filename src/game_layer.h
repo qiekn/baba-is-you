@@ -78,11 +78,12 @@ class GameLayer : public Layer {
     float life;
     float max_life;
     float rot_deg;
+    Color color = Color{255, 255, 255, 255};
     ParticleStyle style = ParticleStyle::Sparkle;
   };
   void UpdateParticles(float dt);
   void DrawParticles() const;
-  void SpawnSmokeAt(int cell_x, int cell_y);
+  void SpawnSmokeAt(int cell_x, int cell_y, ObjectId source_id);
 
   // Audio
   void LoadTrack(int index);
