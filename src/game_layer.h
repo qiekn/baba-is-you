@@ -62,8 +62,8 @@ class GameLayer : public Layer {
   // per-frame editor preview to avoid cyclic-rule oscillation).
   void RecomputeRules(bool apply_transformations = false);
   bool TryMove(entt::entity who, Direction dir);
-  bool CanEnter(int x, int y, int dx, int dy);
-  void PushChain(int x, int y, int dx, int dy);
+  bool CanEnter(int x, int y, int dx, int dy, bool mover_is_float);
+  void PushChain(int x, int y, int dx, int dy, bool mover_is_float);
   // Advances every IsMove entity one cell in its facing direction. Blocked
   // movers flip 180° and stay put for the turn (next turn they try the new
   // direction). Returns true if any mover successfully stepped.

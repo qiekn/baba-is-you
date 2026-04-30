@@ -656,25 +656,30 @@ std::pair<int, int> GameLayer::Delta(Direction dir) {
   return {0, 0};
 }
 
-bool GameLayer::CanEnter(int x, int y, int dx, int dy) {
+bool GameLayer::CanEnter(int x, int y, int dx, int dy, bool mover_is_float) {
   if (x < 0 || x >= board::kCols || y < 0 || y >= board::kRows) return false;
   bool any_push = false;
   for (auto [e, cell] : registry_.view<const Cell>().each()) {
     if (cell.x != x || cell.y != y) continue;
+    const bool other_is_float = registry_.all_of<IsFloat>(e);
+    if (other_is_float != mover_is_float) continue;
     if (registry_.all_of<IsStop>(e)) return false;
     if (registry_.all_of<IsPush>(e)) any_push = true;
   }
-  if (any_push) return CanEnter(x + dx, y + dy, dx, dy);
+  if (any_push) return CanEnter(x + dx, y + dy, dx, dy, mover_is_float);
   return true;
 }
 
-void GameLayer::PushChain(int x, int y, int dx, int dy) {
+void GameLayer::PushChain(int x, int y, int dx, int dy, bool mover_is_float) {
   std::vector<entt::entity> pushers;
   for (auto [e, cell] : registry_.view<Cell, const IsPush>().each()) {
-    if (cell.x == x && cell.y == y) pushers.push_back(e);
+    if (cell.x != x || cell.y != y) continue;
+    const bool other_is_float = registry_.all_of<IsFloat>(e);
+    if (other_is_float != mover_is_float) continue;
+    pushers.push_back(e);
   }
   if (pushers.empty()) return;
-  PushChain(x + dx, y + dy, dx, dy);
+  PushChain(x + dx, y + dy, dx, dy, mover_is_float);
   for (auto e : pushers) {
     auto& c = registry_.get<Cell>(e);
     c.x = x + dx;
@@ -687,10 +692,11 @@ bool GameLayer::TryMove(entt::entity who, Direction dir) {
   const auto [dx, dy] = Delta(dir);
   const int tx = c.x + dx;
   const int ty = c.y + dy;
-  if (!CanEnter(tx, ty, dx, dy)) return false;
+  const bool mover_is_float = registry_.all_of<IsFloat>(who);
+  if (!CanEnter(tx, ty, dx, dy, mover_is_float)) return false;
   const int from_x = c.x;
   const int from_y = c.y;
-  PushChain(tx, ty, dx, dy);
+  PushChain(tx, ty, dx, dy, mover_is_float);
   auto& mut = registry_.get<Cell>(who);
   mut.x = tx;
   mut.y = ty;
@@ -762,16 +768,42 @@ bool GameLayer::StepMovers() {
 }
 
 void GameLayer::RunWinDefeat() {
+  // HOT/MELT: melt-tagged entities vanish when overlapping a hot entity on
+  // the same float plane. This includes HOT+MELT on the same tile/entity.
+  std::vector<entt::entity> melted;
+  auto melt_view = registry_.view<const Cell, const IsMelt>();
+  auto hot_view = registry_.view<const Cell, const IsHot>();
+  for (auto [me, mc] : melt_view.each()) {
+    const bool melt_is_float = registry_.all_of<IsFloat>(me);
+    for (auto [he, hc] : hot_view.each()) {
+      const bool hot_is_float = registry_.all_of<IsFloat>(he);
+      if (melt_is_float != hot_is_float) continue;
+      if (mc.x != hc.x || mc.y != hc.y) continue;
+      melted.push_back(me);
+      break;
+    }
+  }
+  std::sort(melted.begin(), melted.end());
+  melted.erase(std::unique(melted.begin(), melted.end()), melted.end());
+  for (auto e : melted) {
+    if (registry_.valid(e)) registry_.destroy(e);
+  }
+  if (!melted.empty() && defeat_sound_loaded_ && !muted_) PlaySound(defeat_sound_);
+
   // Collect YOU entity cells.
-  std::vector<std::pair<int, int>> you_cells;
+  std::vector<std::tuple<int, int, bool>> you_cells;
   for (auto [e, cell] : registry_.view<const Cell, const IsYou>().each()) {
-    you_cells.emplace_back(cell.x, cell.y);
+    you_cells.emplace_back(cell.x, cell.y, registry_.all_of<IsFloat>(e));
   }
 
   // WIN: any YOU sharing a cell with a WIN entity.
   for (auto [e, cell] : registry_.view<const Cell, const IsWin>().each()) {
+    const bool win_is_float = registry_.all_of<IsFloat>(e);
     for (const auto& yc : you_cells) {
-      if (yc.first == cell.x && yc.second == cell.y) {
+      const int you_x = std::get<0>(yc);
+      const int you_y = std::get<1>(yc);
+      const bool you_is_float = std::get<2>(yc);
+      if (you_x == cell.x && you_y == cell.y && you_is_float == win_is_float) {
         if (!won_) {
           won_ = true;
           if (!win_handled_ && !current_level_id_.empty()) {
@@ -798,7 +830,10 @@ void GameLayer::RunWinDefeat() {
   auto defeat_view = registry_.view<const Cell, const IsDefeat>();
   auto you_view = registry_.view<const Cell, const IsYou>();
   for (auto [ye, yc] : you_view.each()) {
+    const bool you_is_float = registry_.all_of<IsFloat>(ye);
     for (auto [de, dc] : defeat_view.each()) {
+      const bool defeat_is_float = registry_.all_of<IsFloat>(de);
+      if (you_is_float != defeat_is_float) continue;
       if (yc.x == dc.x && yc.y == dc.y) {
         doomed.push_back(ye);
         break;
@@ -814,10 +849,13 @@ void GameLayer::RunWinDefeat() {
   std::vector<entt::entity> sunk;
   auto sink_view = registry_.view<const Cell, const IsSink>();
   for (auto [se, sc] : sink_view.each()) {
+    const bool sink_is_float = registry_.all_of<IsFloat>(se);
     bool has_partner = false;
     for (auto [other, oc] : registry_.view<const Cell>().each()) {
       if (other == se) continue;
       if (registry_.all_of<IsSink>(other)) continue;
+      const bool other_is_float = registry_.all_of<IsFloat>(other);
+      if (sink_is_float != other_is_float) continue;
       if (oc.x != sc.x || oc.y != sc.y) continue;
       has_partner = true;
       sunk.push_back(other);

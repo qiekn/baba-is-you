@@ -42,6 +42,7 @@ struct IsDefeat {};
 struct IsSink {};
 struct IsHot {};
 struct IsMelt {};
+struct IsFloat {};
 
 // Present on text entities that currently participate in a valid rule
 // expression (e.g. NOUN IS PROPERTY).
