@@ -14,6 +14,7 @@ struct Snapshot {
   struct Row {
     int x;
     int y;
+    int layer = 2;
     std::variant<ObjectId, TextId> id;
     Direction facing;
   };

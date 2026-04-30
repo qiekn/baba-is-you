@@ -51,8 +51,8 @@ class GameLayer : public Layer {
   void BuildRegistryFromLevel();
   Level ExtractLevelFromRegistry() const;
   void ClearRegistry();
-  void SpawnObject(ObjectId id, int x, int y);
-  void SpawnText(TextId id, int x, int y);
+  void SpawnObject(ObjectId id, int x, int y, int layer = 2);
+  void SpawnText(TextId id, int x, int y, int layer = 2);
 
   // Turn step
   void Step(Direction dir);
@@ -180,7 +180,10 @@ class GameLayer : public Layer {
   std::variant<ObjectId, TextId> brush_ = ObjectId::Baba;
   Tool tool_ = Tool::Brush;
   EraseMode erase_mode_ = EraseMode::Point;
-  int palette_layer_ = 1;  // 0 = backgrounds, 1 = objects, 2 = text
+  int palette_kind_ = 0;   // 0 = object, 1 = text
+  int palette_layer_ = 2;  // 1..3, placement layer for newly painted tiles
+  int palette_text_group_ = 0;  // 0 = nouns, 1 = operators, 2 = properties
+  char palette_filter_[64] = "";
 
   // Tool icons, indexed by Tool enum (Eraser sub-modes reuse the same art).
   std::array<Texture2D, 7> tool_icons_{};
@@ -197,6 +200,7 @@ class GameLayer : public Layer {
     int dx;
     int dy;
     std::variant<ObjectId, TextId> kind;
+    int layer = 2;
   };
   std::vector<ClipTile> clipboard_;
 

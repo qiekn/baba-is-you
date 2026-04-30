@@ -376,7 +376,8 @@ void GameLayer::OnRender() {
   // bottom-to-top. Values come from values.lua — e.g. tile=4 (bottom),
   // wall=14, flag=17, baba=18, text=20.
   struct Draw {
-    int layer;
+    int engine_layer;
+    int authored_layer;
     entt::entity e;
     int x, y;
     int kind;  // 0 = object, 1 = text
@@ -384,13 +385,20 @@ void GameLayer::OnRender() {
   std::vector<Draw> draws;
   draws.reserve(registry_.storage<Cell>().size());
   for (auto [e, cell, object] : registry_.view<const Cell, const ObjectBlock>().each()) {
-    draws.push_back({LayerOf(object.id), e, cell.x, cell.y, 0});
+    const auto* dl = registry_.try_get<DrawLayer>(e);
+    const int authored_layer = dl ? std::clamp(dl->slot, 1, 3) : 2;
+    draws.push_back({LayerOf(object.id), authored_layer, e, cell.x, cell.y, 0});
   }
   for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
-    draws.push_back({LayerOf(text.id), e, cell.x, cell.y, 1});
+    const auto* dl = registry_.try_get<DrawLayer>(e);
+    const int authored_layer = dl ? std::clamp(dl->slot, 1, 3) : 2;
+    draws.push_back({LayerOf(text.id), authored_layer, e, cell.x, cell.y, 1});
   }
-  std::sort(draws.begin(), draws.end(),
-            [](const Draw& a, const Draw& b) { return a.layer < b.layer; });
+  std::sort(draws.begin(), draws.end(), [](const Draw& a, const Draw& b) {
+    if (a.authored_layer != b.authored_layer) return a.authored_layer < b.authored_layer;
+    if (a.engine_layer != b.engine_layer) return a.engine_layer < b.engine_layer;
+    return a.kind < b.kind;
+  });
   for (const Draw& d : draws) {
     if (d.kind == 0) {
       const auto& object = registry_.get<const ObjectBlock>(d.e);
@@ -517,9 +525,9 @@ void GameLayer::BuildRegistryFromLevel() {
   ClearRegistry();
   for (const auto& tile : level_.tiles) {
     if (tile.IsObject()) {
-      SpawnObject(std::get<ObjectId>(tile.kind), tile.x, tile.y);
+      SpawnObject(std::get<ObjectId>(tile.kind), tile.x, tile.y, tile.layer);
     } else {
-      SpawnText(std::get<TextId>(tile.kind), tile.x, tile.y);
+      SpawnText(std::get<TextId>(tile.kind), tile.x, tile.y, tile.layer);
     }
   }
 }
@@ -540,6 +548,7 @@ Level GameLayer::ExtractLevelFromRegistry() const {
     tile.x = cell.x;
     tile.y = cell.y;
     tile.kind = object.id;
+    if (const auto* dl = registry_.try_get<DrawLayer>(e)) tile.layer = std::clamp(dl->slot, 1, 3);
     lvl.tiles.push_back(tile);
   }
   for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
@@ -547,6 +556,7 @@ Level GameLayer::ExtractLevelFromRegistry() const {
     tile.x = cell.x;
     tile.y = cell.y;
     tile.kind = text.id;
+    if (const auto* dl = registry_.try_get<DrawLayer>(e)) tile.layer = std::clamp(dl->slot, 1, 3);
     lvl.tiles.push_back(tile);
   }
   return lvl;
@@ -554,18 +564,20 @@ Level GameLayer::ExtractLevelFromRegistry() const {
 
 void GameLayer::ClearRegistry() { registry_.clear(); }
 
-void GameLayer::SpawnObject(ObjectId id, int x, int y) {
+void GameLayer::SpawnObject(ObjectId id, int x, int y, int layer) {
   auto e = registry_.create();
   registry_.emplace<Cell>(e, x, y);
   registry_.emplace<ObjectBlock>(e, id);
+  registry_.emplace<DrawLayer>(e, std::clamp(layer, 1, 3));
   registry_.emplace<Facing>(e);
   registry_.emplace<AnimFrame>(e);
 }
 
-void GameLayer::SpawnText(TextId id, int x, int y) {
+void GameLayer::SpawnText(TextId id, int x, int y, int layer) {
   auto e = registry_.create();
   registry_.emplace<Cell>(e, x, y);
   registry_.emplace<TextBlock>(e, id);
+  registry_.emplace<DrawLayer>(e, std::clamp(layer, 1, 3));
   registry_.emplace<Facing>(e);
   registry_.emplace<AnimFrame>(e);
 }
@@ -1241,16 +1253,31 @@ void GameLayer::DrawToolbar() {
 }
 
 void GameLayer::DrawPalette() {
-  if (ImGui::BeginTabBar("##layers")) {
-    const char* labels[] = {"Layer 1", "Layer 2", "Layer 3"};
-    for (int i = 0; i < 3; ++i) {
-      if (ImGui::BeginTabItem(labels[i])) {
-        palette_layer_ = i;
-        ImGui::EndTabItem();
-      }
-    }
-    ImGui::EndTabBar();
+  ImGui::TextUnformatted("Kind");
+  ImGui::SameLine();
+  ImGui::RadioButton("Object", &palette_kind_, 0);
+  ImGui::SameLine();
+  ImGui::RadioButton("Text", &palette_kind_, 1);
+
+  ImGui::TextUnformatted("Layer");
+  ImGui::SameLine();
+  ImGui::RadioButton("1", &palette_layer_, 1);
+  ImGui::SameLine();
+  ImGui::RadioButton("2", &palette_layer_, 2);
+  ImGui::SameLine();
+  ImGui::RadioButton("3", &palette_layer_, 3);
+
+  if (palette_kind_ == 1) {
+    ImGui::TextUnformatted("Group");
+    ImGui::SameLine();
+    ImGui::RadioButton("Nouns", &palette_text_group_, 0);
+    ImGui::SameLine();
+    ImGui::RadioButton("Operators", &palette_text_group_, 1);
+    ImGui::SameLine();
+    ImGui::RadioButton("Properties", &palette_text_group_, 2);
   }
+
+  ImGui::InputTextWithHint("Search", "name filter", palette_filter_, sizeof(palette_filter_));
 
   constexpr float kBtn = 40.0f;
   const ImVec2 btn_size{kBtn, kBtn};
@@ -1260,6 +1287,26 @@ void GameLayer::DrawPalette() {
 
   auto tint_to_imvec = [](Color c) {
     return ImVec4(c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, 1.0f);
+  };
+  auto lower_char = [](char c) { return static_cast<char>(std::tolower(static_cast<unsigned char>(c))); };
+  auto matches_filter = [&](const char* name) {
+    if (!name) return false;
+    if (palette_filter_[0] == '\0') return true;
+    std::string a(name), b(palette_filter_);
+    std::transform(a.begin(), a.end(), a.begin(), lower_char);
+    std::transform(b.begin(), b.end(), b.begin(), lower_char);
+    return a.find(b) != std::string::npos;
+  };
+  auto matches_text_group = [&](TextId id) {
+    const TextCategory cat = CategoryOf(id);
+    if (palette_text_group_ == 0) {
+      return cat == TextCategory::Noun;
+    }
+    if (palette_text_group_ == 1) {
+      return cat == TextCategory::Verb || cat == TextCategory::Conjunction ||
+             cat == TextCategory::Modifier || cat == TextCategory::RelOp;
+    }
+    return cat == TextCategory::Property || cat == TextCategory::Lonely;
   };
 
   auto button_for_object = [&](ObjectId id) {
@@ -1303,19 +1350,19 @@ void GameLayer::DrawPalette() {
     col = (col + 1) % cols;
   };
 
-  if (palette_layer_ < 2) {
-    // Split objects by engine layer: < 14 = backgrounds, >= 14 = objects.
+  if (palette_kind_ == 0) {
+    // Object palette is independent of layer selection.
     for (int i = 0; i < kObjectCount; ++i) {
       const auto id = static_cast<ObjectId>(i);
-      const int lvl = InfoOf(id).layer;
-      const bool is_bg = (lvl < 14);
-      if ((palette_layer_ == 0) == is_bg) {
-        button_for_object(id);
-      }
+      if (!matches_filter(PrettyName(id))) continue;
+      button_for_object(id);
     }
   } else {
     for (int i = 0; i < kTextCount; ++i) {
-      button_for_text(static_cast<TextId>(i));
+      const auto id = static_cast<TextId>(i);
+      if (!matches_text_group(id)) continue;
+      if (!matches_filter(PrettyName(id))) continue;
+      button_for_text(id);
     }
   }
 }
@@ -1645,15 +1692,21 @@ void GameLayer::PlaceBrushAt(int col, int row) {
   if (std::holds_alternative<ObjectId>(brush_)) {
     const ObjectId id = std::get<ObjectId>(brush_);
     for (auto [e, cell, object] : registry_.view<const Cell, const ObjectBlock>().each()) {
-      if (cell.x == col && cell.y == row && object.id == id) return;
+      if (cell.x != col || cell.y != row || object.id != id) continue;
+      const auto* dl = registry_.try_get<DrawLayer>(e);
+      const int slot = dl ? std::clamp(dl->slot, 1, 3) : 2;
+      if (slot == palette_layer_) return;
     }
-    SpawnObject(id, col, row);
+    SpawnObject(id, col, row, palette_layer_);
   } else {
     const TextId id = std::get<TextId>(brush_);
     for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
-      if (cell.x == col && cell.y == row && text.id == id) return;
+      if (cell.x != col || cell.y != row || text.id != id) continue;
+      const auto* dl = registry_.try_get<DrawLayer>(e);
+      const int slot = dl ? std::clamp(dl->slot, 1, 3) : 2;
+      if (slot == palette_layer_) return;
     }
-    SpawnText(id, col, row);
+    SpawnText(id, col, row, palette_layer_);
   }
   undo_.Clear();
 }
@@ -1774,13 +1827,17 @@ void GameLayer::CutRegionToClipboard(int x0, int y0, int x1, int y1) {
   std::vector<entt::entity> doomed;
   for (auto [e, cell, object] : registry_.view<const Cell, const ObjectBlock>().each()) {
     if (cell.x >= lx && cell.x <= rx && cell.y >= ly && cell.y <= ry) {
-      clipboard_.push_back({cell.x - lx, cell.y - ly, object.id});
+      const auto* dl = registry_.try_get<DrawLayer>(e);
+      const int slot = dl ? std::clamp(dl->slot, 1, 3) : 2;
+      clipboard_.push_back({cell.x - lx, cell.y - ly, object.id, slot});
       doomed.push_back(e);
     }
   }
   for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
     if (cell.x >= lx && cell.x <= rx && cell.y >= ly && cell.y <= ry) {
-      clipboard_.push_back({cell.x - lx, cell.y - ly, text.id});
+      const auto* dl = registry_.try_get<DrawLayer>(e);
+      const int slot = dl ? std::clamp(dl->slot, 1, 3) : 2;
+      clipboard_.push_back({cell.x - lx, cell.y - ly, text.id, slot});
       doomed.push_back(e);
     }
   }
@@ -1797,22 +1854,26 @@ void GameLayer::PasteClipboardAt(int col, int row) {
       const auto id = std::get<ObjectId>(t.kind);
       bool exists = false;
       for (auto [e, cell, object] : registry_.view<const Cell, const ObjectBlock>().each()) {
-        if (cell.x == x && cell.y == y && object.id == id) {
-          exists = true;
-          break;
-        }
+        if (cell.x != x || cell.y != y || object.id != id) continue;
+        const auto* dl = registry_.try_get<DrawLayer>(e);
+        const int slot = dl ? std::clamp(dl->slot, 1, 3) : 2;
+        if (slot != std::clamp(t.layer, 1, 3)) continue;
+        exists = true;
+        break;
       }
-      if (!exists) SpawnObject(id, x, y);
+      if (!exists) SpawnObject(id, x, y, t.layer);
     } else {
       const auto id = std::get<TextId>(t.kind);
       bool exists = false;
       for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
-        if (cell.x == x && cell.y == y && text.id == id) {
-          exists = true;
-          break;
-        }
+        if (cell.x != x || cell.y != y || text.id != id) continue;
+        const auto* dl = registry_.try_get<DrawLayer>(e);
+        const int slot = dl ? std::clamp(dl->slot, 1, 3) : 2;
+        if (slot != std::clamp(t.layer, 1, 3)) continue;
+        exists = true;
+        break;
       }
-      if (!exists) SpawnText(id, x, y);
+      if (!exists) SpawnText(id, x, y, t.layer);
     }
   }
   undo_.Clear();

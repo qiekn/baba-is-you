@@ -15,6 +15,10 @@ struct TextBlock {
   TextId id;
 };
 
+struct DrawLayer {
+  int slot = 2;  // user-authored paint layer bucket (1..3)
+};
+
 struct Facing {
   Direction dir = Direction::Right;
 };

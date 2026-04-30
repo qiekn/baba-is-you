@@ -1,5 +1,6 @@
 #include "level.h"
 
+#include <algorithm>
 #include <fstream>
 #include <string>
 
@@ -41,6 +42,7 @@ bool LoadLevelFromJson(const std::filesystem::path& path, Level& out) {
       LevelTile tile;
       tile.x = node.value("x", 0);
       tile.y = node.value("y", 0);
+      tile.layer = std::clamp(node.value("layer", 2), 1, 3);
       const std::string kind = node.value("kind", "object");
       const std::string name = node.value("name", "");
       if (kind == "object") {
@@ -72,6 +74,7 @@ bool SaveLevelToJson(const std::filesystem::path& path, const Level& level) {
     json node;
     node["x"] = tile.x;
     node["y"] = tile.y;
+    node["layer"] = std::clamp(tile.layer, 1, 3);
     if (tile.IsObject()) {
       node["kind"] = "object";
       node["name"] = std::string{NameOf(std::get<ObjectId>(tile.kind))};

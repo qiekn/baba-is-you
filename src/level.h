@@ -11,6 +11,7 @@ struct LevelTile {
   int x = 0;
   int y = 0;
   std::variant<ObjectId, TextId> kind;
+  int layer = 2;  // editor-authored layering bucket (1..3)
 
   bool IsObject() const { return std::holds_alternative<ObjectId>(kind); }
   bool IsText() const { return std::holds_alternative<TextId>(kind); }

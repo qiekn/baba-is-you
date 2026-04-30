@@ -1,5 +1,7 @@
 #include "undo_stack.h"
 
+#include <algorithm>
+
 #include "components.h"
 
 Snapshot CaptureSnapshot(const entt::registry& registry) {
@@ -13,6 +15,10 @@ Snapshot CaptureSnapshot(const entt::registry& registry) {
     row.facing = Direction::Right;
     if (const auto* facing = registry.try_get<Facing>(e)) {
       row.facing = facing->dir;
+    }
+    row.layer = 2;
+    if (const auto* draw_layer = registry.try_get<DrawLayer>(e)) {
+      row.layer = std::clamp(draw_layer->slot, 1, 3);
     }
     if (const auto* object = registry.try_get<ObjectBlock>(e)) {
       row.id = object->id;
@@ -32,6 +38,7 @@ void RestoreSnapshot(entt::registry& registry, const Snapshot& snapshot) {
   for (const auto& row : snapshot.rows) {
     auto e = registry.create();
     registry.emplace<Cell>(e, row.x, row.y);
+    registry.emplace<DrawLayer>(e, std::clamp(row.layer, 1, 3));
     registry.emplace<Facing>(e, row.facing);
     registry.emplace<AnimFrame>(e);
     if (std::holds_alternative<ObjectId>(row.id)) {
