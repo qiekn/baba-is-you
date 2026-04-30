@@ -38,6 +38,11 @@ class GameLayer : public Layer {
   bool* ShowEditorPanelPtr() { return &show_editor_panel_; }
   bool* ShowWorldPanelPtr() { return &show_world_panel_; }
   bool* ShowSettingsPanelPtr() { return &show_settings_panel_; }
+  bool ConsumeRequestShowUi() {
+    const bool v = request_show_ui_;
+    request_show_ui_ = false;
+    return v;
+  }
 
   // Iris (eye-blink) transition shown between levels. Drawn last so it sits
   // on top of ImGui panels too. No-op when no transition is active.
@@ -263,6 +268,7 @@ class GameLayer : public Layer {
   bool show_editor_panel_ = true;
   bool show_world_panel_ = true;
   bool show_settings_panel_ = true;
+  bool request_show_ui_ = false;
 
   // Iris transition between levels. Closing collapses the elliptical opening
   // toward the screen center; at full black we swap to `transition_target_`;

@@ -300,10 +300,16 @@ void GameLayer::OnUpdate(float dt) {
   if (!edit_mode_ && IsKeyPressed(KEY_E)) {
     edit_mode_ = true;
     dragging_ = false;
+    request_show_ui_ = true;
     return;
   }
 
   if (edit_mode_) {
+    if (IsKeyPressed(KEY_SLASH) || IsKeyPressed(KEY_KP_DIVIDE)) {
+      palette_filter_[0] = '\0';
+      palette_focus_search_ = true;
+    }
+
     // Editor mode keyboard shortcuts.
     if (IsKeyPressed(KEY_Q)) {
       edit_mode_ = false;
@@ -1389,7 +1395,13 @@ void GameLayer::DrawPalette() {
     ImGui::RadioButton("Properties", &palette_text_group_, 2);
   }
 
-  ImGui::InputTextWithHint("Search", "name filter", palette_filter_, sizeof(palette_filter_));
+  if (palette_focus_search_) {
+    ImGui::SetKeyboardFocusHere();
+    palette_focus_search_ = false;
+  }
+  const bool search_submit =
+      ImGui::InputTextWithHint("Search", "name filter", palette_filter_, sizeof(palette_filter_),
+                               ImGuiInputTextFlags_EnterReturnsTrue);
 
   constexpr float kBtn = 40.0f;
   const ImVec2 btn_size{kBtn, kBtn};
@@ -1420,6 +1432,26 @@ void GameLayer::DrawPalette() {
     }
     return cat == TextCategory::Property || cat == TextCategory::Lonely;
   };
+
+  auto pick_first_filtered = [&]() {
+    if (palette_kind_ == 0) {
+      for (int i = 0; i < kObjectCount; ++i) {
+        const auto id = static_cast<ObjectId>(i);
+        if (!matches_filter(PrettyName(id))) continue;
+        brush_ = id;
+        return;
+      }
+      return;
+    }
+    for (int i = 0; i < kTextCount; ++i) {
+      const auto id = static_cast<TextId>(i);
+      if (!matches_text_group(id)) continue;
+      if (!matches_filter(PrettyName(id))) continue;
+      brush_ = id;
+      return;
+    }
+  };
+  if (search_submit) pick_first_filtered();
 
   auto button_for_object = [&](ObjectId id) {
     const Texture2D& tex = sprites_.Get(id, current_frame_,

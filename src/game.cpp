@@ -104,6 +104,9 @@ void Game::Update() {
   for (auto& layer : layers_) {
     layer->OnUpdate(dt);
   }
+  if (game_layer_ && game_layer_->ConsumeRequestShowUi() && imgui_layer_ && !imgui_layer_->IsVisible()) {
+    imgui_layer_->ToggleVisible();
+  }
 }
 
 void Game::ToggleBorderless() {
