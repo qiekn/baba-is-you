@@ -1,0 +1,37 @@
+{
+  "title": "depths",
+  "area_index": 11,
+  "source_map": "264level",
+  "levels": [
+    {
+      "id": "274level",
+      "name": "priority lane",
+      "number": 0
+    },
+    {
+      "id": "261level",
+      "name": "cleaning service",
+      "number": 1
+    },
+    {
+      "id": "251level",
+      "name": "exercise hall",
+      "number": 2
+    },
+    {
+      "id": "263level",
+      "name": "crushers",
+      "number": 3
+    },
+    {
+      "id": "262level",
+      "name": "collaborative effort",
+      "number": 4
+    },
+    {
+      "id": "265level",
+      "name": "living lands",
+      "number": 5
+    }
+  ]
+}

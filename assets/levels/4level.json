@@ -1,0 +1,659 @@
+{
+  "cols": 24,
+  "rows": 14,
+  "tiles": [
+    {
+      "x": 0,
+      "y": 0,
+      "kind": "text",
+      "name": "flag"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 16,
+      "y": 1,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 18,
+      "y": 1,
+      "kind": "object",
+      "name": "pillar"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "kind": "text",
+      "name": "pillar"
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "kind": "text",
+      "name": "push"
+    },
+    {
+      "x": 10,
+      "y": 2,
+      "kind": "object",
+      "name": "pillar"
+    },
+    {
+      "x": 17,
+      "y": 2,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 22,
+      "y": 2,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 12,
+      "y": 3,
+      "kind": "object",
+      "name": "pillar"
+    },
+    {
+      "x": 20,
+      "y": 3,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 9,
+      "y": 4,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 5,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 15,
+      "y": 5,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 16,
+      "y": 5,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 17,
+      "y": 5,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 18,
+      "y": 5,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 19,
+      "y": 5,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "kind": "text",
+      "name": "wall"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 14,
+      "y": 6,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 15,
+      "y": 6,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 16,
+      "y": 6,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 17,
+      "y": 6,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 18,
+      "y": 6,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 19,
+      "y": 6,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "kind": "object",
+      "name": "pillar"
+    },
+    {
+      "x": 9,
+      "y": 7,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 10,
+      "y": 7,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 11,
+      "y": 7,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 12,
+      "y": 7,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 13,
+      "y": 7,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 14,
+      "y": 7,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 15,
+      "y": 7,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 16,
+      "y": 7,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 17,
+      "y": 7,
+      "kind": "object",
+      "name": "flag"
+    },
+    {
+      "x": 18,
+      "y": 7,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 19,
+      "y": 7,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 0,
+      "y": 8,
+      "kind": "text",
+      "name": "stop"
+    },
+    {
+      "x": 3,
+      "y": 8,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 4,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 5,
+      "y": 8,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 6,
+      "y": 8,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 7,
+      "y": 8,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 8,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 10,
+      "y": 8,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 15,
+      "y": 8,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 16,
+      "y": 8,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 17,
+      "y": 8,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 18,
+      "y": 8,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 19,
+      "y": 8,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 20,
+      "y": 8,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 3,
+      "y": 9,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 4,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 5,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 6,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 9,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 15,
+      "y": 9,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 16,
+      "y": 9,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 17,
+      "y": 9,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 18,
+      "y": 9,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 19,
+      "y": 9,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 3,
+      "y": 10,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 4,
+      "y": 10,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 7,
+      "y": 10,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 8,
+      "y": 10,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 9,
+      "y": 10,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 1,
+      "y": 11,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 11,
+      "y": 11,
+      "kind": "object",
+      "name": "pillar"
+    },
+    {
+      "x": 5,
+      "y": 12,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 6,
+      "y": 12,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 7,
+      "y": 12,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 15,
+      "y": 12,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 17,
+      "y": 12,
+      "kind": "object",
+      "name": "pillar"
+    },
+    {
+      "x": 19,
+      "y": 12,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 14,
+      "y": 13,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 21,
+      "y": 13,
+      "kind": "text",
+      "name": "star"
+    },
+    {
+      "x": 22,
+      "y": 13,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 23,
+      "y": 13,
+      "kind": "text",
+      "name": "defeat"
+    }
+  ],
+  "background": [
+    15,
+    21,
+    41
+  ],
+  "edge": [
+    36,
+    44,
+    71
+  ],
+  "name": "pillar yard"
+}

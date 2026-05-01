@@ -1,0 +1,863 @@
+{
+  "cols": 28,
+  "rows": 16,
+  "tiles": [
+    {
+      "x": 0,
+      "y": 0,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 22,
+      "y": 0,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 24,
+      "y": 0,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 25,
+      "y": 0,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 26,
+      "y": 0,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 27,
+      "y": 0,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 13,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 14,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 15,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 16,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 17,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 18,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 19,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 20,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 26,
+      "y": 1,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 27,
+      "y": 1,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 9,
+      "y": 2,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 10,
+      "y": 2,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 11,
+      "y": 2,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 12,
+      "y": 2,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 13,
+      "y": 2,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 14,
+      "y": 2,
+      "kind": "text",
+      "name": "door"
+    },
+    {
+      "x": 15,
+      "y": 2,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 16,
+      "y": 2,
+      "kind": "text",
+      "name": "shut"
+    },
+    {
+      "x": 17,
+      "y": 2,
+      "kind": "text",
+      "name": "and"
+    },
+    {
+      "x": 18,
+      "y": 2,
+      "kind": "text",
+      "name": "not"
+    },
+    {
+      "x": 19,
+      "y": 2,
+      "kind": "text",
+      "name": "open"
+    },
+    {
+      "x": 20,
+      "y": 2,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 27,
+      "y": 2,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 9,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 10,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 11,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 12,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 13,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 14,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 15,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 16,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 17,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 18,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 19,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 20,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "kind": "text",
+      "name": "flag"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 9,
+      "y": 4,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 13,
+      "y": 4,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 14,
+      "y": 4,
+      "kind": "text",
+      "name": "water"
+    },
+    {
+      "x": 15,
+      "y": 4,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 16,
+      "y": 4,
+      "kind": "text",
+      "name": "sink"
+    },
+    {
+      "x": 17,
+      "y": 4,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 9,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 11,
+      "y": 5,
+      "kind": "object",
+      "name": "flag"
+    },
+    {
+      "x": 13,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 14,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 15,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 16,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 17,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 18,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 19,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 20,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 21,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 22,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "kind": "object",
+      "name": "door"
+    },
+    {
+      "x": 13,
+      "y": 6,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 14,
+      "y": 6,
+      "kind": "text",
+      "name": "hedge"
+    },
+    {
+      "x": 15,
+      "y": 6,
+      "kind": "text",
+      "name": "and"
+    },
+    {
+      "x": 16,
+      "y": 6,
+      "kind": "text",
+      "name": "door"
+    },
+    {
+      "x": 17,
+      "y": 6,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 18,
+      "y": 6,
+      "kind": "text",
+      "name": "stop"
+    },
+    {
+      "x": 19,
+      "y": 6,
+      "kind": "text",
+      "name": "and"
+    },
+    {
+      "x": 20,
+      "y": 6,
+      "kind": "text",
+      "name": "not"
+    },
+    {
+      "x": 21,
+      "y": 6,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 22,
+      "y": 6,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 9,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 13,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 14,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 15,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 16,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 17,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 18,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 19,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 20,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 21,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 22,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 9,
+      "y": 8,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 11,
+      "y": 8,
+      "kind": "object",
+      "name": "rock"
+    },
+    {
+      "x": 13,
+      "y": 8,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 19,
+      "y": 8,
+      "kind": "text",
+      "name": "rock"
+    },
+    {
+      "x": 22,
+      "y": 8,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 27,
+      "y": 9,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 7,
+      "y": 10,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 27,
+      "y": 10,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 15,
+      "y": 11,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 16,
+      "y": 11,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 17,
+      "y": 11,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 26,
+      "y": 11,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 27,
+      "y": 11,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 0,
+      "y": 12,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 11,
+      "y": 12,
+      "kind": "text",
+      "name": "open"
+    },
+    {
+      "x": 12,
+      "y": 12,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 0,
+      "y": 13,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 11,
+      "y": 13,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 12,
+      "y": 13,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 15,
+      "y": 13,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 17,
+      "y": 13,
+      "kind": "text",
+      "name": "not"
+    },
+    {
+      "x": 19,
+      "y": 13,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 21,
+      "y": 13,
+      "kind": "text",
+      "name": "not"
+    },
+    {
+      "x": 27,
+      "y": 13,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 0,
+      "y": 14,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 1,
+      "y": 14,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 26,
+      "y": 14,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 27,
+      "y": 14,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 0,
+      "y": 15,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 1,
+      "y": 15,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 2,
+      "y": 15,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 20,
+      "y": 15,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 21,
+      "y": 15,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 24,
+      "y": 15,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 25,
+      "y": 15,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 26,
+      "y": 15,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 27,
+      "y": 15,
+      "kind": "object",
+      "name": "brick"
+    }
+  ],
+  "background": [
+    57,
+    45,
+    36
+  ],
+  "edge": [
+    82,
+    64,
+    40
+  ],
+  "name": "cranny"
+}

@@ -1,0 +1,95 @@
+{
+  "cols": 15,
+  "rows": 8,
+  "tiles": [
+    {
+      "x": 1,
+      "y": 1,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "kind": "text",
+      "name": "orb"
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "kind": "text",
+      "name": "bonus"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 12,
+      "y": 7,
+      "kind": "text",
+      "name": "orb"
+    },
+    {
+      "x": 13,
+      "y": 7,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 14,
+      "y": 7,
+      "kind": "text",
+      "name": "weak"
+    }
+  ],
+  "background": [
+    15,
+    21,
+    41
+  ],
+  "edge": [
+    36,
+    44,
+    71
+  ],
+  "name": "a prize well earned"
+}

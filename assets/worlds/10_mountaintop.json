@@ -1,0 +1,52 @@
+{
+  "title": "10. mountaintop",
+  "area_index": 10,
+  "source_map": "232level",
+  "levels": [
+    {
+      "id": "48level",
+      "name": "the floatiest platforms",
+      "number": 0
+    },
+    {
+      "id": "105level",
+      "name": "shuffle",
+      "number": 1
+    },
+    {
+      "id": "100level",
+      "name": "love at first sight",
+      "number": 2
+    },
+    {
+      "id": "195level",
+      "name": "solitude",
+      "number": 3
+    },
+    {
+      "id": "116level",
+      "name": "what is baba?",
+      "number": 4
+    },
+    {
+      "id": "120level",
+      "name": "connector",
+      "number": 5
+    },
+    {
+      "id": "118level",
+      "name": "floaty platforms",
+      "number": 6
+    },
+    {
+      "id": "99level",
+      "name": "seeking acceptance",
+      "number": 7
+    },
+    {
+      "id": "104level",
+      "name": "tectonic movements",
+      "number": 8
+    }
+  ]
+}

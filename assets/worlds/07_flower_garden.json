@@ -1,0 +1,67 @@
+{
+  "title": "7. flower garden",
+  "area_index": 7,
+  "source_map": "180level",
+  "levels": [
+    {
+      "id": "127level",
+      "name": "secret garden",
+      "number": 0
+    },
+    {
+      "id": "59level",
+      "name": "condition",
+      "number": 1
+    },
+    {
+      "id": "142level",
+      "name": "out at sea",
+      "number": 1
+    },
+    {
+      "id": "94level",
+      "name": "thicket",
+      "number": 2
+    },
+    {
+      "id": "242level",
+      "name": "sorting facility",
+      "number": 3
+    },
+    {
+      "id": "124level",
+      "name": "relaxing spot",
+      "number": 4
+    },
+    {
+      "id": "64level",
+      "name": "maritime adventures",
+      "number": 5
+    },
+    {
+      "id": "89level",
+      "name": "ruined orchard",
+      "number": 6
+    },
+    {
+      "id": "150level",
+      "name": "blockade",
+      "number": 7
+    },
+    {
+      "id": "91level",
+      "name": "jaywalkers united",
+      "number": 8
+    },
+    {
+      "id": "130level",
+      "name": "overgrowth",
+      "number": 9
+    },
+    {
+      "id": "92level",
+      "name": "adventurers",
+      "number": 10
+    }
+  ]
+}

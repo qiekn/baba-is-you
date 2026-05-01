@@ -1,0 +1,251 @@
+{
+  "cols": 24,
+  "rows": 14,
+  "tiles": [
+    {
+      "x": 0,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 23,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 13,
+      "y": 2,
+      "kind": "text",
+      "name": "flag"
+    },
+    {
+      "x": 14,
+      "y": 2,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 15,
+      "y": 2,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 9,
+      "y": 4,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 14,
+      "y": 4,
+      "kind": "object",
+      "name": "flag"
+    },
+    {
+      "x": 9,
+      "y": 10,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 10,
+      "y": 10,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 11,
+      "y": 10,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 12,
+      "y": 10,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 10,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 10,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 11,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 14,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 12,
+      "kind": "text",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 12,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 11,
+      "y": 12,
+      "kind": "text",
+      "name": "stop"
+    },
+    {
+      "x": 12,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 12,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 14,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 12,
+      "kind": "text",
+      "name": "flag"
+    },
+    {
+      "x": 18,
+      "y": 12,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 19,
+      "y": 12,
+      "kind": "text",
+      "name": "melt"
+    },
+    {
+      "x": 0,
+      "y": 13,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 8,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 13,
+      "kind": "text",
+      "name": "lava"
+    },
+    {
+      "x": 10,
+      "y": 13,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 11,
+      "y": 13,
+      "kind": "text",
+      "name": "more"
+    },
+    {
+      "x": 12,
+      "y": 13,
+      "kind": "text",
+      "name": "and"
+    },
+    {
+      "x": 13,
+      "y": 13,
+      "kind": "text",
+      "name": "hot"
+    },
+    {
+      "x": 14,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 13,
+      "kind": "object",
+      "name": "lava"
+    }
+  ],
+  "background": [
+    8,
+    8,
+    8
+  ],
+  "edge": [
+    21,
+    24,
+    31
+  ],
+  "name": "lava flood"
+}

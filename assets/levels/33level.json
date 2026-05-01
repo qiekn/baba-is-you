@@ -1,0 +1,947 @@
+{
+  "cols": 33,
+  "rows": 18,
+  "tiles": [
+    {
+      "x": 6,
+      "y": 0,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 15,
+      "y": 0,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 16,
+      "y": 0,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 23,
+      "y": 0,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 9,
+      "y": 1,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 22,
+      "y": 1,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 23,
+      "y": 1,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 24,
+      "y": 1,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 27,
+      "y": 1,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 9,
+      "y": 2,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 10,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 20,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 21,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 22,
+      "y": 2,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 23,
+      "y": 2,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 24,
+      "y": 2,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 9,
+      "y": 3,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 10,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 3,
+      "kind": "text",
+      "name": "has"
+    },
+    {
+      "x": 21,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 22,
+      "y": 3,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 23,
+      "y": 3,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 24,
+      "y": 3,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 10,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 20,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 21,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 27,
+      "y": 4,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 28,
+      "y": 4,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 29,
+      "y": 4,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 10,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 20,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 5,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 24,
+      "y": 5,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 25,
+      "y": 5,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 26,
+      "y": 5,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 27,
+      "y": 5,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 28,
+      "y": 5,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 10,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 6,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 20,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 6,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 24,
+      "y": 6,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 25,
+      "y": 6,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 26,
+      "y": 6,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 27,
+      "y": 6,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 10,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 7,
+      "kind": "text",
+      "name": "box"
+    },
+    {
+      "x": 20,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 24,
+      "y": 7,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 25,
+      "y": 7,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 26,
+      "y": 7,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 9,
+      "y": 8,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 10,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 8,
+      "kind": "text",
+      "name": "key"
+    },
+    {
+      "x": 16,
+      "y": 8,
+      "kind": "text",
+      "name": "and"
+    },
+    {
+      "x": 19,
+      "y": 8,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 20,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 9,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 8,
+      "y": 9,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 10,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 9,
+      "kind": "text",
+      "name": "weak"
+    },
+    {
+      "x": 20,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 21,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 22,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 10,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 8,
+      "y": 10,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 9,
+      "y": 10,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 10,
+      "y": 10,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 10,
+      "kind": "object",
+      "name": "box"
+    },
+    {
+      "x": 14,
+      "y": 10,
+      "kind": "text",
+      "name": "box"
+    },
+    {
+      "x": 15,
+      "y": 10,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 16,
+      "y": 10,
+      "kind": "text",
+      "name": "push"
+    },
+    {
+      "x": 20,
+      "y": 10,
+      "kind": "object",
+      "name": "door"
+    },
+    {
+      "x": 22,
+      "y": 10,
+      "kind": "object",
+      "name": "door"
+    },
+    {
+      "x": 23,
+      "y": 10,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 7,
+      "y": 11,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 8,
+      "y": 11,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 9,
+      "y": 11,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 10,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 20,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 21,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 22,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 26,
+      "y": 11,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 2,
+      "y": 12,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 7,
+      "y": 12,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 8,
+      "y": 12,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 10,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 20,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 13,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 10,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 20,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 22,
+      "y": 13,
+      "kind": "text",
+      "name": "love"
+    },
+    {
+      "x": 23,
+      "y": 13,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 24,
+      "y": 13,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 12,
+      "y": 14,
+      "kind": "text",
+      "name": "key"
+    },
+    {
+      "x": 13,
+      "y": 14,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 14,
+      "y": 14,
+      "kind": "text",
+      "name": "open"
+    },
+    {
+      "x": 16,
+      "y": 14,
+      "kind": "text",
+      "name": "door"
+    },
+    {
+      "x": 17,
+      "y": 14,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 18,
+      "y": 14,
+      "kind": "text",
+      "name": "shut"
+    },
+    {
+      "x": 29,
+      "y": 14,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 5,
+      "y": 15,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 6,
+      "y": 15,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 23,
+      "y": 15,
+      "kind": "object",
+      "name": "love"
+    },
+    {
+      "x": 26,
+      "y": 15,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 27,
+      "y": 15,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 4,
+      "y": 16,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 5,
+      "y": 16,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 25,
+      "y": 16,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 26,
+      "y": 16,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 8,
+      "y": 17,
+      "kind": "text",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 17,
+      "kind": "text",
+      "name": "and"
+    },
+    {
+      "x": 10,
+      "y": 17,
+      "kind": "text",
+      "name": "door"
+    },
+    {
+      "x": 11,
+      "y": 17,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 12,
+      "y": 17,
+      "kind": "text",
+      "name": "stop"
+    },
+    {
+      "x": 14,
+      "y": 17,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 15,
+      "y": 17,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 16,
+      "y": 17,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 24,
+      "y": 17,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 25,
+      "y": 17,
+      "kind": "object",
+      "name": "grass"
+    }
+  ],
+  "background": [
+    22,
+    23,
+    18
+  ],
+  "edge": [
+    38,
+    40,
+    31
+  ],
+  "name": "love is out there"
+}

@@ -1,0 +1,695 @@
+{
+  "cols": 24,
+  "rows": 18,
+  "tiles": [
+    {
+      "x": 0,
+      "y": 0,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 18,
+      "y": 0,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 19,
+      "y": 0,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 20,
+      "y": 0,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 21,
+      "y": 0,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 22,
+      "y": 0,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 23,
+      "y": 0,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 21,
+      "y": 1,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 22,
+      "y": 1,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 23,
+      "y": 1,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 9,
+      "y": 2,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 10,
+      "y": 2,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 11,
+      "y": 2,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 12,
+      "y": 2,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 13,
+      "y": 2,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 14,
+      "y": 2,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 15,
+      "y": 2,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 16,
+      "y": 2,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 23,
+      "y": 2,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 16,
+      "y": 3,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 23,
+      "y": 3,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 16,
+      "y": 4,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 16,
+      "y": 5,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 17,
+      "y": 5,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 23,
+      "y": 5,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 15,
+      "y": 6,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 16,
+      "y": 6,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 17,
+      "y": 6,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 23,
+      "y": 6,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 16,
+      "y": 7,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 17,
+      "y": 7,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 0,
+      "y": 8,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 1,
+      "y": 8,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 5,
+      "y": 8,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 16,
+      "y": 8,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 0,
+      "y": 9,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 5,
+      "y": 9,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 16,
+      "y": 9,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 5,
+      "y": 10,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 16,
+      "y": 10,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 17,
+      "y": 10,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 18,
+      "y": 10,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 5,
+      "y": 11,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 17,
+      "y": 11,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 18,
+      "y": 11,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 5,
+      "y": 12,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 16,
+      "y": 12,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 17,
+      "y": 12,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 18,
+      "y": 12,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 5,
+      "y": 13,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 6,
+      "y": 13,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 7,
+      "y": 13,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 8,
+      "y": 13,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 9,
+      "y": 13,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 10,
+      "y": 13,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 11,
+      "y": 13,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 12,
+      "y": 13,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 13,
+      "y": 13,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 14,
+      "y": 13,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 15,
+      "y": 13,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 16,
+      "y": 13,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 0,
+      "y": 14,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 10,
+      "y": 14,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 11,
+      "y": 14,
+      "kind": "text",
+      "name": "up"
+    },
+    {
+      "x": 12,
+      "y": 14,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 13,
+      "y": 14,
+      "kind": "text",
+      "name": "move"
+    },
+    {
+      "x": 14,
+      "y": 14,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 23,
+      "y": 14,
+      "kind": "text",
+      "name": "lonely"
+    },
+    {
+      "x": 0,
+      "y": 15,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 10,
+      "y": 15,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 11,
+      "y": 15,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 12,
+      "y": 15,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 13,
+      "y": 15,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 14,
+      "y": 15,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 23,
+      "y": 15,
+      "kind": "text",
+      "name": "text"
+    },
+    {
+      "x": 0,
+      "y": 16,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 1,
+      "y": 16,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 17,
+      "y": 16,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 18,
+      "y": 16,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 23,
+      "y": 16,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 0,
+      "y": 17,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 1,
+      "y": 17,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 2,
+      "y": 17,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 5,
+      "y": 17,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 6,
+      "y": 17,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 15,
+      "y": 17,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 16,
+      "y": 17,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 17,
+      "y": 17,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 18,
+      "y": 17,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 19,
+      "y": 17,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 23,
+      "y": 17,
+      "kind": "text",
+      "name": "you"
+    }
+  ],
+  "background": [
+    30,
+    38,
+    46
+  ],
+  "edge": [
+    41,
+    59,
+    76
+  ],
+  "name": "what is baba?"
+}

@@ -1,0 +1,611 @@
+{
+  "cols": 24,
+  "rows": 14,
+  "tiles": [
+    {
+      "x": 5,
+      "y": 0,
+      "kind": "text",
+      "name": "wall"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "kind": "text",
+      "name": "stop"
+    },
+    {
+      "x": 11,
+      "y": 0,
+      "kind": "text",
+      "name": "skull"
+    },
+    {
+      "x": 12,
+      "y": 0,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 13,
+      "y": 0,
+      "kind": "text",
+      "name": "defeat"
+    },
+    {
+      "x": 14,
+      "y": 0,
+      "kind": "text",
+      "name": "and"
+    },
+    {
+      "x": 15,
+      "y": 0,
+      "kind": "text",
+      "name": "melt"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "kind": "object",
+      "name": "belt"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "kind": "object",
+      "name": "belt"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "kind": "object",
+      "name": "belt"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "kind": "object",
+      "name": "belt"
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "kind": "object",
+      "name": "belt"
+    },
+    {
+      "x": 10,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 3,
+      "kind": "text",
+      "name": "belt"
+    },
+    {
+      "x": 17,
+      "y": 3,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 18,
+      "y": 3,
+      "kind": "text",
+      "name": "shift"
+    },
+    {
+      "x": 19,
+      "y": 3,
+      "kind": "text",
+      "name": "and"
+    },
+    {
+      "x": 20,
+      "y": 3,
+      "kind": "text",
+      "name": "not"
+    },
+    {
+      "x": 21,
+      "y": 3,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 4,
+      "kind": "text",
+      "name": "fruit"
+    },
+    {
+      "x": 10,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 20,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 21,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 22,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 5,
+      "kind": "text",
+      "name": "flag"
+    },
+    {
+      "x": 20,
+      "y": 5,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 21,
+      "y": 5,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 10,
+      "y": 6,
+      "kind": "text",
+      "name": "belt"
+    },
+    {
+      "x": 11,
+      "y": 6,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 12,
+      "y": 6,
+      "kind": "text",
+      "name": "hot"
+    },
+    {
+      "x": 15,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 20,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 21,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 5,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 8,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 12,
+      "y": 8,
+      "kind": "text",
+      "name": "push"
+    },
+    {
+      "x": 17,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 8,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 20,
+      "y": 8,
+      "kind": "object",
+      "name": "flag"
+    },
+    {
+      "x": 21,
+      "y": 8,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 1,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 2,
+      "y": 9,
+      "kind": "text",
+      "name": "brick"
+    },
+    {
+      "x": 3,
+      "y": 9,
+      "kind": "text",
+      "name": "fungus"
+    },
+    {
+      "x": 4,
+      "y": 9,
+      "kind": "text",
+      "name": "brick"
+    },
+    {
+      "x": 5,
+      "y": 9,
+      "kind": "text",
+      "name": "fungus"
+    },
+    {
+      "x": 6,
+      "y": 9,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 7,
+      "y": 9,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 15,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 9,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 20,
+      "y": 9,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 21,
+      "y": 9,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 6,
+      "y": 10,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 10,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 10,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 13,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 17,
+      "y": 13,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 18,
+      "y": 13,
+      "kind": "text",
+      "name": "push"
+    },
+    {
+      "x": 19,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    }
+  ],
+  "background": [
+    8,
+    8,
+    8
+  ],
+  "edge": [
+    21,
+    24,
+    31
+  ],
+  "name": "ab"
+}

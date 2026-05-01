@@ -1,0 +1,131 @@
+{
+  "cols": 15,
+  "rows": 8,
+  "tiles": [
+    {
+      "x": 14,
+      "y": 0,
+      "kind": "text",
+      "name": "level"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "kind": "text",
+      "name": "flag"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 10,
+      "y": 1,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 11,
+      "y": 1,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 12,
+      "y": 1,
+      "kind": "text",
+      "name": "push"
+    },
+    {
+      "x": 14,
+      "y": 1,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "kind": "object",
+      "name": "love"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "kind": "object",
+      "name": "love"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "kind": "object",
+      "name": "flag"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "kind": "object",
+      "name": "rock"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "kind": "text",
+      "name": "love"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "kind": "text",
+      "name": "tele"
+    },
+    {
+      "x": 12,
+      "y": 7,
+      "kind": "text",
+      "name": "rock"
+    },
+    {
+      "x": 13,
+      "y": 7,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 14,
+      "y": 7,
+      "kind": "text",
+      "name": "you"
+    }
+  ],
+  "background": [
+    12,
+    6,
+    13
+  ],
+  "edge": [
+    25,
+    28,
+    40
+  ],
+  "name": "mutual feelings"
+}

@@ -1,99 +1,90 @@
-# Refresh Levels (000-007)
+# Refresh Levels
 
-This note records exactly how `assets/levels/000.json` to `007.json` were refreshed from the original Baba data.
+How the level set under `assets/levels/` and the per-area worlds under
+`assets/worlds/` are rebuilt from the original Baba Is You data.
 
-## Goal
+## Pipeline
 
-Update local levels to this order:
-
-- `00` Baba Is You
-- `01` Where Do I Go?
-- `02` Now What Is This?
-- `03` Out Of Reach
-- `04` Still Out Of Reach
-- `05` Volcano
-- `06` Off Limits
-- `07` Grass Yard
-
-## Source Mapping
-
-The mapping from level title to original `.l` file under `original-baba-is-you/Data/Worlds/baba/`:
-
-- `000.json` <- `0level.l` (`baba is you`)
-- `001.json` <- `1level.l` (`where do i go?`)
-- `002.json` <- `189level.l` (`now what is this?`)
-- `003.json` <- `3level.l` (`out of reach`)
-- `004.json` <- `2level.l` (`still out of reach`)
-- `005.json` <- `90level.l` (`volcano`)
-- `006.json` <- `5level.l` (`off limits`)
-- `007.json` <- `6level.l` (`grass yard`)
-
-Level name lookup command:
+Three scripts handle the full chain. Run them from the repo root.
 
 ```powershell
-rg -n "^name=" original-baba-is-you/Data/Worlds/baba -g "*.ld"
+# 1. Re-extract every .l file into assets/imported/{stem}.json.
+C:/Python314/python.exe tools/import_baba_level.py --all `
+    original-baba-is-you/Data/Worlds/baba `
+    --values original-baba-is-you/Data/values.lua `
+    -o assets/imported
+
+# 2. Build the canonical area->level manifest at assets/levels_index.json.
+C:/Python314/python.exe tools/build_level_index.py --include-bonus
+
+# 3. Copy imported files into assets/levels/ and emit per-area worlds.
+C:/Python314/python.exe tools/apply_level_index.py
 ```
 
-## Conversion Command
+## Importer Behavior
 
-Run importer per source level and copy output into target level id:
+`tools/import_baba_level.py` parses `ACHTUNG!` chunked `.l` files:
 
-```powershell
-$map = @(
-  @{src='0level.l';   dst='000.json'},
-  @{src='1level.l';   dst='001.json'},
-  @{src='189level.l'; dst='002.json'},
-  @{src='3level.l';   dst='003.json'},
-  @{src='2level.l';   dst='004.json'},
-  @{src='90level.l';  dst='005.json'},
-  @{src='5level.l';   dst='006.json'},
-  @{src='6level.l';   dst='007.json'}
-)
+- Layer header gives the canvas size (W, H). Baba levels store the
+  playfield wrapped in a 1-cell edge ring at id=0; the importer detects
+  this and emits `cols = W-2`, `rows = H-2` with positions shifted by
+  `(-1, -1)`. Levels without the ring fall through to the full WxH grid.
+- Cell ids encode the tile coordinate `(tx | (ty << 8))` and resolve to
+  object names via `Data/values.lua` plus the per-level `[currobjlist]`
+  override in the `.ld` companion.
+- Background and edge colors come from the palette PNG named by
+  `[general] palette=`.
 
-foreach ($it in $map) {
-  python tools/import_baba_level.py ("original-baba-is-you/Data/Worlds/baba/" + $it.src) --values original-baba-is-you/Data/values.lua -o .cache/rebuild
-  $tmp = ".cache/rebuild/" + [System.IO.Path]::GetFileNameWithoutExtension($it.src) + ".json"
-  Copy-Item -LiteralPath $tmp -Destination ("assets/levels/" + $it.dst) -Force
-}
-```
+## Canonical Area Order
+
+`tools/build_level_index.py` walks the overworld maps in the in-game
+progression order and emits a manifest at `assets/levels_index.json`:
+
+1. `177level` - 1. the lake
+2. `207level` - 2. solitary island
+3. `206level` - 3. temple ruins
+4. `16level`  - 4. forest of fall
+5. `169level` - 5. deep forest
+6. `87level`  - 6. rocket trip
+7. `180level` - 7. flower garden
+8. `182level` - 8. chasm
+9. `179level` - 9. volcanic cavern
+10. `232level` - 10. mountaintop
+
+With `--include-bonus`, the post-game maps are appended:
+`264level` (depths), `282level` (abc), `283level` (meta),
+`304level` (center), `338level` (null).
+
+For each area, levels are sorted by their `[levels] <n>number=` slot;
+overworld back-links and nested maps (`leveltype != 0`) are filtered out.
+
+## Apply Step
+
+`tools/apply_level_index.py` does two things:
+
+- Copies every `assets/imported/<stem>.json` referenced by the manifest
+  into `assets/levels/<stem>.json`. The runtime loader resolves levels
+  by id, so `id = "211level"` reads `assets/levels/211level.json`.
+- Writes one world file per area into `assets/worlds/`, e.g.
+  `01_the_lake.json` ... `10_mountaintop.json` (+ bonus areas). Each
+  world lists levels in canonical order with `id`, `name`, and the
+  in-area `number`.
+
+The pre-existing tutorial set (`000-008.json` and
+`assets/worlds/tutorial.json`) is left in place; those ids are aliases
+that re-import to the same JSON as the canonical sources.
 
 ## Verification
 
-Quick check for name, dimensions, and tile count:
-
 ```powershell
-@'
+C:/Python314/python.exe -c @"
 import json
 from pathlib import Path
-for i in range(8):
-    p = Path(f'assets/levels/{i:03d}.json')
-    d = json.loads(p.read_text(encoding='utf-8'))
-    print(f"{i:03d} | {d.get('name','<noname>')} | {d['cols']}x{d['rows']} | tiles={len(d['tiles'])}")
-'@ | python -
+idx = json.loads(Path('assets/levels_index.json').read_text(encoding='utf-8'))
+last = 0
+for L in idx['levels'][:25]:
+    if L['area_idx'] != last:
+        print(); last = L['area_idx']
+    print(f\"{L['area_idx']:2d}-{L['level_in_area']:02d}  {L['source']:>10}  {L['name']}\")
+"@
 ```
-
-Expected titles:
-
-- `000` `baba is you`
-- `001` `where do i go?`
-- `002` `now what is this?`
-- `003` `out of reach`
-- `004` `still out of reach`
-- `005` `volcano`
-- `006` `off limits`
-- `007` `grass yard`
-
-## Commit Scope
-
-Only stage these files when committing this refresh:
-
-- `assets/levels/000.json`
-- `assets/levels/001.json`
-- `assets/levels/002.json`
-- `assets/levels/003.json`
-- `assets/levels/004.json`
-- `assets/levels/005.json`
-- `assets/levels/006.json`
-- `assets/levels/007.json`
-
-Do not include unrelated local changes (for example `imgui.ini`).

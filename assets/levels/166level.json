@@ -1,0 +1,863 @@
+{
+  "cols": 28,
+  "rows": 16,
+  "tiles": [
+    {
+      "x": 0,
+      "y": 0,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 19,
+      "y": 0,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 20,
+      "y": 0,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 22,
+      "y": 0,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 0,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 24,
+      "y": 0,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 26,
+      "y": 0,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 27,
+      "y": 0,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 21,
+      "y": 1,
+      "kind": "text",
+      "name": "key"
+    },
+    {
+      "x": 22,
+      "y": 1,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 23,
+      "y": 1,
+      "kind": "text",
+      "name": "defeat"
+    },
+    {
+      "x": 24,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 25,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 26,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 27,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "kind": "text",
+      "name": "door"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "kind": "text",
+      "name": "stop"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 2,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 15,
+      "y": 2,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 22,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 24,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 26,
+      "y": 2,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 27,
+      "y": 2,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 21,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 22,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 24,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 25,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 26,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 27,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 25,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 26,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 5,
+      "kind": "object",
+      "name": "door"
+    },
+    {
+      "x": 15,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 26,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "kind": "text",
+      "name": "star"
+    },
+    {
+      "x": 10,
+      "y": 6,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 11,
+      "y": 6,
+      "kind": "text",
+      "name": "push"
+    },
+    {
+      "x": 16,
+      "y": 6,
+      "kind": "text",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 6,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 18,
+      "y": 6,
+      "kind": "text",
+      "name": "stop"
+    },
+    {
+      "x": 19,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 26,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 26,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 27,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 27,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 3,
+      "y": 9,
+      "kind": "object",
+      "name": "fruit"
+    },
+    {
+      "x": 8,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 9,
+      "kind": "object",
+      "name": "key"
+    },
+    {
+      "x": 16,
+      "y": 9,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 19,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 27,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 10,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 10,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 11,
+      "kind": "text",
+      "name": "key"
+    },
+    {
+      "x": 11,
+      "y": 11,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 12,
+      "y": 11,
+      "kind": "text",
+      "name": "open"
+    },
+    {
+      "x": 15,
+      "y": 11,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 16,
+      "y": 11,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 17,
+      "y": 11,
+      "kind": "text",
+      "name": "shut"
+    },
+    {
+      "x": 19,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 11,
+      "kind": "object",
+      "name": "fruit"
+    },
+    {
+      "x": 7,
+      "y": 12,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 8,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 2,
+      "y": 13,
+      "kind": "object",
+      "name": "fruit"
+    },
+    {
+      "x": 7,
+      "y": 13,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 8,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 20,
+      "y": 13,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 26,
+      "y": 13,
+      "kind": "object",
+      "name": "fruit"
+    },
+    {
+      "x": 0,
+      "y": 14,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 4,
+      "y": 14,
+      "kind": "object",
+      "name": "fruit"
+    },
+    {
+      "x": 7,
+      "y": 14,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 8,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 20,
+      "y": 14,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 27,
+      "y": 14,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 0,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 1,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 6,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 7,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 8,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 9,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 16,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 17,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 18,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 19,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 21,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 25,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 26,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 27,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    }
+  ],
+  "background": [
+    15,
+    21,
+    41
+  ],
+  "edge": [
+    36,
+    44,
+    71
+  ],
+  "name": "burglary"
+}

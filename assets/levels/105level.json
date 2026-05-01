@@ -1,0 +1,485 @@
+{
+  "cols": 33,
+  "rows": 18,
+  "tiles": [
+    {
+      "x": 30,
+      "y": 1,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 31,
+      "y": 2,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 11,
+      "y": 3,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 12,
+      "y": 3,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 13,
+      "y": 3,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 14,
+      "y": 3,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 15,
+      "y": 3,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 16,
+      "y": 3,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 17,
+      "y": 3,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 18,
+      "y": 3,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 19,
+      "y": 3,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 20,
+      "y": 3,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 21,
+      "y": 3,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 26,
+      "y": 3,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 11,
+      "y": 4,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 21,
+      "y": 4,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 11,
+      "y": 5,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 15,
+      "y": 5,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 21,
+      "y": 5,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 11,
+      "y": 6,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 21,
+      "y": 6,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 11,
+      "y": 7,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 20,
+      "y": 7,
+      "kind": "text",
+      "name": "skull"
+    },
+    {
+      "x": 21,
+      "y": 7,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 11,
+      "y": 8,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 13,
+      "y": 8,
+      "kind": "text",
+      "name": "lonely"
+    },
+    {
+      "x": 14,
+      "y": 8,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 15,
+      "y": 8,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 16,
+      "y": 8,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 20,
+      "y": 8,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 21,
+      "y": 8,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 11,
+      "y": 9,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 12,
+      "y": 9,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 13,
+      "y": 9,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 14,
+      "y": 9,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 15,
+      "y": 9,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 16,
+      "y": 9,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 20,
+      "y": 9,
+      "kind": "text",
+      "name": "defeat"
+    },
+    {
+      "x": 21,
+      "y": 9,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 11,
+      "y": 10,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 13,
+      "y": 10,
+      "kind": "text",
+      "name": "flag"
+    },
+    {
+      "x": 14,
+      "y": 10,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 15,
+      "y": 10,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 16,
+      "y": 10,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 21,
+      "y": 10,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 3,
+      "y": 11,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 11,
+      "y": 11,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 16,
+      "y": 11,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 21,
+      "y": 11,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 11,
+      "y": 12,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 14,
+      "y": 12,
+      "kind": "object",
+      "name": "flag"
+    },
+    {
+      "x": 16,
+      "y": 12,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 21,
+      "y": 12,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 29,
+      "y": 12,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 1,
+      "y": 13,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 11,
+      "y": 13,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 16,
+      "y": 13,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 21,
+      "y": 13,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 11,
+      "y": 14,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 12,
+      "y": 14,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 13,
+      "y": 14,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 14,
+      "y": 14,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 15,
+      "y": 14,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 16,
+      "y": 14,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 17,
+      "y": 14,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 18,
+      "y": 14,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 19,
+      "y": 14,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 20,
+      "y": 14,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 21,
+      "y": 14,
+      "kind": "object",
+      "name": "fungus"
+    },
+    {
+      "x": 27,
+      "y": 14,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 5,
+      "y": 15,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 30,
+      "y": 16,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 7,
+      "y": 17,
+      "kind": "text",
+      "name": "fungus"
+    },
+    {
+      "x": 8,
+      "y": 17,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 9,
+      "y": 17,
+      "kind": "text",
+      "name": "stop"
+    }
+  ],
+  "background": [
+    30,
+    38,
+    46
+  ],
+  "edge": [
+    41,
+    59,
+    76
+  ],
+  "name": "shuffle"
+}

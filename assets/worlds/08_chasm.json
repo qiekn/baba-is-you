@@ -1,0 +1,87 @@
+{
+  "title": "8. chasm",
+  "area_index": 8,
+  "source_map": "182level",
+  "levels": [
+    {
+      "id": "21level",
+      "name": "rocky prison",
+      "number": 0
+    },
+    {
+      "id": "155level",
+      "name": "metacognition",
+      "number": 0
+    },
+    {
+      "id": "164level",
+      "name": "multitool",
+      "number": 1
+    },
+    {
+      "id": "241level",
+      "name": "siege",
+      "number": 1
+    },
+    {
+      "id": "175level",
+      "name": "broken",
+      "number": 2
+    },
+    {
+      "id": "31level",
+      "name": "elusive condition",
+      "number": 2
+    },
+    {
+      "id": "240level",
+      "name": "treasury",
+      "number": 3
+    },
+    {
+      "id": "167level",
+      "name": "alley",
+      "number": 3
+    },
+    {
+      "id": "19level",
+      "name": "looking for a heart",
+      "number": 4
+    },
+    {
+      "id": "156level",
+      "name": "keke and the star",
+      "number": 4
+    },
+    {
+      "id": "110level",
+      "name": "lava flood",
+      "number": 5
+    },
+    {
+      "id": "165level",
+      "name": "visiting baba",
+      "number": 5
+    },
+    {
+      "id": "18level",
+      "name": "entropy",
+      "number": 6
+    },
+    {
+      "id": "163level",
+      "name": "automated doors",
+      "number": 6
+    },
+    {
+      "id": "25level",
+      "name": "floodgates",
+      "number": 7
+    },
+    {
+      "id": "60level",
+      "name": "lonely sight",
+      "number": 8
+    }
+  ]
+}

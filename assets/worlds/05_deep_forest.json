@@ -1,0 +1,142 @@
+{
+  "title": "5. deep forest",
+  "area_index": 5,
+  "source_map": "169level",
+  "levels": [
+    {
+      "id": "50level",
+      "name": "nearly",
+      "number": 0
+    },
+    {
+      "id": "193level",
+      "name": "crumbling floor",
+      "number": 0
+    },
+    {
+      "id": "66level",
+      "name": "renovating",
+      "number": 1
+    },
+    {
+      "id": "257level",
+      "name": "not quite",
+      "number": 1
+    },
+    {
+      "id": "54level",
+      "name": "skull house",
+      "number": 1
+    },
+    {
+      "id": "136level",
+      "name": "jelly throne",
+      "number": 1
+    },
+    {
+      "id": "260level",
+      "name": "passing through",
+      "number": 2
+    },
+    {
+      "id": "246level",
+      "name": "toolshed",
+      "number": 2
+    },
+    {
+      "id": "199level",
+      "name": "fragility",
+      "number": 2
+    },
+    {
+      "id": "69level",
+      "name": "keep out!",
+      "number": 3
+    },
+    {
+      "id": "271level",
+      "name": "salvage",
+      "number": 3
+    },
+    {
+      "id": "268level",
+      "name": "insulation",
+      "number": 4
+    },
+    {
+      "id": "34level",
+      "name": "baba doesn't respond",
+      "number": 4
+    },
+    {
+      "id": "57level",
+      "name": "patrol",
+      "number": 5
+    },
+    {
+      "id": "23level",
+      "name": "but where's the key",
+      "number": 5
+    },
+    {
+      "id": "85level",
+      "name": "canyon",
+      "number": 6
+    },
+    {
+      "id": "17level",
+      "name": "unreachable shores",
+      "number": 6
+    },
+    {
+      "id": "151level",
+      "name": "concrete goals",
+      "number": 7
+    },
+    {
+      "id": "7level",
+      "name": "catch the thief!",
+      "number": 7
+    },
+    {
+      "id": "98level",
+      "name": "victory in the open",
+      "number": 8
+    },
+    {
+      "id": "33level",
+      "name": "love is out there",
+      "number": 8
+    },
+    {
+      "id": "191level",
+      "name": "moving floor",
+      "number": 9
+    },
+    {
+      "id": "315level",
+      "name": "lovely house",
+      "number": 10
+    },
+    {
+      "id": "248level",
+      "name": "supermarket",
+      "number": 11
+    },
+    {
+      "id": "67level",
+      "name": "lock the door",
+      "number": 12
+    },
+    {
+      "id": "28level",
+      "name": "factory",
+      "number": 13
+    },
+    {
+      "id": "233level",
+      "name": "tiny pasture",
+      "number": 14
+    }
+  ]
+}

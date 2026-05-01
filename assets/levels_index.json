@@ -1,0 +1,1908 @@
+{
+  "areas": [
+    {
+      "index": 1,
+      "map": "177level",
+      "label": "1. the lake"
+    },
+    {
+      "index": 2,
+      "map": "207level",
+      "label": "2. solitary island"
+    },
+    {
+      "index": 3,
+      "map": "206level",
+      "label": "3. temple ruins"
+    },
+    {
+      "index": 4,
+      "map": "16level",
+      "label": "4. forest of fall"
+    },
+    {
+      "index": 5,
+      "map": "169level",
+      "label": "5. deep forest"
+    },
+    {
+      "index": 6,
+      "map": "87level",
+      "label": "6. rocket trip"
+    },
+    {
+      "index": 7,
+      "map": "180level",
+      "label": "7. flower garden"
+    },
+    {
+      "index": 8,
+      "map": "182level",
+      "label": "8. chasm"
+    },
+    {
+      "index": 9,
+      "map": "179level",
+      "label": "9. volcanic cavern"
+    },
+    {
+      "index": 10,
+      "map": "232level",
+      "label": "10. mountaintop"
+    },
+    {
+      "index": 11,
+      "map": "264level",
+      "label": "depths"
+    },
+    {
+      "index": 12,
+      "map": "282level",
+      "label": "abc"
+    },
+    {
+      "index": 13,
+      "map": "283level",
+      "label": "meta"
+    },
+    {
+      "index": 14,
+      "map": "304level",
+      "label": "center"
+    },
+    {
+      "index": 15,
+      "map": "338level",
+      "label": "null"
+    }
+  ],
+  "levels": [
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 0,
+      "source": "211level",
+      "name": "submerged ruins",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 1,
+      "source": "314level",
+      "name": "sunken temple",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 1,
+      "source": "20level",
+      "name": "icy waters",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 2,
+      "source": "212level",
+      "name": "turns",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 3,
+      "source": "10level",
+      "name": "affection",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 4,
+      "source": "4level",
+      "name": "pillar yard",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 5,
+      "source": "93level",
+      "name": "brick wall",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 6,
+      "source": "209level",
+      "name": "lock",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 7,
+      "source": "15level",
+      "name": "novice locksmith",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 8,
+      "source": "8level",
+      "name": "locked in",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 9,
+      "source": "236level",
+      "name": "changeless",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 10,
+      "source": "210level",
+      "name": "two doors",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 11,
+      "source": "136level",
+      "name": "jelly throne",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 12,
+      "source": "30level",
+      "name": "crab storage",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 1,
+      "area": "1. the lake",
+      "level_in_area": 13,
+      "source": "166level",
+      "name": "burglary",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 0,
+      "source": "310level",
+      "name": "poem",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 0,
+      "source": "219level",
+      "name": "boiling river",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 1,
+      "source": "205level",
+      "name": "float",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 1,
+      "source": "173level",
+      "name": "...bridges?",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 2,
+      "source": "218level",
+      "name": "warm river",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 2,
+      "source": "41level",
+      "name": "tiny isle",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 3,
+      "source": "171level",
+      "name": "bridge building",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 3,
+      "source": "134level",
+      "name": "dim signal",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 4,
+      "source": "318level",
+      "name": "dungeon",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 4,
+      "source": "172level",
+      "name": "bridge building?",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 5,
+      "source": "215level",
+      "name": "evaporating river",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 5,
+      "source": "234level",
+      "name": "victory spring",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 6,
+      "source": "107level",
+      "name": "assembly team",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 7,
+      "source": "7level",
+      "name": "catch the thief!",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 8,
+      "source": "37level",
+      "name": "tiny pond",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 9,
+      "source": "319level",
+      "name": "research facility",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 10,
+      "source": "68level",
+      "name": "wireless connection",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 2,
+      "area": "2. solitary island",
+      "level_in_area": 11,
+      "source": "65level",
+      "name": "prison",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 3,
+      "area": "3. temple ruins",
+      "level_in_area": 0,
+      "source": "129level",
+      "name": "further fields",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 3,
+      "area": "3. temple ruins",
+      "level_in_area": 1,
+      "source": "199level",
+      "name": "fragility",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 3,
+      "area": "3. temple ruins",
+      "level_in_area": 2,
+      "source": "52level",
+      "name": "tunnel vision",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 3,
+      "area": "3. temple ruins",
+      "level_in_area": 3,
+      "source": "58level",
+      "name": "a present for you",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 3,
+      "area": "3. temple ruins",
+      "level_in_area": 4,
+      "source": "17level",
+      "name": "unreachable shores",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 3,
+      "area": "3. temple ruins",
+      "level_in_area": 5,
+      "source": "23level",
+      "name": "but where's the key",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 3,
+      "area": "3. temple ruins",
+      "level_in_area": 6,
+      "source": "33level",
+      "name": "love is out there",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 3,
+      "area": "3. temple ruins",
+      "level_in_area": 7,
+      "source": "71level",
+      "name": "perilous gang",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 3,
+      "area": "3. temple ruins",
+      "level_in_area": 8,
+      "source": "72level",
+      "name": "double moat",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 3,
+      "area": "3. temple ruins",
+      "level_in_area": 8,
+      "source": "85level",
+      "name": "canyon",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 3,
+      "area": "3. temple ruins",
+      "level_in_area": 9,
+      "source": "56level",
+      "name": "walls of gold",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 3,
+      "area": "3. temple ruins",
+      "level_in_area": 9,
+      "source": "98level",
+      "name": "victory in the open",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 3,
+      "area": "3. temple ruins",
+      "level_in_area": 12,
+      "source": "248level",
+      "name": "supermarket",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 0,
+      "source": "77level",
+      "name": "literacy",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 0,
+      "source": "239level",
+      "name": "jump",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 1,
+      "source": "138level",
+      "name": "even less there",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 1,
+      "source": "29level",
+      "name": "broken playground",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 1,
+      "source": "238level",
+      "name": "hop",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 1,
+      "source": "142level",
+      "name": "out at sea",
+      "subtitle": "",
+      "palette": "garden.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 2,
+      "source": "308level",
+      "name": "deep pool",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 2,
+      "source": "221level",
+      "name": "grand stream",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 2,
+      "source": "269level",
+      "name": "fetching",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 3,
+      "source": "307level",
+      "name": "scenic pond",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 3,
+      "source": "235level",
+      "name": "rocky road",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 4,
+      "source": "70level",
+      "name": "skeletal door",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 4,
+      "source": "62level",
+      "name": "telephone",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 4,
+      "source": "194level",
+      "name": "haunt",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 6,
+      "source": "220level",
+      "name": "crate square",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 7,
+      "source": "36level",
+      "name": "ghost friend",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 8,
+      "source": "26level",
+      "name": "ghost guard",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 9,
+      "source": "35level",
+      "name": "leaf chamber",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 10,
+      "source": "137level",
+      "name": "not there",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 11,
+      "source": "160level",
+      "name": "catch",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 11,
+      "source": "151level",
+      "name": "concrete goals",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 12,
+      "source": "174level",
+      "name": "dead end",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 4,
+      "area": "4. forest of fall",
+      "level_in_area": 21,
+      "source": "139level",
+      "name": "cranny",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 0,
+      "source": "50level",
+      "name": "nearly",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 0,
+      "source": "193level",
+      "name": "crumbling floor",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 1,
+      "source": "66level",
+      "name": "renovating",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 1,
+      "source": "257level",
+      "name": "not quite",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 1,
+      "source": "54level",
+      "name": "skull house",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 1,
+      "source": "136level",
+      "name": "jelly throne",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 2,
+      "source": "260level",
+      "name": "passing through",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 2,
+      "source": "246level",
+      "name": "toolshed",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 2,
+      "source": "199level",
+      "name": "fragility",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 3,
+      "source": "69level",
+      "name": "keep out!",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 3,
+      "source": "271level",
+      "name": "salvage",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 4,
+      "source": "268level",
+      "name": "insulation",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 4,
+      "source": "34level",
+      "name": "baba doesn't respond",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 5,
+      "source": "57level",
+      "name": "patrol",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 5,
+      "source": "23level",
+      "name": "but where's the key",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 6,
+      "source": "85level",
+      "name": "canyon",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 6,
+      "source": "17level",
+      "name": "unreachable shores",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 7,
+      "source": "151level",
+      "name": "concrete goals",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 7,
+      "source": "7level",
+      "name": "catch the thief!",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 8,
+      "source": "98level",
+      "name": "victory in the open",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 8,
+      "source": "33level",
+      "name": "love is out there",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 9,
+      "source": "191level",
+      "name": "moving floor",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 10,
+      "source": "315level",
+      "name": "lovely house",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 11,
+      "source": "248level",
+      "name": "supermarket",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 12,
+      "source": "67level",
+      "name": "lock the door",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 13,
+      "source": "28level",
+      "name": "factory",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 5,
+      "area": "5. deep forest",
+      "level_in_area": 14,
+      "source": "233level",
+      "name": "tiny pasture",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 0,
+      "source": "324level",
+      "name": "existential crisis",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 1,
+      "source": "9level",
+      "name": "empty",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 1,
+      "source": "125level",
+      "name": "heavy cloud",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 2,
+      "source": "11level",
+      "name": "lonely flag",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 3,
+      "source": "13level",
+      "name": "babas are you",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 4,
+      "source": "80level",
+      "name": "please hold my key",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 5,
+      "source": "201level",
+      "name": "horror story",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 6,
+      "source": "111level",
+      "name": "aiming high",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 7,
+      "source": "112level",
+      "name": "trio",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 8,
+      "source": "79level",
+      "name": "bottleneck",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 9,
+      "source": "216level",
+      "name": "platformer",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 10,
+      "source": "226level",
+      "name": "the pit",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 11,
+      "source": "115level",
+      "name": "heavy words",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 12,
+      "source": "82level",
+      "name": "guardians",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 6,
+      "area": "6. rocket trip",
+      "level_in_area": 13,
+      "source": "217level",
+      "name": "sky hold",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 7,
+      "area": "7. flower garden",
+      "level_in_area": 0,
+      "source": "127level",
+      "name": "secret garden",
+      "subtitle": "",
+      "palette": "garden.png"
+    },
+    {
+      "area_idx": 7,
+      "area": "7. flower garden",
+      "level_in_area": 1,
+      "source": "59level",
+      "name": "condition",
+      "subtitle": "",
+      "palette": "garden.png"
+    },
+    {
+      "area_idx": 7,
+      "area": "7. flower garden",
+      "level_in_area": 1,
+      "source": "142level",
+      "name": "out at sea",
+      "subtitle": "",
+      "palette": "garden.png"
+    },
+    {
+      "area_idx": 7,
+      "area": "7. flower garden",
+      "level_in_area": 2,
+      "source": "94level",
+      "name": "thicket",
+      "subtitle": "",
+      "palette": "garden.png"
+    },
+    {
+      "area_idx": 7,
+      "area": "7. flower garden",
+      "level_in_area": 3,
+      "source": "242level",
+      "name": "sorting facility",
+      "subtitle": "",
+      "palette": "garden.png"
+    },
+    {
+      "area_idx": 7,
+      "area": "7. flower garden",
+      "level_in_area": 4,
+      "source": "124level",
+      "name": "relaxing spot",
+      "subtitle": "",
+      "palette": "garden.png"
+    },
+    {
+      "area_idx": 7,
+      "area": "7. flower garden",
+      "level_in_area": 5,
+      "source": "64level",
+      "name": "maritime adventures",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 7,
+      "area": "7. flower garden",
+      "level_in_area": 6,
+      "source": "89level",
+      "name": "ruined orchard",
+      "subtitle": "",
+      "palette": "garden.png"
+    },
+    {
+      "area_idx": 7,
+      "area": "7. flower garden",
+      "level_in_area": 7,
+      "source": "150level",
+      "name": "blockade",
+      "subtitle": "",
+      "palette": "garden.png"
+    },
+    {
+      "area_idx": 7,
+      "area": "7. flower garden",
+      "level_in_area": 8,
+      "source": "91level",
+      "name": "jaywalkers united",
+      "subtitle": "",
+      "palette": "garden.png"
+    },
+    {
+      "area_idx": 7,
+      "area": "7. flower garden",
+      "level_in_area": 9,
+      "source": "130level",
+      "name": "overgrowth",
+      "subtitle": "",
+      "palette": "garden.png"
+    },
+    {
+      "area_idx": 7,
+      "area": "7. flower garden",
+      "level_in_area": 10,
+      "source": "92level",
+      "name": "adventurers",
+      "subtitle": "",
+      "palette": "garden.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 0,
+      "source": "21level",
+      "name": "rocky prison",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 0,
+      "source": "155level",
+      "name": "metacognition",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 1,
+      "source": "164level",
+      "name": "multitool",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 1,
+      "source": "241level",
+      "name": "siege",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 2,
+      "source": "175level",
+      "name": "broken",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 2,
+      "source": "31level",
+      "name": "elusive condition",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 3,
+      "source": "240level",
+      "name": "treasury",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 3,
+      "source": "167level",
+      "name": "alley",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 4,
+      "source": "19level",
+      "name": "looking for a heart",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 4,
+      "source": "156level",
+      "name": "keke and the star",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 5,
+      "source": "110level",
+      "name": "lava flood",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 5,
+      "source": "165level",
+      "name": "visiting baba",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 6,
+      "source": "18level",
+      "name": "entropy",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 6,
+      "source": "163level",
+      "name": "automated doors",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 7,
+      "source": "25level",
+      "name": "floodgates",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 8,
+      "area": "8. chasm",
+      "level_in_area": 8,
+      "source": "60level",
+      "name": "lonely sight",
+      "subtitle": "",
+      "palette": "mono.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 0,
+      "source": "51level",
+      "name": "coronation",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 1,
+      "source": "148level",
+      "name": "tour",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 1,
+      "source": "110level",
+      "name": "lava flood",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 2,
+      "source": "47level",
+      "name": "peril at every turn",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 3,
+      "source": "266level",
+      "name": "pillarwork",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 4,
+      "source": "95level",
+      "name": "mouse hole",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 4,
+      "source": "100level",
+      "name": "love at first sight",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 5,
+      "source": "146level",
+      "name": "torn apart",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 6,
+      "source": "46level",
+      "name": "vital ingredients",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 7,
+      "source": "270level",
+      "name": "backstage",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 8,
+      "source": "101level",
+      "name": "the heist",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 8,
+      "source": "103level",
+      "name": "backstage - old",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 9,
+      "source": "109level",
+      "name": "join the crew",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 10,
+      "source": "119level",
+      "name": "automaton",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 11,
+      "source": "145level",
+      "name": "trick door",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 12,
+      "source": "176level",
+      "name": "trapped",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 13,
+      "source": "122level",
+      "name": "tunnel",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 14,
+      "source": "178level",
+      "name": "broken expectations",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 9,
+      "area": "9. volcanic cavern",
+      "level_in_area": 17,
+      "source": "104level",
+      "name": "tectonic movements",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 10,
+      "area": "10. mountaintop",
+      "level_in_area": 0,
+      "source": "48level",
+      "name": "the floatiest platforms",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 10,
+      "area": "10. mountaintop",
+      "level_in_area": 1,
+      "source": "105level",
+      "name": "shuffle",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 10,
+      "area": "10. mountaintop",
+      "level_in_area": 2,
+      "source": "100level",
+      "name": "love at first sight",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 10,
+      "area": "10. mountaintop",
+      "level_in_area": 3,
+      "source": "195level",
+      "name": "solitude",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 10,
+      "area": "10. mountaintop",
+      "level_in_area": 4,
+      "source": "116level",
+      "name": "what is baba?",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 10,
+      "area": "10. mountaintop",
+      "level_in_area": 5,
+      "source": "120level",
+      "name": "connector",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 10,
+      "area": "10. mountaintop",
+      "level_in_area": 6,
+      "source": "118level",
+      "name": "floaty platforms",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 10,
+      "area": "10. mountaintop",
+      "level_in_area": 7,
+      "source": "99level",
+      "name": "seeking acceptance",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 10,
+      "area": "10. mountaintop",
+      "level_in_area": 8,
+      "source": "104level",
+      "name": "tectonic movements",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 11,
+      "area": "depths",
+      "level_in_area": 0,
+      "source": "274level",
+      "name": "priority lane",
+      "subtitle": "",
+      "palette": "variant.png"
+    },
+    {
+      "area_idx": 11,
+      "area": "depths",
+      "level_in_area": 1,
+      "source": "261level",
+      "name": "cleaning service",
+      "subtitle": "",
+      "palette": "variant.png"
+    },
+    {
+      "area_idx": 11,
+      "area": "depths",
+      "level_in_area": 2,
+      "source": "251level",
+      "name": "exercise hall",
+      "subtitle": "",
+      "palette": "variant.png"
+    },
+    {
+      "area_idx": 11,
+      "area": "depths",
+      "level_in_area": 3,
+      "source": "263level",
+      "name": "crushers",
+      "subtitle": "",
+      "palette": "variant.png"
+    },
+    {
+      "area_idx": 11,
+      "area": "depths",
+      "level_in_area": 4,
+      "source": "262level",
+      "name": "collaborative effort",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 11,
+      "area": "depths",
+      "level_in_area": 5,
+      "source": "265level",
+      "name": "living lands",
+      "subtitle": "",
+      "palette": "variant.png"
+    },
+    {
+      "area_idx": 12,
+      "area": "abc",
+      "level_in_area": 0,
+      "source": "281level",
+      "name": "meteor strike",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 12,
+      "area": "abc",
+      "level_in_area": 1,
+      "source": "255level",
+      "name": "lunar gallery",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 12,
+      "area": "abc",
+      "level_in_area": 2,
+      "source": "252level",
+      "name": "ba",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 12,
+      "area": "abc",
+      "level_in_area": 3,
+      "source": "253level",
+      "name": "ab",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 12,
+      "area": "abc",
+      "level_in_area": 4,
+      "source": "280level",
+      "name": "wall",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 12,
+      "area": "abc",
+      "level_in_area": 5,
+      "source": "313level",
+      "name": "stardrop",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 0,
+      "source": "299level",
+      "name": "hidden path",
+      "subtitle": "",
+      "palette": "space.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 0,
+      "source": "294level",
+      "name": "a prize well earned",
+      "subtitle": "",
+      "palette": "ocean.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 1,
+      "source": "188level",
+      "name": "triplets",
+      "subtitle": "",
+      "palette": "variant.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 1,
+      "source": "288level",
+      "name": "hot potato",
+      "subtitle": "",
+      "palette": "variant.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 2,
+      "source": "323level",
+      "name": "power generator",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 2,
+      "source": "287level",
+      "name": "adventure",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 3,
+      "source": "302level",
+      "name": "booby trap",
+      "subtitle": "",
+      "palette": "ruins.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 4,
+      "source": "285level",
+      "name": "canister",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 5,
+      "source": "291level",
+      "name": "avalanche",
+      "subtitle": "",
+      "palette": "mountain.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 6,
+      "source": "132level",
+      "name": "one-way entrance",
+      "subtitle": "",
+      "palette": "swamp.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 7,
+      "source": "295level",
+      "name": "bramblevine",
+      "subtitle": "",
+      "palette": "garden.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 8,
+      "source": "297level",
+      "name": "mutual feelings",
+      "subtitle": "",
+      "palette": "variant.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 9,
+      "source": "298level",
+      "name": "delicate stars",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 10,
+      "source": "303level",
+      "name": "just no",
+      "subtitle": "",
+      "palette": "test.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 11,
+      "source": "289level",
+      "name": "acrobatics",
+      "subtitle": "",
+      "palette": "volcano.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 12,
+      "source": "284level",
+      "name": "tangle",
+      "subtitle": "",
+      "palette": "variant.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 13,
+      "source": "277level",
+      "name": "the box",
+      "subtitle": "",
+      "palette": "variant.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 14,
+      "source": "279level",
+      "name": "queue",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 15,
+      "source": "292level",
+      "name": "breaking and entering",
+      "subtitle": "",
+      "palette": "factory.png"
+    },
+    {
+      "area_idx": 13,
+      "area": "meta",
+      "level_in_area": 16,
+      "source": "309level",
+      "name": "the return of scenic pond",
+      "subtitle": "",
+      "palette": "autumn.png"
+    },
+    {
+      "area_idx": 14,
+      "area": "center",
+      "level_in_area": 3,
+      "source": "305level",
+      "name": "gallery",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 14,
+      "area": "center",
+      "level_in_area": 8,
+      "source": "198level",
+      "name": "the end",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 15,
+      "area": "null",
+      "level_in_area": 3,
+      "source": "305level",
+      "name": "gallery",
+      "subtitle": "",
+      "palette": "default.png"
+    },
+    {
+      "area_idx": 15,
+      "area": "null",
+      "level_in_area": 8,
+      "source": "198level",
+      "name": "the end",
+      "subtitle": "",
+      "palette": "default.png"
+    }
+  ]
+}

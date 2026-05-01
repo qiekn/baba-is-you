@@ -1,0 +1,97 @@
+{
+  "title": "2. solitary island",
+  "area_index": 2,
+  "source_map": "207level",
+  "levels": [
+    {
+      "id": "310level",
+      "name": "poem",
+      "number": 0
+    },
+    {
+      "id": "219level",
+      "name": "boiling river",
+      "number": 0
+    },
+    {
+      "id": "205level",
+      "name": "float",
+      "number": 1
+    },
+    {
+      "id": "173level",
+      "name": "...bridges?",
+      "number": 1
+    },
+    {
+      "id": "218level",
+      "name": "warm river",
+      "number": 2
+    },
+    {
+      "id": "41level",
+      "name": "tiny isle",
+      "number": 2
+    },
+    {
+      "id": "171level",
+      "name": "bridge building",
+      "number": 3
+    },
+    {
+      "id": "134level",
+      "name": "dim signal",
+      "number": 3
+    },
+    {
+      "id": "318level",
+      "name": "dungeon",
+      "number": 4
+    },
+    {
+      "id": "172level",
+      "name": "bridge building?",
+      "number": 4
+    },
+    {
+      "id": "215level",
+      "name": "evaporating river",
+      "number": 5
+    },
+    {
+      "id": "234level",
+      "name": "victory spring",
+      "number": 5
+    },
+    {
+      "id": "107level",
+      "name": "assembly team",
+      "number": 6
+    },
+    {
+      "id": "7level",
+      "name": "catch the thief!",
+      "number": 7
+    },
+    {
+      "id": "37level",
+      "name": "tiny pond",
+      "number": 8
+    },
+    {
+      "id": "319level",
+      "name": "research facility",
+      "number": 9
+    },
+    {
+      "id": "68level",
+      "name": "wireless connection",
+      "number": 10
+    },
+    {
+      "id": "65level",
+      "name": "prison",
+      "number": 11
+    }
+  ]
+}

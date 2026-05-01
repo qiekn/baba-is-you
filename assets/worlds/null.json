@@ -1,0 +1,17 @@
+{
+  "title": "null",
+  "area_index": 15,
+  "source_map": "338level",
+  "levels": [
+    {
+      "id": "305level",
+      "name": "gallery",
+      "number": 3
+    },
+    {
+      "id": "198level",
+      "name": "the end",
+      "number": 8
+    }
+  ]
+}

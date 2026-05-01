@@ -1,0 +1,455 @@
+{
+  "cols": 14,
+  "rows": 14,
+  "tiles": [
+    {
+      "x": 0,
+      "y": 0,
+      "kind": "object",
+      "name": "flag"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 9,
+      "y": 0,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 10,
+      "y": 0,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 11,
+      "y": 0,
+      "kind": "text",
+      "name": "level"
+    },
+    {
+      "x": 12,
+      "y": 0,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 13,
+      "y": 0,
+      "kind": "text",
+      "name": "down"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 10,
+      "y": 1,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 11,
+      "y": 1,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 12,
+      "y": 1,
+      "kind": "text",
+      "name": "rock"
+    },
+    {
+      "x": 13,
+      "y": 1,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 10,
+      "y": 2,
+      "kind": "object",
+      "name": "belt"
+    },
+    {
+      "x": 11,
+      "y": 2,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 13,
+      "y": 2,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "kind": "object",
+      "name": "me"
+    },
+    {
+      "x": 10,
+      "y": 3,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 11,
+      "y": 3,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 12,
+      "y": 3,
+      "kind": "text",
+      "name": "empty"
+    },
+    {
+      "x": 13,
+      "y": 3,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 10,
+      "y": 4,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 11,
+      "y": 4,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 12,
+      "y": 4,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 13,
+      "y": 4,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "kind": "text",
+      "name": "belt"
+    },
+    {
+      "x": 10,
+      "y": 6,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 11,
+      "y": 6,
+      "kind": "text",
+      "name": "shift"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 7,
+      "y": 8,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 9,
+      "y": 8,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 10,
+      "y": 10,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 11,
+      "y": 10,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 12,
+      "y": 10,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 13,
+      "y": 10,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 4,
+      "y": 11,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 10,
+      "y": 11,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 11,
+      "y": 11,
+      "kind": "text",
+      "name": "level"
+    },
+    {
+      "x": 12,
+      "y": 11,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 13,
+      "y": 11,
+      "kind": "text",
+      "name": "level"
+    },
+    {
+      "x": 0,
+      "y": 12,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 1,
+      "y": 12,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 2,
+      "y": 12,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 3,
+      "y": 12,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 4,
+      "y": 12,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 8,
+      "y": 12,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 9,
+      "y": 12,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 10,
+      "y": 12,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 11,
+      "y": 12,
+      "kind": "text",
+      "name": "me"
+    },
+    {
+      "x": 12,
+      "y": 12,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 13,
+      "y": 12,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 0,
+      "y": 13,
+      "kind": "text",
+      "name": "flag"
+    },
+    {
+      "x": 1,
+      "y": 13,
+      "kind": "object",
+      "name": "rock"
+    },
+    {
+      "x": 2,
+      "y": 13,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 3,
+      "y": 13,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 4,
+      "y": 13,
+      "kind": "text",
+      "name": "skull"
+    },
+    {
+      "x": 5,
+      "y": 13,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 6,
+      "y": 13,
+      "kind": "text",
+      "name": "defeat"
+    },
+    {
+      "x": 8,
+      "y": 13,
+      "kind": "object",
+      "name": "cloud"
+    },
+    {
+      "x": 9,
+      "y": 13,
+      "kind": "text",
+      "name": "rock"
+    },
+    {
+      "x": 10,
+      "y": 13,
+      "kind": "text",
+      "name": "and"
+    },
+    {
+      "x": 11,
+      "y": 13,
+      "kind": "text",
+      "name": "cloud"
+    },
+    {
+      "x": 12,
+      "y": 13,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 13,
+      "y": 13,
+      "kind": "text",
+      "name": "stop"
+    }
+  ],
+  "background": [
+    26,
+    19,
+    35
+  ],
+  "edge": [
+    38,
+    30,
+    67
+  ],
+  "name": "hidden path"
+}

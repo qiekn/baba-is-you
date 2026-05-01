@@ -1,0 +1,72 @@
+{
+  "title": "3. temple ruins",
+  "area_index": 3,
+  "source_map": "206level",
+  "levels": [
+    {
+      "id": "129level",
+      "name": "further fields",
+      "number": 0
+    },
+    {
+      "id": "199level",
+      "name": "fragility",
+      "number": 1
+    },
+    {
+      "id": "52level",
+      "name": "tunnel vision",
+      "number": 2
+    },
+    {
+      "id": "58level",
+      "name": "a present for you",
+      "number": 3
+    },
+    {
+      "id": "17level",
+      "name": "unreachable shores",
+      "number": 4
+    },
+    {
+      "id": "23level",
+      "name": "but where's the key",
+      "number": 5
+    },
+    {
+      "id": "33level",
+      "name": "love is out there",
+      "number": 6
+    },
+    {
+      "id": "71level",
+      "name": "perilous gang",
+      "number": 7
+    },
+    {
+      "id": "72level",
+      "name": "double moat",
+      "number": 8
+    },
+    {
+      "id": "85level",
+      "name": "canyon",
+      "number": 8
+    },
+    {
+      "id": "56level",
+      "name": "walls of gold",
+      "number": 9
+    },
+    {
+      "id": "98level",
+      "name": "victory in the open",
+      "number": 9
+    },
+    {
+      "id": "248level",
+      "name": "supermarket",
+      "number": 12
+    }
+  ]
+}

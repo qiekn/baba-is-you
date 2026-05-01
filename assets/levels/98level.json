@@ -1,0 +1,935 @@
+{
+  "cols": 28,
+  "rows": 16,
+  "tiles": [
+    {
+      "x": 0,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 18,
+      "y": 0,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 25,
+      "y": 0,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 11,
+      "y": 1,
+      "kind": "text",
+      "name": "flower"
+    },
+    {
+      "x": 12,
+      "y": 1,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 13,
+      "y": 1,
+      "kind": "text",
+      "name": "defeat"
+    },
+    {
+      "x": 21,
+      "y": 1,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 20,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 21,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 22,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 27,
+      "y": 2,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 3,
+      "kind": "object",
+      "name": "flower"
+    },
+    {
+      "x": 14,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 4,
+      "kind": "text",
+      "name": "keke"
+    },
+    {
+      "x": 12,
+      "y": 4,
+      "kind": "object",
+      "name": "flower"
+    },
+    {
+      "x": 14,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "kind": "text",
+      "name": "keke"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 9,
+      "y": 5,
+      "kind": "text",
+      "name": "move"
+    },
+    {
+      "x": 12,
+      "y": 5,
+      "kind": "object",
+      "name": "flower"
+    },
+    {
+      "x": 14,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 19,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 20,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 23,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 26,
+      "y": 5,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 12,
+      "y": 6,
+      "kind": "object",
+      "name": "flower"
+    },
+    {
+      "x": 13,
+      "y": 6,
+      "kind": "text",
+      "name": "up"
+    },
+    {
+      "x": 14,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 19,
+      "y": 6,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 20,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 23,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "kind": "text",
+      "name": "right"
+    },
+    {
+      "x": 12,
+      "y": 7,
+      "kind": "object",
+      "name": "flower"
+    },
+    {
+      "x": 14,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 19,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 20,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 23,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 27,
+      "y": 7,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 0,
+      "y": 8,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 1,
+      "y": 8,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 4,
+      "y": 8,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 5,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 8,
+      "kind": "object",
+      "name": "flower"
+    },
+    {
+      "x": 14,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 26,
+      "y": 8,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 27,
+      "y": 8,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 0,
+      "y": 9,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 4,
+      "y": 9,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 5,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 9,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 26,
+      "y": 9,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 27,
+      "y": 9,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 0,
+      "y": 10,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 5,
+      "y": 10,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 10,
+      "kind": "object",
+      "name": "flower"
+    },
+    {
+      "x": 23,
+      "y": 10,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 27,
+      "y": 10,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 5,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 11,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 9,
+      "y": 11,
+      "kind": "object",
+      "name": "keke"
+    },
+    {
+      "x": 12,
+      "y": 11,
+      "kind": "object",
+      "name": "flower"
+    },
+    {
+      "x": 23,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 25,
+      "y": 11,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 5,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 12,
+      "kind": "object",
+      "name": "flower"
+    },
+    {
+      "x": 23,
+      "y": 12,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 27,
+      "y": 12,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 1,
+      "y": 13,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 5,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 6,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 20,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 21,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 22,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 27,
+      "y": 13,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 0,
+      "y": 14,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 11,
+      "y": 14,
+      "kind": "text",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 14,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 13,
+      "y": 14,
+      "kind": "text",
+      "name": "stop"
+    },
+    {
+      "x": 26,
+      "y": 14,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 27,
+      "y": 14,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 0,
+      "y": 15,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 1,
+      "y": 15,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 3,
+      "y": 15,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 5,
+      "y": 15,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 16,
+      "y": 15,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 21,
+      "y": 15,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 22,
+      "y": 15,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 24,
+      "y": 15,
+      "kind": "object",
+      "name": "orb"
+    },
+    {
+      "x": 25,
+      "y": 15,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 26,
+      "y": 15,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 27,
+      "y": 15,
+      "kind": "object",
+      "name": "lava"
+    }
+  ],
+  "background": [
+    22,
+    23,
+    18
+  ],
+  "edge": [
+    38,
+    40,
+    31
+  ],
+  "name": "victory in the open"
+}

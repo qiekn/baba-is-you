@@ -1,0 +1,287 @@
+{
+  "cols": 33,
+  "rows": 18,
+  "tiles": [
+    {
+      "x": 5,
+      "y": 3,
+      "kind": "text",
+      "name": "rose"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "kind": "text",
+      "name": "fruit"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "kind": "text",
+      "name": "cloud"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "kind": "text",
+      "name": "pillar"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "kind": "text",
+      "name": "statue"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "kind": "text",
+      "name": "ghost"
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "kind": "text",
+      "name": "star"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "kind": "text",
+      "name": "moon"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "kind": "text",
+      "name": "brick"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "kind": "text",
+      "name": "statue"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "kind": "text",
+      "name": "fungus"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "kind": "text",
+      "name": "fence"
+    },
+    {
+      "x": 5,
+      "y": 8,
+      "kind": "text",
+      "name": "hand"
+    },
+    {
+      "x": 6,
+      "y": 8,
+      "kind": "text",
+      "name": "hedge"
+    },
+    {
+      "x": 5,
+      "y": 9,
+      "kind": "text",
+      "name": "dust"
+    },
+    {
+      "x": 6,
+      "y": 9,
+      "kind": "text",
+      "name": "hide"
+    },
+    {
+      "x": 11,
+      "y": 9,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 5,
+      "y": 11,
+      "kind": "text",
+      "name": "lava"
+    },
+    {
+      "x": 2,
+      "y": 12,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 5,
+      "y": 12,
+      "kind": "text",
+      "name": "pillar"
+    },
+    {
+      "x": 0,
+      "y": 16,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 1,
+      "y": 16,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 2,
+      "y": 16,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 3,
+      "y": 16,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 4,
+      "y": 16,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 5,
+      "y": 16,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 6,
+      "y": 16,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 16,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 16,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 16,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 16,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 16,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 0,
+      "y": 17,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 1,
+      "y": 17,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 2,
+      "y": 17,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 3,
+      "y": 17,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 4,
+      "y": 17,
+      "kind": "text",
+      "name": "wall"
+    },
+    {
+      "x": 5,
+      "y": 17,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 6,
+      "y": 17,
+      "kind": "text",
+      "name": "stop"
+    },
+    {
+      "x": 7,
+      "y": 17,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 17,
+      "kind": "text",
+      "name": "fruit"
+    },
+    {
+      "x": 9,
+      "y": 17,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 10,
+      "y": 17,
+      "kind": "text",
+      "name": "fruit"
+    },
+    {
+      "x": 11,
+      "y": 17,
+      "kind": "object",
+      "name": "wall"
+    }
+  ],
+  "background": [
+    8,
+    8,
+    8
+  ],
+  "edge": [
+    21,
+    24,
+    31
+  ],
+  "name": "gallery"
+}

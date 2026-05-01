@@ -1,0 +1,82 @@
+{
+  "title": "6. rocket trip",
+  "area_index": 6,
+  "source_map": "87level",
+  "levels": [
+    {
+      "id": "324level",
+      "name": "existential crisis",
+      "number": 0
+    },
+    {
+      "id": "9level",
+      "name": "empty",
+      "number": 1
+    },
+    {
+      "id": "125level",
+      "name": "heavy cloud",
+      "number": 1
+    },
+    {
+      "id": "11level",
+      "name": "lonely flag",
+      "number": 2
+    },
+    {
+      "id": "13level",
+      "name": "babas are you",
+      "number": 3
+    },
+    {
+      "id": "80level",
+      "name": "please hold my key",
+      "number": 4
+    },
+    {
+      "id": "201level",
+      "name": "horror story",
+      "number": 5
+    },
+    {
+      "id": "111level",
+      "name": "aiming high",
+      "number": 6
+    },
+    {
+      "id": "112level",
+      "name": "trio",
+      "number": 7
+    },
+    {
+      "id": "79level",
+      "name": "bottleneck",
+      "number": 8
+    },
+    {
+      "id": "216level",
+      "name": "platformer",
+      "number": 9
+    },
+    {
+      "id": "226level",
+      "name": "the pit",
+      "number": 10
+    },
+    {
+      "id": "115level",
+      "name": "heavy words",
+      "number": 11
+    },
+    {
+      "id": "82level",
+      "name": "guardians",
+      "number": 12
+    },
+    {
+      "id": "217level",
+      "name": "sky hold",
+      "number": 13
+    }
+  ]
+}

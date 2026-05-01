@@ -1,0 +1,953 @@
+{
+  "cols": 24,
+  "rows": 14,
+  "tiles": [
+    {
+      "x": 0,
+      "y": 0,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 16,
+      "y": 0,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 17,
+      "y": 0,
+      "kind": "text",
+      "name": "empty"
+    },
+    {
+      "x": 18,
+      "y": 0,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 19,
+      "y": 0,
+      "kind": "text",
+      "name": "empty"
+    },
+    {
+      "x": 20,
+      "y": 0,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "kind": "text",
+      "name": "empty"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "kind": "object",
+      "name": "star"
+    },
+    {
+      "x": 16,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 17,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 18,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 19,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 20,
+      "y": 1,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 16,
+      "y": 2,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 17,
+      "y": 2,
+      "kind": "text",
+      "name": "near"
+    },
+    {
+      "x": 18,
+      "y": 2,
+      "kind": "text",
+      "name": "empty"
+    },
+    {
+      "x": 19,
+      "y": 2,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 20,
+      "y": 2,
+      "kind": "text",
+      "name": "sink"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "kind": "text",
+      "name": "not"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "kind": "object",
+      "name": "statue"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "kind": "text",
+      "name": "move"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 12,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 13,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 14,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 15,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 16,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 17,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 18,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 19,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 20,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 21,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "kind": "text",
+      "name": "hand"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "kind": "object",
+      "name": "statue"
+    },
+    {
+      "x": 12,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 13,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 14,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 15,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 16,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 17,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 18,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 19,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 20,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 21,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 12,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 13,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 14,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 15,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 16,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 17,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 18,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 19,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 20,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 21,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 0,
+      "y": 8,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 1,
+      "y": 8,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 2,
+      "y": 8,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 3,
+      "y": 8,
+      "kind": "text",
+      "name": "defeat"
+    },
+    {
+      "x": 4,
+      "y": 8,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 5,
+      "y": 8,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 6,
+      "y": 8,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 7,
+      "y": 8,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 12,
+      "y": 8,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 13,
+      "y": 8,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 14,
+      "y": 8,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 15,
+      "y": 8,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 16,
+      "y": 8,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 17,
+      "y": 8,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 18,
+      "y": 8,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 19,
+      "y": 8,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 20,
+      "y": 8,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 21,
+      "y": 8,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 0,
+      "y": 9,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 1,
+      "y": 9,
+      "kind": "text",
+      "name": "and"
+    },
+    {
+      "x": 2,
+      "y": 9,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 3,
+      "y": 9,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 4,
+      "y": 9,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 7,
+      "y": 9,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 8,
+      "y": 9,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 12,
+      "y": 9,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 13,
+      "y": 9,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 14,
+      "y": 9,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 15,
+      "y": 9,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 16,
+      "y": 9,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 17,
+      "y": 9,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 18,
+      "y": 9,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 19,
+      "y": 9,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 20,
+      "y": 9,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 21,
+      "y": 9,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 0,
+      "y": 10,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 2,
+      "y": 10,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 4,
+      "y": 10,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 8,
+      "y": 10,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 12,
+      "y": 10,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 13,
+      "y": 10,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 14,
+      "y": 10,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 15,
+      "y": 10,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 16,
+      "y": 10,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 17,
+      "y": 10,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 18,
+      "y": 10,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 19,
+      "y": 10,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 20,
+      "y": 10,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 21,
+      "y": 10,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 0,
+      "y": 11,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 1,
+      "y": 11,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 2,
+      "y": 11,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 3,
+      "y": 11,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 4,
+      "y": 11,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 5,
+      "y": 11,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 6,
+      "y": 11,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 10,
+      "y": 11,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 12,
+      "y": 11,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 13,
+      "y": 11,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 14,
+      "y": 11,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 15,
+      "y": 11,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 16,
+      "y": 11,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 17,
+      "y": 11,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 18,
+      "y": 11,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 19,
+      "y": 11,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 20,
+      "y": 11,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 21,
+      "y": 11,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 0,
+      "y": 12,
+      "kind": "text",
+      "name": "hedge"
+    },
+    {
+      "x": 1,
+      "y": 12,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 2,
+      "y": 12,
+      "kind": "text",
+      "name": "stop"
+    },
+    {
+      "x": 4,
+      "y": 12,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 5,
+      "y": 12,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 6,
+      "y": 12,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 7,
+      "y": 12,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 8,
+      "y": 12,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 0,
+      "y": 13,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 1,
+      "y": 13,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 2,
+      "y": 13,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 4,
+      "y": 13,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 6,
+      "y": 13,
+      "kind": "object",
+      "name": "hedge"
+    },
+    {
+      "x": 7,
+      "y": 13,
+      "kind": "object",
+      "name": "hand"
+    },
+    {
+      "x": 8,
+      "y": 13,
+      "kind": "object",
+      "name": "hedge"
+    }
+  ],
+  "background": [
+    21,
+    13,
+    13
+  ],
+  "edge": [
+    40,
+    26,
+    26
+  ],
+  "name": "power generator"
+}

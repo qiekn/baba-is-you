@@ -1,0 +1,353 @@
+{
+  "cols": 24,
+  "rows": 14,
+  "tiles": [
+    {
+      "x": 0,
+      "y": 0,
+      "kind": "text",
+      "name": "tree"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "kind": "text",
+      "name": "defeat"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "kind": "object",
+      "name": "keke"
+    },
+    {
+      "x": 14,
+      "y": 4,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 9,
+      "y": 5,
+      "kind": "text",
+      "name": "keke"
+    },
+    {
+      "x": 10,
+      "y": 5,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 11,
+      "y": 5,
+      "kind": "text",
+      "name": "move"
+    },
+    {
+      "x": 14,
+      "y": 5,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 15,
+      "y": 5,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 16,
+      "y": 5,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 17,
+      "y": 5,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 18,
+      "y": 5,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 14,
+      "y": 6,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 18,
+      "y": 6,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "kind": "object",
+      "name": "keke"
+    },
+    {
+      "x": 14,
+      "y": 7,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 15,
+      "y": 7,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 16,
+      "y": 7,
+      "kind": "object",
+      "name": "love"
+    },
+    {
+      "x": 18,
+      "y": 7,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 13,
+      "y": 8,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 14,
+      "y": 8,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 15,
+      "y": 8,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 16,
+      "y": 8,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 17,
+      "y": 8,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 18,
+      "y": 8,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 3,
+      "y": 9,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 9,
+      "y": 9,
+      "kind": "text",
+      "name": "love"
+    },
+    {
+      "x": 10,
+      "y": 9,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 11,
+      "y": 9,
+      "kind": "text",
+      "name": "push"
+    },
+    {
+      "x": 12,
+      "y": 9,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 13,
+      "y": 9,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 14,
+      "y": 9,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 15,
+      "y": 9,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 16,
+      "y": 9,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 17,
+      "y": 9,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 18,
+      "y": 9,
+      "kind": "object",
+      "name": "tree"
+    },
+    {
+      "x": 19,
+      "y": 9,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 6,
+      "y": 10,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 7,
+      "y": 10,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 12,
+      "y": 10,
+      "kind": "object",
+      "name": "keke"
+    },
+    {
+      "x": 13,
+      "y": 10,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 14,
+      "y": 10,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 15,
+      "y": 10,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 0,
+      "y": 11,
+      "kind": "text",
+      "name": "love"
+    },
+    {
+      "x": 5,
+      "y": 11,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 6,
+      "y": 11,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 7,
+      "y": 11,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 0,
+      "y": 12,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 0,
+      "y": 13,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 21,
+      "y": 13,
+      "kind": "text",
+      "name": "baba"
+    },
+    {
+      "x": 22,
+      "y": 13,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 23,
+      "y": 13,
+      "kind": "text",
+      "name": "you"
+    }
+  ],
+  "background": [
+    15,
+    21,
+    41
+  ],
+  "edge": [
+    36,
+    44,
+    71
+  ],
+  "name": "affection"
+}
