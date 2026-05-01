@@ -9,52 +9,10 @@
       "name": "rock"
     },
     {
-      "x": 0,
-      "y": 2,
-      "kind": "text",
-      "name": "skull"
-    },
-    {
-      "x": 0,
-      "y": 4,
-      "kind": "text",
-      "name": "flag"
-    },
-    {
-      "x": 0,
-      "y": 6,
-      "kind": "object",
-      "name": "rock"
-    },
-    {
       "x": 1,
       "y": 0,
       "kind": "text",
       "name": "is"
-    },
-    {
-      "x": 1,
-      "y": 2,
-      "kind": "text",
-      "name": "is"
-    },
-    {
-      "x": 1,
-      "y": 4,
-      "kind": "text",
-      "name": "is"
-    },
-    {
-      "x": 1,
-      "y": 6,
-      "kind": "object",
-      "name": "rock"
-    },
-    {
-      "x": 1,
-      "y": 10,
-      "kind": "object",
-      "name": "grass"
     },
     {
       "x": 2,
@@ -63,104 +21,8 @@
       "name": "stop"
     },
     {
-      "x": 2,
-      "y": 2,
-      "kind": "text",
-      "name": "defeat"
-    },
-    {
-      "x": 2,
-      "y": 4,
-      "kind": "text",
-      "name": "win"
-    },
-    {
-      "x": 2,
-      "y": 6,
-      "kind": "object",
-      "name": "rock"
-    },
-    {
-      "x": 2,
-      "y": 9,
-      "kind": "object",
-      "name": "grass"
-    },
-    {
-      "x": 2,
-      "y": 10,
-      "kind": "object",
-      "name": "grass"
-    },
-    {
-      "x": 2,
-      "y": 11,
-      "kind": "object",
-      "name": "grass"
-    },
-    {
-      "x": 3,
-      "y": 6,
-      "kind": "object",
-      "name": "rock"
-    },
-    {
-      "x": 3,
-      "y": 7,
-      "kind": "object",
-      "name": "flower"
-    },
-    {
-      "x": 3,
-      "y": 10,
-      "kind": "object",
-      "name": "grass"
-    },
-    {
-      "x": 3,
-      "y": 11,
-      "kind": "object",
-      "name": "grass"
-    },
-    {
       "x": 4,
       "y": 0,
-      "kind": "object",
-      "name": "rock"
-    },
-    {
-      "x": 4,
-      "y": 1,
-      "kind": "object",
-      "name": "rock"
-    },
-    {
-      "x": 4,
-      "y": 2,
-      "kind": "object",
-      "name": "rock"
-    },
-    {
-      "x": 4,
-      "y": 3,
-      "kind": "object",
-      "name": "rock"
-    },
-    {
-      "x": 4,
-      "y": 4,
-      "kind": "object",
-      "name": "rock"
-    },
-    {
-      "x": 4,
-      "y": 5,
-      "kind": "object",
-      "name": "rock"
-    },
-    {
-      "x": 4,
-      "y": 6,
       "kind": "object",
       "name": "rock"
     },
@@ -177,86 +39,62 @@
       "name": "grass"
     },
     {
-      "x": 6,
-      "y": 1,
-      "kind": "object",
-      "name": "grass"
-    },
-    {
-      "x": 6,
-      "y": 4,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 6,
-      "y": 5,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 6,
-      "y": 6,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 6,
-      "y": 7,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 6,
-      "y": 8,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
       "x": 7,
       "y": 0,
       "kind": "object",
       "name": "grass"
-    },
-    {
-      "x": 7,
-      "y": 1,
-      "kind": "object",
-      "name": "grass"
-    },
-    {
-      "x": 7,
-      "y": 4,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 7,
-      "y": 5,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 7,
-      "y": 6,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 7,
-      "y": 7,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 7,
-      "y": 8,
-      "kind": "object",
-      "name": "wall"
     },
     {
       "x": 8,
       "y": 0,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 9,
+      "y": 0,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 12,
+      "y": 0,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 21,
+      "y": 0,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 22,
+      "y": 0,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 23,
+      "y": 0,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "kind": "object",
+      "name": "rock"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 7,
+      "y": 1,
       "kind": "object",
       "name": "grass"
     },
@@ -267,362 +105,122 @@
       "name": "flower"
     },
     {
-      "x": 8,
-      "y": 3,
-      "kind": "object",
-      "name": "brick"
-    },
-    {
-      "x": 8,
-      "y": 4,
+      "x": 10,
+      "y": 1,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 8,
-      "y": 5,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 8,
-      "y": 6,
-      "kind": "object",
-      "name": "baba"
-    },
-    {
-      "x": 8,
-      "y": 7,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 8,
-      "y": 8,
+      "x": 11,
+      "y": 1,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 8,
-      "y": 10,
-      "kind": "text",
-      "name": "baba"
+      "x": 12,
+      "y": 1,
+      "kind": "object",
+      "name": "skull"
     },
     {
-      "x": 8,
-      "y": 11,
-      "kind": "text",
-      "name": "is"
+      "x": 13,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
     },
     {
-      "x": 8,
-      "y": 12,
-      "kind": "text",
-      "name": "you"
+      "x": 14,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
     },
     {
-      "x": 9,
-      "y": 0,
+      "x": 15,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 22,
+      "y": 1,
       "kind": "object",
       "name": "grass"
     },
     {
-      "x": 9,
-      "y": 2,
-      "kind": "object",
-      "name": "brick"
-    },
-    {
-      "x": 9,
-      "y": 3,
-      "kind": "object",
-      "name": "brick"
-    },
-    {
-      "x": 9,
-      "y": 4,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 9,
-      "y": 5,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 9,
-      "y": 6,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 9,
-      "y": 7,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 9,
-      "y": 8,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 10,
+      "x": 23,
       "y": 1,
       "kind": "object",
-      "name": "wall"
+      "name": "grass"
     },
     {
-      "x": 10,
+      "x": 0,
       "y": 2,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 10,
-      "y": 3,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 10,
-      "y": 4,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 10,
-      "y": 5,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 10,
-      "y": 7,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 10,
-      "y": 8,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 10,
-      "y": 9,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 10,
-      "y": 10,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 10,
-      "y": 11,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 11,
-      "y": 1,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 11,
-      "y": 11,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 12,
-      "y": 0,
-      "kind": "object",
-      "name": "skull"
-    },
-    {
-      "x": 12,
-      "y": 1,
-      "kind": "object",
-      "name": "skull"
-    },
-    {
-      "x": 12,
-      "y": 2,
-      "kind": "object",
-      "name": "skull"
-    },
-    {
-      "x": 12,
-      "y": 3,
-      "kind": "object",
-      "name": "skull"
-    },
-    {
-      "x": 12,
-      "y": 4,
-      "kind": "object",
-      "name": "skull"
-    },
-    {
-      "x": 12,
-      "y": 5,
-      "kind": "object",
-      "name": "skull"
-    },
-    {
-      "x": 12,
-      "y": 6,
-      "kind": "object",
-      "name": "skull"
-    },
-    {
-      "x": 12,
-      "y": 7,
-      "kind": "object",
-      "name": "skull"
-    },
-    {
-      "x": 12,
-      "y": 9,
       "kind": "text",
-      "name": "wall"
-    },
-    {
-      "x": 12,
-      "y": 11,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 13,
-      "y": 1,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 13,
-      "y": 6,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 13,
-      "y": 7,
-      "kind": "object",
       "name": "skull"
     },
     {
-      "x": 13,
-      "y": 9,
+      "x": 1,
+      "y": 2,
       "kind": "text",
       "name": "is"
     },
     {
-      "x": 13,
-      "y": 11,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 14,
-      "y": 1,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 14,
-      "y": 6,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 14,
-      "y": 7,
-      "kind": "object",
-      "name": "skull"
-    },
-    {
-      "x": 14,
-      "y": 9,
+      "x": 2,
+      "y": 2,
       "kind": "text",
-      "name": "stop"
+      "name": "defeat"
     },
     {
-      "x": 14,
-      "y": 11,
+      "x": 4,
+      "y": 2,
       "kind": "object",
-      "name": "wall"
+      "name": "rock"
     },
     {
-      "x": 15,
-      "y": 1,
+      "x": 9,
+      "y": 2,
       "kind": "object",
-      "name": "wall"
+      "name": "brick"
     },
     {
-      "x": 15,
+      "x": 10,
       "y": 2,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 15,
-      "y": 4,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 15,
-      "y": 5,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 15,
-      "y": 6,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 15,
-      "y": 7,
+      "x": 12,
+      "y": 2,
       "kind": "object",
       "name": "skull"
     },
     {
       "x": 15,
-      "y": 8,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 15,
-      "y": 9,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 15,
-      "y": 10,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 15,
-      "y": 11,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 16,
-      "y": 1,
+      "y": 2,
       "kind": "object",
       "name": "wall"
     },
@@ -631,58 +229,64 @@
       "y": 2,
       "kind": "object",
       "name": "tile"
+    },
+    {
+      "x": 17,
+      "y": 2,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 18,
+      "y": 2,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 19,
+      "y": 2,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 23,
+      "y": 2,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "kind": "object",
+      "name": "rock"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 9,
+      "y": 3,
+      "kind": "object",
+      "name": "brick"
+    },
+    {
+      "x": 10,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 3,
+      "kind": "object",
+      "name": "skull"
     },
     {
       "x": 16,
       "y": 3,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 16,
-      "y": 4,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 16,
-      "y": 5,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 16,
-      "y": 6,
-      "kind": "object",
-      "name": "brick"
-    },
-    {
-      "x": 16,
-      "y": 7,
-      "kind": "object",
-      "name": "skull"
-    },
-    {
-      "x": 16,
-      "y": 8,
-      "kind": "object",
-      "name": "brick"
-    },
-    {
-      "x": 16,
-      "y": 9,
-      "kind": "object",
-      "name": "brick"
-    },
-    {
-      "x": 17,
-      "y": 1,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 17,
-      "y": 2,
       "kind": "object",
       "name": "tile"
     },
@@ -693,16 +297,268 @@
       "name": "flag"
     },
     {
-      "x": 17,
+      "x": 18,
+      "y": 3,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 19,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "kind": "text",
+      "name": "flag"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "kind": "text",
+      "name": "win"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "kind": "object",
+      "name": "rock"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 4,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 15,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
       "y": 4,
       "kind": "object",
       "name": "tile"
     },
     {
       "x": 17,
+      "y": 4,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 18,
+      "y": 4,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 19,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "kind": "object",
+      "name": "rock"
+    },
+    {
+      "x": 6,
       "y": 5,
       "kind": "object",
       "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 9,
+      "y": 5,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 10,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 5,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 15,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 5,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 22,
+      "y": 5,
+      "kind": "object",
+      "name": "flower"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "kind": "object",
+      "name": "rock"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "kind": "object",
+      "name": "rock"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "kind": "object",
+      "name": "rock"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "kind": "object",
+      "name": "rock"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "kind": "object",
+      "name": "rock"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 12,
+      "y": 6,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 13,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 6,
+      "kind": "object",
+      "name": "brick"
     },
     {
       "x": 17,
@@ -711,10 +567,154 @@
       "name": "brick"
     },
     {
+      "x": 3,
+      "y": 7,
+      "kind": "object",
+      "name": "flower"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 9,
+      "y": 7,
+      "kind": "object",
+      "name": "tile"
+    },
+    {
+      "x": 10,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 13,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 14,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 15,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 16,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
       "x": 17,
       "y": 7,
       "kind": "object",
       "name": "skull"
+    },
+    {
+      "x": 18,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 19,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 20,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 21,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 22,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 23,
+      "y": 7,
+      "kind": "object",
+      "name": "skull"
+    },
+    {
+      "x": 6,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 8,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 8,
+      "kind": "object",
+      "name": "brick"
     },
     {
       "x": 17,
@@ -723,118 +723,46 @@
       "name": "brick"
     },
     {
-      "x": 17,
-      "y": 12,
-      "kind": "object",
-      "name": "flower"
-    },
-    {
-      "x": 18,
-      "y": 1,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 18,
-      "y": 2,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 18,
-      "y": 3,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 18,
-      "y": 4,
-      "kind": "object",
-      "name": "tile"
-    },
-    {
-      "x": 18,
-      "y": 5,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 18,
-      "y": 7,
-      "kind": "object",
-      "name": "skull"
-    },
-    {
-      "x": 19,
-      "y": 1,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 19,
-      "y": 2,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 19,
-      "y": 3,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 19,
-      "y": 4,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 19,
-      "y": 5,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 19,
-      "y": 7,
-      "kind": "object",
-      "name": "skull"
-    },
-    {
-      "x": 19,
-      "y": 10,
-      "kind": "object",
-      "name": "flower"
-    },
-    {
-      "x": 19,
-      "y": 13,
+      "x": 2,
+      "y": 9,
       "kind": "object",
       "name": "grass"
     },
     {
-      "x": 20,
-      "y": 7,
+      "x": 10,
+      "y": 9,
       "kind": "object",
-      "name": "skull"
+      "name": "wall"
     },
     {
-      "x": 20,
-      "y": 13,
-      "kind": "object",
-      "name": "grass"
+      "x": 12,
+      "y": 9,
+      "kind": "text",
+      "name": "wall"
     },
     {
-      "x": 21,
-      "y": 0,
-      "kind": "object",
-      "name": "grass"
+      "x": 13,
+      "y": 9,
+      "kind": "text",
+      "name": "is"
     },
     {
-      "x": 21,
-      "y": 7,
+      "x": 14,
+      "y": 9,
+      "kind": "text",
+      "name": "stop"
+    },
+    {
+      "x": 15,
+      "y": 9,
       "kind": "object",
-      "name": "skull"
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 9,
+      "kind": "object",
+      "name": "brick"
     },
     {
       "x": 21,
@@ -843,40 +771,118 @@
       "name": "flower"
     },
     {
-      "x": 21,
-      "y": 12,
+      "x": 1,
+      "y": 10,
       "kind": "object",
       "name": "grass"
     },
     {
-      "x": 21,
-      "y": 13,
+      "x": 2,
+      "y": 10,
       "kind": "object",
       "name": "grass"
     },
     {
-      "x": 22,
-      "y": 0,
+      "x": 3,
+      "y": 10,
       "kind": "object",
       "name": "grass"
     },
     {
-      "x": 22,
-      "y": 1,
-      "kind": "object",
-      "name": "grass"
+      "x": 8,
+      "y": 10,
+      "kind": "text",
+      "name": "baba"
     },
     {
-      "x": 22,
-      "y": 5,
+      "x": 10,
+      "y": 10,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 10,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 10,
       "kind": "object",
       "name": "flower"
     },
     {
-      "x": 22,
-      "y": 7,
+      "x": 2,
+      "y": 11,
       "kind": "object",
-      "name": "skull"
+      "name": "grass"
+    },
+    {
+      "x": 3,
+      "y": 11,
+      "kind": "object",
+      "name": "grass"
+    },
+    {
+      "x": 8,
+      "y": 11,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 10,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 12,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 11,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 12,
+      "kind": "text",
+      "name": "you"
+    },
+    {
+      "x": 17,
+      "y": 12,
+      "kind": "object",
+      "name": "flower"
+    },
+    {
+      "x": 21,
+      "y": 12,
+      "kind": "object",
+      "name": "grass"
     },
     {
       "x": 22,
@@ -885,34 +891,28 @@
       "name": "grass"
     },
     {
-      "x": 22,
+      "x": 19,
       "y": 13,
       "kind": "object",
       "name": "grass"
     },
     {
-      "x": 23,
-      "y": 0,
+      "x": 20,
+      "y": 13,
       "kind": "object",
       "name": "grass"
     },
     {
-      "x": 23,
-      "y": 1,
+      "x": 21,
+      "y": 13,
       "kind": "object",
       "name": "grass"
     },
     {
-      "x": 23,
-      "y": 2,
+      "x": 22,
+      "y": 13,
       "kind": "object",
       "name": "grass"
-    },
-    {
-      "x": 23,
-      "y": 7,
-      "kind": "object",
-      "name": "skull"
     },
     {
       "x": 23,

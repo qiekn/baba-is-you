@@ -308,18 +308,45 @@ def classify(name):
 # Level extraction + JSON emission
 # ---------------------------------------------------------------------------
 
+def has_edge_ring(cells, w, h):
+    """Return True if the canvas perimeter is fully filled with edge tiles
+    (id=0). Baba Is You levels uniformly wrap their playfield in this ring;
+    the editor (BabaIsYouEditor) renders the full WxH canvas, but the
+    *playable* level is the (W-2)x(H-2) interior. We strip that ring on
+    import so cols/rows match the real level dimensions."""
+    if w < 3 or h < 3:
+        return False
+    for x in range(w):
+        if cells[x] != 0 or cells[(h - 1) * w + x] != 0:
+            return False
+    for y in range(1, h - 1):
+        if cells[y * w] != 0 or cells[y * w + (w - 1)] != 0:
+            return False
+    return True
+
+
 def extract_tiles(layer, tile_map, unknown=None):
     """Walk the MAIN uint16 stream and emit {x, y, kind, name} records.
-    Cells equal to 0 (floor default) or 0xFFFF (empty) are skipped.
+
+    Returns (tiles, used, cols, rows). When the canvas has the standard
+    1-cell edge ring, the ring is stripped and (cols, rows) = (W-2, H-2)
+    with positions shifted by (-1, -1). Otherwise the full WxH grid is
+    used and positions are kept as-is.
 
     MAIN is stored row-major, so cell (x, y) = main[y * layer.w + x]."""
     w, h = layer.w, layer.h
     count = len(layer.main) // 2
     cells = struct.unpack(f'<{count}H', layer.main)
+
+    if has_edge_ring(cells, w, h):
+        x0, y0, cols, rows = 1, 1, w - 2, h - 2
+    else:
+        x0, y0, cols, rows = 0, 0, w, h
+
     tiles = []
     used = 0
-    for x in range(w):
-        for y in range(h):
+    for y in range(y0, y0 + rows):
+        for x in range(x0, x0 + cols):
             idx = y * w + x
             if idx >= count:
                 continue
@@ -336,30 +363,9 @@ def extract_tiles(layer, tile_map, unknown=None):
             kind, short = classify(name)
             if kind is None:
                 continue
-            tiles.append({'x': x, 'y': y, 'kind': kind, 'name': short})
+            tiles.append({'x': x - x0, 'y': y - y0, 'kind': kind, 'name': short})
             used += 1
-    return tiles, used
-
-
-def trim_to_bbox(tiles, w, h, pad=0):
-    """Shrink the grid around its content so levels with huge empty margins
-    (e.g. the overworld, which stores 20x35 cells but only uses rows 12-22)
-    don't render as tall vertical boards. Returns a possibly-smaller (tiles,
-    w, h). `pad` controls how many empty cells we keep on each side."""
-    if not tiles:
-        return tiles, w, h
-    xs = [t['x'] for t in tiles]
-    ys = [t['y'] for t in tiles]
-    min_x, max_x = min(xs), max(xs)
-    min_y, max_y = min(ys), max(ys)
-    # Strict crop to content bounds (optionally expanded by `pad` cells).
-    # This avoids importing levels with an extra 1-cell ring around the map.
-    left = max(0, min_x - pad)
-    right = min(w - 1, max_x + pad)
-    top = max(0, min_y - pad)
-    bottom = min(h - 1, max_y + pad)
-    new_tiles = [{**t, 'x': t['x'] - left, 'y': t['y'] - top} for t in tiles]
-    return new_tiles, right - left + 1, bottom - top + 1
+    return tiles, used, cols, rows
 
 
 def convert(l_path, values_lua, out_path):
@@ -376,8 +382,7 @@ def convert(l_path, values_lua, out_path):
     # layers are decorative overlays that we can't map cleanly yet.
     primary = layers[0]
     unknown = {}
-    tiles, used = extract_tiles(primary, tile_map, unknown)
-    tiles, cols, rows = trim_to_bbox(tiles, primary.w, primary.h)
+    tiles, used, cols, rows = extract_tiles(primary, tile_map, unknown)
 
     out = {
         'cols': cols,

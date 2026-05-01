@@ -9,40 +9,10 @@
       "name": "wall"
     },
     {
-      "x": 0,
-      "y": 1,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 0,
-      "y": 2,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 0,
-      "y": 3,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
       "x": 1,
       "y": 0,
       "kind": "text",
       "name": "is"
-    },
-    {
-      "x": 1,
-      "y": 1,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 1,
-      "y": 2,
-      "kind": "object",
-      "name": "lava"
     },
     {
       "x": 2,
@@ -51,20 +21,8 @@
       "name": "stop"
     },
     {
-      "x": 2,
-      "y": 1,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
       "x": 3,
       "y": 0,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 3,
-      "y": 1,
       "kind": "object",
       "name": "lava"
     },
@@ -81,10 +39,154 @@
       "name": "wall"
     },
     {
+      "x": 12,
+      "y": 0,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 0,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 20,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 21,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 22,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 23,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 24,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 25,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 26,
+      "y": 0,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
       "x": 6,
       "y": 1,
       "kind": "object",
       "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 1,
+      "kind": "object",
+      "name": "baba"
+    },
+    {
+      "x": 16,
+      "y": 1,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 19,
+      "y": 1,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 20,
+      "y": 1,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 21,
+      "y": 1,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 22,
+      "y": 1,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 23,
+      "y": 1,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 24,
+      "y": 1,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 25,
+      "y": 1,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "kind": "object",
+      "name": "lava"
     },
     {
       "x": 6,
@@ -93,166 +195,76 @@
       "name": "wall"
     },
     {
-      "x": 6,
-      "y": 3,
+      "x": 12,
+      "y": 2,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 6,
-      "y": 4,
+      "x": 16,
+      "y": 2,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 6,
-      "y": 5,
+      "x": 19,
+      "y": 2,
       "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 6,
-      "y": 6,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 6,
-      "y": 7,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 7,
-      "y": 4,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 7,
-      "y": 6,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 7,
-      "y": 7,
-      "kind": "text",
-      "name": "rock"
-    },
-    {
-      "x": 7,
-      "y": 8,
-      "kind": "text",
-      "name": "is"
-    },
-    {
-      "x": 7,
-      "y": 9,
-      "kind": "text",
-      "name": "push"
-    },
-    {
-      "x": 7,
-      "y": 12,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 7,
-      "y": 13,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 7,
-      "y": 14,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 7,
-      "y": 15,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 8,
-      "y": 3,
-      "kind": "text",
-      "name": "baba"
-    },
-    {
-      "x": 8,
-      "y": 6,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 8,
-      "y": 7,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 8,
-      "y": 12,
-      "kind": "text",
-      "name": "baba"
-    },
-    {
-      "x": 8,
-      "y": 13,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 8,
-      "y": 14,
-      "kind": "text",
       "name": "lava"
     },
     {
-      "x": 8,
-      "y": 15,
+      "x": 20,
+      "y": 2,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 21,
+      "y": 2,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 22,
+      "y": 2,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 23,
+      "y": 2,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 24,
+      "y": 2,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 6,
+      "y": 3,
       "kind": "object",
       "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "kind": "text",
+      "name": "baba"
     },
     {
       "x": 9,
       "y": 3,
       "kind": "text",
       "name": "is"
-    },
-    {
-      "x": 9,
-      "y": 6,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 9,
-      "y": 12,
-      "kind": "text",
-      "name": "is"
-    },
-    {
-      "x": 9,
-      "y": 13,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 9,
-      "y": 14,
-      "kind": "text",
-      "name": "is"
-    },
-    {
-      "x": 9,
-      "y": 15,
-      "kind": "object",
-      "name": "wall"
     },
     {
       "x": 10,
@@ -261,98 +273,140 @@
       "name": "you"
     },
     {
-      "x": 10,
-      "y": 6,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 10,
-      "y": 12,
-      "kind": "text",
-      "name": "melt"
-    },
-    {
-      "x": 10,
-      "y": 13,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 10,
-      "y": 14,
-      "kind": "text",
-      "name": "hot"
-    },
-    {
-      "x": 10,
-      "y": 15,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 11,
-      "y": 4,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 11,
-      "y": 6,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 11,
-      "y": 12,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 11,
-      "y": 13,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 11,
-      "y": 14,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 11,
-      "y": 15,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 11,
-      "y": 17,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 12,
-      "y": 0,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 12,
-      "y": 2,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
       "x": 12,
       "y": 3,
       "kind": "object",
       "name": "wall"
     },
     {
+      "x": 13,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 15,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 16,
+      "y": 3,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 3,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 19,
+      "y": 3,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 20,
+      "y": 3,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 21,
+      "y": 3,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 22,
+      "y": 3,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 23,
+      "y": 3,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 24,
+      "y": 3,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
       "x": 12,
       "y": 4,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 18,
+      "y": 4,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 19,
+      "y": 4,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 20,
+      "y": 4,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 21,
+      "y": 4,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 22,
+      "y": 4,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 23,
+      "y": 4,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 6,
+      "y": 5,
       "kind": "object",
       "name": "wall"
     },
@@ -363,10 +417,268 @@
       "name": "rock"
     },
     {
+      "x": 18,
+      "y": 5,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 19,
+      "y": 5,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 20,
+      "y": 5,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 21,
+      "y": 5,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 22,
+      "y": 5,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 23,
+      "y": 5,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 6,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
       "x": 12,
       "y": 6,
       "kind": "object",
       "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 6,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 18,
+      "y": 6,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 19,
+      "y": 6,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 20,
+      "y": 6,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 21,
+      "y": 6,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 22,
+      "y": 6,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 23,
+      "y": 6,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "kind": "text",
+      "name": "rock"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 17,
+      "y": 7,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 18,
+      "y": 7,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 19,
+      "y": 7,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 20,
+      "y": 7,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 21,
+      "y": 7,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 22,
+      "y": 7,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 7,
+      "y": 8,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 17,
+      "y": 8,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 18,
+      "y": 8,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 19,
+      "y": 8,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 20,
+      "y": 8,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 21,
+      "y": 8,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 22,
+      "y": 8,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 7,
+      "y": 9,
+      "kind": "text",
+      "name": "push"
+    },
+    {
+      "x": 16,
+      "y": 9,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 17,
+      "y": 9,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 18,
+      "y": 9,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 19,
+      "y": 9,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 20,
+      "y": 9,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 21,
+      "y": 9,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 22,
+      "y": 9,
+      "kind": "object",
+      "name": "lava"
     },
     {
       "x": 12,
@@ -375,170 +687,110 @@
       "name": "lava"
     },
     {
-      "x": 12,
-      "y": 16,
+      "x": 16,
+      "y": 10,
       "kind": "object",
       "name": "lava"
     },
     {
-      "x": 12,
-      "y": 17,
+      "x": 17,
+      "y": 10,
       "kind": "object",
       "name": "lava"
     },
     {
-      "x": 13,
-      "y": 3,
+      "x": 18,
+      "y": 10,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 19,
+      "y": 10,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 20,
+      "y": 10,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 21,
+      "y": 10,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 15,
+      "y": 11,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 16,
+      "y": 11,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 17,
+      "y": 11,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 18,
+      "y": 11,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 19,
+      "y": 11,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 20,
+      "y": 11,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 7,
+      "y": 12,
       "kind": "object",
       "name": "wall"
     },
     {
-      "x": 13,
-      "y": 15,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 13,
-      "y": 16,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 13,
-      "y": 17,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 14,
-      "y": 1,
-      "kind": "object",
+      "x": 8,
+      "y": 12,
+      "kind": "text",
       "name": "baba"
     },
     {
-      "x": 14,
-      "y": 3,
+      "x": 9,
+      "y": 12,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 10,
+      "y": 12,
+      "kind": "text",
+      "name": "melt"
+    },
+    {
+      "x": 11,
+      "y": 12,
       "kind": "object",
       "name": "wall"
-    },
-    {
-      "x": 14,
-      "y": 13,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 14,
-      "y": 14,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 14,
-      "y": 15,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 14,
-      "y": 16,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 14,
-      "y": 17,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 15,
-      "y": 3,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 15,
-      "y": 11,
-      "kind": "object",
-      "name": "lava"
     },
     {
       "x": 15,
       "y": 12,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 15,
-      "y": 13,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 15,
-      "y": 14,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 15,
-      "y": 15,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 15,
-      "y": 16,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 15,
-      "y": 17,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 16,
-      "y": 0,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 16,
-      "y": 1,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 16,
-      "y": 2,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 16,
-      "y": 3,
-      "kind": "object",
-      "name": "wall"
-    },
-    {
-      "x": 16,
-      "y": 9,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 16,
-      "y": 10,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 16,
-      "y": 11,
       "kind": "object",
       "name": "lava"
     },
@@ -549,80 +801,146 @@
       "name": "lava"
     },
     {
-      "x": 16,
-      "y": 13,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 16,
-      "y": 14,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 16,
-      "y": 15,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 16,
-      "y": 16,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 16,
-      "y": 17,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 17,
-      "y": 6,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 17,
-      "y": 7,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 17,
-      "y": 8,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 17,
-      "y": 9,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 17,
-      "y": 10,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 17,
-      "y": 11,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
       "x": 17,
       "y": 12,
       "kind": "object",
       "name": "lava"
     },
     {
+      "x": 18,
+      "y": 12,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 19,
+      "y": 12,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 20,
+      "y": 12,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 26,
+      "y": 12,
+      "kind": "object",
+      "name": "flag"
+    },
+    {
+      "x": 7,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 13,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 13,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 15,
+      "y": 13,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 16,
+      "y": 13,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
       "x": 17,
       "y": 13,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 18,
+      "y": 13,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 19,
+      "y": 13,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 7,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 14,
+      "kind": "text",
+      "name": "lava"
+    },
+    {
+      "x": 9,
+      "y": 14,
+      "kind": "text",
+      "name": "is"
+    },
+    {
+      "x": 10,
+      "y": 14,
+      "kind": "text",
+      "name": "hot"
+    },
+    {
+      "x": 11,
+      "y": 14,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 14,
+      "y": 14,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 15,
+      "y": 14,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 16,
+      "y": 14,
       "kind": "object",
       "name": "lava"
     },
@@ -633,458 +951,8 @@
       "name": "lava"
     },
     {
-      "x": 17,
-      "y": 15,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 17,
-      "y": 16,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 17,
-      "y": 17,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 18,
-      "y": 3,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 18,
-      "y": 4,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 18,
-      "y": 5,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 18,
-      "y": 6,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 18,
-      "y": 7,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 18,
-      "y": 8,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 18,
-      "y": 9,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 18,
-      "y": 10,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 18,
-      "y": 11,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 18,
-      "y": 12,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 18,
-      "y": 13,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
       "x": 18,
       "y": 14,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 18,
-      "y": 15,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 19,
-      "y": 1,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 19,
-      "y": 2,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 19,
-      "y": 3,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 19,
-      "y": 4,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 19,
-      "y": 5,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 19,
-      "y": 6,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 19,
-      "y": 7,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 19,
-      "y": 8,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 19,
-      "y": 9,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 19,
-      "y": 10,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 19,
-      "y": 11,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 19,
-      "y": 12,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 19,
-      "y": 13,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 20,
-      "y": 0,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 20,
-      "y": 1,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 20,
-      "y": 2,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 20,
-      "y": 3,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 20,
-      "y": 4,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 20,
-      "y": 5,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 20,
-      "y": 6,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 20,
-      "y": 7,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 20,
-      "y": 8,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 20,
-      "y": 9,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 20,
-      "y": 10,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 20,
-      "y": 11,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 20,
-      "y": 12,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 21,
-      "y": 0,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 21,
-      "y": 1,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 21,
-      "y": 2,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 21,
-      "y": 3,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 21,
-      "y": 4,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 21,
-      "y": 5,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 21,
-      "y": 6,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 21,
-      "y": 7,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 21,
-      "y": 8,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 21,
-      "y": 9,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 21,
-      "y": 10,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 22,
-      "y": 0,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 22,
-      "y": 1,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 22,
-      "y": 2,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 22,
-      "y": 3,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 22,
-      "y": 4,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 22,
-      "y": 5,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 22,
-      "y": 6,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 22,
-      "y": 7,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 22,
-      "y": 8,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 22,
-      "y": 9,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 23,
-      "y": 0,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 23,
-      "y": 1,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 23,
-      "y": 2,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 23,
-      "y": 3,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 23,
-      "y": 4,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 23,
-      "y": 5,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 23,
-      "y": 6,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 24,
-      "y": 0,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 24,
-      "y": 1,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 24,
-      "y": 2,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 24,
-      "y": 3,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 25,
-      "y": 0,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 25,
-      "y": 1,
       "kind": "object",
       "name": "lava"
     },
@@ -1092,18 +960,6 @@
       "x": 25,
       "y": 14,
       "kind": "text",
-      "name": "flag"
-    },
-    {
-      "x": 26,
-      "y": 0,
-      "kind": "object",
-      "name": "lava"
-    },
-    {
-      "x": 26,
-      "y": 12,
-      "kind": "object",
       "name": "flag"
     },
     {
@@ -1119,20 +975,68 @@
       "name": "win"
     },
     {
-      "x": 30,
-      "y": 17,
+      "x": 7,
+      "y": 15,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 8,
+      "y": 15,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 9,
+      "y": 15,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 10,
+      "y": 15,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 11,
+      "y": 15,
+      "kind": "object",
+      "name": "wall"
+    },
+    {
+      "x": 13,
+      "y": 15,
       "kind": "object",
       "name": "lava"
     },
     {
-      "x": 31,
-      "y": 16,
+      "x": 14,
+      "y": 15,
       "kind": "object",
       "name": "lava"
     },
     {
-      "x": 31,
-      "y": 17,
+      "x": 15,
+      "y": 15,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 16,
+      "y": 15,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 17,
+      "y": 15,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 18,
+      "y": 15,
       "kind": "object",
       "name": "lava"
     },
@@ -1143,8 +1047,104 @@
       "name": "lava"
     },
     {
+      "x": 12,
+      "y": 16,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 13,
+      "y": 16,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 14,
+      "y": 16,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 15,
+      "y": 16,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 16,
+      "y": 16,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 17,
+      "y": 16,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 31,
+      "y": 16,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
       "x": 32,
       "y": 16,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 11,
+      "y": 17,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 12,
+      "y": 17,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 13,
+      "y": 17,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 14,
+      "y": 17,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 15,
+      "y": 17,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 16,
+      "y": 17,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 17,
+      "y": 17,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 30,
+      "y": 17,
+      "kind": "object",
+      "name": "lava"
+    },
+    {
+      "x": 31,
+      "y": 17,
       "kind": "object",
       "name": "lava"
     },
