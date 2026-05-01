@@ -1239,11 +1239,6 @@ void GameLayer::DrawEditorPanel() {
   }
 
   ImGui::Separator();
-  DrawToolbar();
-  ImGui::Separator();
-  DrawPalette();
-
-  ImGui::Separator();
   if (ImGui::InputText("Name", level_name_, sizeof(level_name_))) {
     level_.name = level_name_;
   }
@@ -1286,6 +1281,11 @@ void GameLayer::DrawEditorPanel() {
       load_level_from_input();
     }
   }
+
+  ImGui::Separator();
+  DrawToolbar();
+  ImGui::Separator();
+  DrawPalette();
 
   ImGui::End();
 }
