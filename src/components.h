@@ -45,6 +45,9 @@ struct IsMelt {};
 struct IsFloat {};
 struct IsOpen {};
 struct IsShut {};
+struct IsPull {};   // Pulled along when something adjacent moves in the opposite direction.
+struct IsWeak {};   // Destroyed by any contact.
+struct IsShift {};  // Carries objects on top of it forward each turn.
 
 // Present on text entities that currently participate in a valid rule
 // expression (e.g. NOUN IS PROPERTY).

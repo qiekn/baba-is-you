@@ -9,7 +9,8 @@
 
 struct Rule {
   TextId subject;    // always a Noun
-  TextId predicate;  // Noun (transformation, follow-up) or Property
+  TextId predicate;  // Noun (transformation) or Property
+  bool negated = false;  // "X IS NOT Y" cancels matching positive rules
 };
 
 // Minimal grid used by the parser: a cell is either empty or holds one text
@@ -30,9 +31,21 @@ class RuleBoard {
   std::vector<std::optional<TextId>> cells_;
 };
 
-// Scans the board for NOUN IS (NOUN | PROPERTY) triples horizontally and
-// vertically. MVP: no AND, no NOT. Text blocks are always pushable; callers
-// should force-tag them separately.
+struct ParseResult {
+  std::vector<Rule> rules;
+  // Cells (x, y) participating in any matched rule. Used by the renderer to
+  // tint rule-active text differently from inert text.
+  std::vector<std::pair<int, int>> active_cells;
+};
+
+// Scans the board for rules. Supports:
+//   * AND on both subject and predicate sides
+//     (BABA AND KEKE IS YOU AND PUSH expands to four rules)
+//   * NOT before a predicate (BABA IS NOT YOU cancels a separate
+//     BABA IS YOU rule). Subject-side NOT is not yet supported.
+ParseResult ParseRulesEx(const RuleBoard& board);
+
+// Back-compat thin wrapper that returns just the rule list.
 std::vector<Rule> ParseRules(const RuleBoard& board);
 
 // Clears all derived rule tags, then re-applies tags to entities whose

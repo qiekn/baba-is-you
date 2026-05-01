@@ -69,6 +69,10 @@ class GameLayer : public Layer {
   bool TryMove(entt::entity who, Direction dir);
   bool CanEnter(int x, int y, int dx, int dy, bool mover_is_float);
   void PushChain(int x, int y, int dx, int dy, bool mover_is_float);
+  // After an entity vacates (from_x, from_y) moving by (dx, dy), drag any
+  // Pull-tagged entity chained along the opposite direction forward by one
+  // cell (a Pull-tagged neighbour follows, the next Pull follows it, etc.).
+  void PullChain(int from_x, int from_y, int dx, int dy, bool mover_is_float);
   // Advances every IsMove entity one cell in its facing direction. Blocked
   // movers flip 180° and stay put for the turn (next turn they try the new
   // direction). Returns true if any mover successfully stepped.

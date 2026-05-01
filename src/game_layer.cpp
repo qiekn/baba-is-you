@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <cstring>
 #include <string>
+#include <unordered_set>
 
 #include <imgui.h>
 #include <raylib.h>
@@ -650,44 +651,21 @@ void GameLayer::RecomputeRules(bool apply_transformations) {
     rb.Set(cell.x, cell.y, text.id);
   }
   registry_.clear<IsRuleActiveText>();
-  rules_ = ParseRules(rb);
-  auto mark_text_at = [&](int x, int y) {
-    for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
-      if (cell.x == x && cell.y == y) {
-        registry_.emplace_or_replace<IsRuleActiveText>(e);
-      }
-    }
-  };
-  for (int y = 0; y < rb.Rows(); ++y) {
-    for (int x = 0; x + 2 < rb.Cols(); ++x) {
-      const auto a = rb.At(x, y);
-      const auto b = rb.At(x + 1, y);
-      const auto c = rb.At(x + 2, y);
-      if (!a || !b || !c) continue;
-      if (CategoryOf(*a) != TextCategory::Noun) continue;
-      if (*b != TextId::Is) continue;
-      const auto pred_cat = CategoryOf(*c);
-      if (pred_cat != TextCategory::Noun && pred_cat != TextCategory::Property) continue;
-      mark_text_at(x, y);
-      mark_text_at(x + 1, y);
-      mark_text_at(x + 2, y);
-    }
+  ParseResult parsed = ParseRulesEx(rb);
+  rules_ = std::move(parsed.rules);
+
+  // Tag every text block whose cell participated in a matched rule
+  // expression so the renderer can dim inert text.
+  std::unordered_set<long long> active_keys;
+  active_keys.reserve(parsed.active_cells.size());
+  for (auto [x, y] : parsed.active_cells) {
+    active_keys.insert((static_cast<long long>(x) << 32) | static_cast<long long>(y));
   }
-  for (int x = 0; x < rb.Cols(); ++x) {
-    for (int y = 0; y + 2 < rb.Rows(); ++y) {
-      const auto a = rb.At(x, y);
-      const auto b = rb.At(x, y + 1);
-      const auto c = rb.At(x, y + 2);
-      if (!a || !b || !c) continue;
-      if (CategoryOf(*a) != TextCategory::Noun) continue;
-      if (*b != TextId::Is) continue;
-      const auto pred_cat = CategoryOf(*c);
-      if (pred_cat != TextCategory::Noun && pred_cat != TextCategory::Property) continue;
-      mark_text_at(x, y);
-      mark_text_at(x, y + 1);
-      mark_text_at(x, y + 2);
-    }
+  for (auto [e, cell, text] : registry_.view<const Cell, const TextBlock>().each()) {
+    const long long k = (static_cast<long long>(cell.x) << 32) | static_cast<long long>(cell.y);
+    if (active_keys.contains(k)) registry_.emplace_or_replace<IsRuleActiveText>(e);
   }
+
   if (apply_transformations && ApplyTransformations(registry_, rules_)) {
     // ObjectBlock.ids changed — re-parse just to be safe (text positions are
     // unchanged, but the rule list is the same so this is essentially free)
@@ -745,6 +723,27 @@ void GameLayer::PushChain(int x, int y, int dx, int dy, bool mover_is_float) {
   }
 }
 
+void GameLayer::PullChain(int from_x, int from_y, int dx, int dy, bool mover_is_float) {
+  // Cell directly behind the vacated tile (opposite of motion direction).
+  const int bx = from_x - dx;
+  const int by = from_y - dy;
+  std::vector<entt::entity> pullers;
+  for (auto [e, cell] : registry_.view<Cell, const IsPull>().each()) {
+    if (cell.x != bx || cell.y != by) continue;
+    const bool other_is_float = registry_.all_of<IsFloat>(e);
+    if (other_is_float != mover_is_float) continue;
+    pullers.push_back(e);
+  }
+  if (pullers.empty()) return;
+  for (auto e : pullers) {
+    auto& c = registry_.get<Cell>(e);
+    c.x = from_x;
+    c.y = from_y;
+  }
+  // Cell (bx, by) is now empty; check one further back for the next pull.
+  PullChain(bx, by, dx, dy, mover_is_float);
+}
+
 bool GameLayer::TryMove(entt::entity who, Direction dir) {
   const auto& c = registry_.get<const Cell>(who);
   const auto [dx, dy] = Delta(dir);
@@ -758,6 +757,7 @@ bool GameLayer::TryMove(entt::entity who, Direction dir) {
   auto& mut = registry_.get<Cell>(who);
   mut.x = tx;
   mut.y = ty;
+  PullChain(from_x, from_y, dx, dy, mover_is_float);
   if (auto* facing = registry_.try_get<Facing>(who)) facing->dir = dir;
   // Step the walk frame so directional sprites visibly animate per-move.
   if (auto* af = registry_.try_get<AnimFrame>(who)) {
@@ -1211,7 +1211,11 @@ void GameLayer::DrawRulesPanel() {
     for (const auto& rule : rules_) {
       const std::string subject = to_upper(PrettyName(rule.subject));
       const std::string predicate = to_upper(PrettyName(rule.predicate));
-      ImGui::Text("%s . IS . %s", subject.c_str(), predicate.c_str());
+      if (rule.negated) {
+        ImGui::Text("%s . IS . NOT . %s", subject.c_str(), predicate.c_str());
+      } else {
+        ImGui::Text("%s . IS . %s", subject.c_str(), predicate.c_str());
+      }
     }
   }
   ImGui::Separator();
