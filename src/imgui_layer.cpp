@@ -140,6 +140,10 @@ void ImGuiLayer::OnUpdate(float /*dt*/) {
 }
 
 void ImGuiLayer::Begin() {
+  if (reset_layout_pending_) {
+    reset_layout_pending_ = false;
+    ImGui::LoadIniSettingsFromDisk("imgui_default.ini");
+  }
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
@@ -221,9 +225,12 @@ void ImGuiLayer::DrawMainMenuBar() {
       ImGui::SaveIniSettingsToDisk("imgui_default.ini");
     }
     if (ImGui::MenuItem("Reset Layout")) {
-      // Restore whatever was last captured via Save Layout. Silently no-ops
-      // if the user hasn't saved a default yet.
-      ImGui::LoadIniSettingsFromDisk("imgui_default.ini");
+      // Defer the load to the next frame's Begin() - calling
+      // LoadIniSettingsFromDisk now would clear the dock graph after
+      // DockSpaceOverViewport already submitted this frame's dockspace,
+      // leaving panels orphaned and floating. Silently no-ops at the next
+      // frame if the user hasn't saved a default yet.
+      reset_layout_pending_ = true;
     }
     ImGui::Separator();
     ImGui::MenuItem("ImGui Demo", nullptr, &show_demo_);

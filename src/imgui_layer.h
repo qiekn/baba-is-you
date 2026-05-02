@@ -86,6 +86,10 @@ class ImGuiLayer : public Layer {
   bool show_demo_ = false;
   bool show_grid_ = true;
   float grid_opacity_ = 0.2f;
+  // Set by the Reset Layout menu; consumed at the start of the next frame
+  // (before NewFrame) so LoadIniSettingsFromDisk doesn't fight an
+  // already-submitted dockspace.
+  bool reset_layout_pending_ = false;
   bool* show_scene_panel_ = nullptr;
   bool* show_rules_panel_ = nullptr;
   bool* show_editor_panel_ = nullptr;
