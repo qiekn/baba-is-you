@@ -120,13 +120,13 @@ void GameLayer::OnAttach() {
   RefreshBuiltInLevels();
   // Editor toolbar icons. Indices must match the Tool enum order.
   const char* kToolIconPaths[7] = {
-      "icon/brush.png",        // Tool::Brush
-      "icon/line.png",         // Tool::Line
-      "icon/rect-outline.png", // Tool::RectOutline
-      "icon/rect-full.png",    // Tool::RectFilled
-      "icon/select.png",       // Tool::Select
-      "icon/paint.png",        // Tool::Bucket
-      "icon/eraser.png",       // Tool::Eraser
+      "assets/icons/brush.png",        // Tool::Brush
+      "assets/icons/line.png",         // Tool::Line
+      "assets/icons/rect-outline.png", // Tool::RectOutline
+      "assets/icons/rect-full.png",    // Tool::RectFilled
+      "assets/icons/select.png",       // Tool::Select
+      "assets/icons/paint.png",        // Tool::Bucket
+      "assets/icons/eraser.png",       // Tool::Eraser
   };
   for (std::size_t i = 0; i < tool_icons_.size(); ++i) {
     tool_icons_[i] = LoadTexture(kToolIconPaths[i]);

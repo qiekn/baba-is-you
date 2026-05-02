@@ -2,9 +2,9 @@
 
 A from-scratch C++23 remake of *Baba Is You*, built on raylib + Dear ImGui.
 
-![Editor layout](screenshot-1.png)
+![Editor layout](docs/images/screenshot-1.png)
 
-![Gameplay](screenshot-2.png)
+![Gameplay](docs/images/screenshot-2.png)
 
 ## Build
 
