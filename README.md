@@ -1,5 +1,8 @@
 # Yet Another Baba-Is-You Clone
 
+> This project is just for programming practice.  
+> [Buy Baba Is You on Steam](https://store.steampowered.com/app/736260/Baba_Is_You/)
+
 A from-scratch C++23 remake of *Baba Is You*, built on raylib + Dear ImGui.
 
 ![Editor layout](docs/images/screenshot-1.png)
