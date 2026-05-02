@@ -17,7 +17,7 @@ cmake --build build
 ## Run
 
 ```sh
-./build/baba
+"./build/Baba Is You"
 ```
 
 Always launch from the repo root - the binary resolves assets relative to

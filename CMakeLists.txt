@@ -70,6 +70,21 @@ add_executable(${PROJECT_NAME}
   src/world.cpp
 )
 
+# User-facing executable name; the CMake target is still `baba` so scripts and
+# generators that reference the target stay readable. Output: "Baba Is You.exe"
+# on Windows, "Baba Is You" elsewhere.
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "Baba Is You")
+
+# On Linux releases we ship the libc++/libunwind runtime next to the
+# executable, so embed a relative rpath that points there. Harmless when
+# those libs aren't present (loader falls back to the system path).
+if(UNIX AND NOT APPLE)
+  set_target_properties(${PROJECT_NAME} PROPERTIES
+    BUILD_RPATH "$ORIGIN"
+    INSTALL_RPATH "$ORIGIN"
+  )
+endif()
+
 target_include_directories(${PROJECT_NAME}
   PRIVATE
     deps/entt/single_include

@@ -17,7 +17,7 @@ First-time setup requires the git submodules (raylib, imgui):
 git submodule update --init --recursive
 cmake -S . -B build -G Ninja
 cmake --build build
-./build/baba
+"./build/Baba Is You"
 ```
 
 `run.sh` is the common dev shortcut (rebuild + run):

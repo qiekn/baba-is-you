@@ -1,2 +1,2 @@
 cmake --build build
-./build/baba
+"./build/Baba Is You"
