@@ -205,17 +205,15 @@ void ImGuiLayer::DrawMainMenuBar() {
     }
     ImGui::Separator();
     if (ImGui::MenuItem("Save Layout")) {
-      // ImGui auto-saves on shutdown; this forces a write so the current
-      // arrangement persists even on a hard quit/crash.
-      ImGui::SaveIniSettingsToDisk(io.IniFilename);
+      // Snapshot the current arrangement to a sidecar file. Reset Layout
+      // reloads from this snapshot, so this acts as "remember this as my
+      // default". The live imgui.ini still auto-saves on shutdown.
+      ImGui::SaveIniSettingsToDisk("imgui_default.ini");
     }
     if (ImGui::MenuItem("Reset Layout")) {
-      // Clear the in-memory dock graph and stop ImGui from re-saving the
-      // empty state on shutdown; deleting the file means the next launch
-      // starts from a clean slate (panels float, user re-arranges).
-      ImGui::LoadIniSettingsFromMemory("", 0);
-      if (io.IniFilename) std::filesystem::remove(io.IniFilename);
-      io.IniFilename = nullptr;
+      // Restore whatever was last captured via Save Layout. Silently no-ops
+      // if the user hasn't saved a default yet.
+      ImGui::LoadIniSettingsFromDisk("imgui_default.ini");
     }
     ImGui::Separator();
     ImGui::MenuItem("ImGui Demo", nullptr, &show_demo_);
