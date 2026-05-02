@@ -2170,7 +2170,8 @@ void GameLayer::DrawWorldPanel() {
     }
   }
 
-  if (!imported_stems_.empty() && ImGui::CollapsingHeader("Imported")) {
+  if (!imported_stems_.empty() &&
+      ImGui::CollapsingHeader("Imported", ImGuiTreeNodeFlags_DefaultOpen)) {
     ImGui::Text("(%zu levels)", imported_stems_.size());
     ImGui::InputTextWithHint("##filter", "filter (e.g. 12 or lev)",
                              imported_filter_, sizeof(imported_filter_));
@@ -2184,8 +2185,11 @@ void GameLayer::DrawWorldPanel() {
       return a.find(b) != std::string::npos;
     };
     imported_index_ = std::clamp(imported_index_, 0, static_cast<int>(imported_stems_.size()) - 1);
-    const char* cur = imported_names_[imported_index_].c_str();
-    if (ImGui::BeginCombo("##imported", cur)) {
+
+    // Inline listbox: typing in the filter immediately shrinks the list,
+    // no need to open a separate combo popup.
+    const float row_h = ImGui::GetTextLineHeightWithSpacing();
+    if (ImGui::BeginListBox("##imported_list", ImVec2(-FLT_MIN, 10.0f * row_h))) {
       for (int i = 0; i < static_cast<int>(imported_stems_.size()); ++i) {
         if (!matches(imported_names_[i])) continue;
         const bool selected = (i == imported_index_);
@@ -2196,13 +2200,14 @@ void GameLayer::DrawWorldPanel() {
         }
         if (selected) ImGui::SetItemDefaultFocus();
       }
-      ImGui::EndCombo();
+      ImGui::EndListBox();
     }
-    ImGui::SameLine();
+
     if (ImGui::Button("Load##imp")) {
       LoadLevelFromPath(std::filesystem::path{kImportedDir} /
                         (imported_stems_[imported_index_] + ".json"));
     }
+    ImGui::SameLine();
     if (ImGui::Button("Prev##imp")) {
       const int n = static_cast<int>(imported_stems_.size());
       imported_index_ = (imported_index_ - 1 + n) % n;
