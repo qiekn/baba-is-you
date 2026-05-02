@@ -97,7 +97,10 @@ void ImGuiLayer::OnAttach() {
   ImGuiIO& io = ImGui::GetIO();
   io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-  io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+  // Multi-viewport (panels detached into standalone OS windows) is opt-in via
+  // the View > Allow Detach menu - leaving it on by default makes submenu
+  // popups create extra OS windows whose placement doesn't match the raylib
+  // window's client area, so dropdowns appear offset from their menu bar.
 
   LoadFonts(dpi_scale);
   SetupStyle(dpi_scale);
