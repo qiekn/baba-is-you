@@ -344,14 +344,34 @@ void GameLayer::OnUpdate(float dt) {
   // Gameplay input should not trigger while typing in ImGui widgets.
   if (ImGui::GetIO().WantCaptureKeyboard) return;
 
-  if (IsKeyPressed(KEY_Z)) {
-    Snapshot snap;
-    if (undo_.Pop(snap)) {
-      RestoreSnapshot(registry_, snap);
-      won_ = false;
+  if (IsKeyDown(KEY_Z)) {
+    auto try_undo = [&]() {
+      Snapshot snap;
+      if (undo_.Pop(snap)) {
+        RestoreSnapshot(registry_, snap);
+        won_ = false;
+        return true;
+      }
+      return false;
+    };
+    if (!undo_held_) {
+      undo_held_ = true;
+      undo_hold_time_ = 0.0f;
+      undo_first_repeat_done_ = false;
+      try_undo();
+    } else {
+      undo_hold_time_ += dt;
+      const float threshold = undo_first_repeat_done_ ? repeat_interval_ : repeat_delay_;
+      if (undo_hold_time_ >= threshold) {
+        if (try_undo()) {
+          undo_first_repeat_done_ = true;
+        }
+        undo_hold_time_ = 0.0f;
+      }
     }
     return;
   }
+  undo_held_ = false;
 
   struct KeyDir {
     int key;
@@ -553,10 +573,11 @@ void GameLayer::LoadLevelFromPath(const std::filesystem::path& path) {
 }
 
 void GameLayer::ResetToInitial() {
+  // Capture the pre-reset state so a Z press can undo the reset itself.
+  undo_.Push(CaptureSnapshot(registry_));
   level_ = initial_level_;
   win_handled_ = false;
   BuildRegistryFromLevel();
-  undo_.Clear();
   won_ = false;
   RecomputeRules(true);
 }

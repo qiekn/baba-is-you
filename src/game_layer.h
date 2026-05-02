@@ -189,6 +189,12 @@ class GameLayer : public Layer {
   float repeat_delay_ = 0.15f;
   float repeat_interval_ = 0.13f;
 
+  // Z-undo uses the same press-then-repeat cadence as movement so holding Z
+  // walks back through history.
+  bool undo_held_ = false;
+  float undo_hold_time_ = 0.0f;
+  bool undo_first_repeat_done_ = false;
+
   // Editor state
   bool edit_mode_ = false;
   std::variant<ObjectId, TextId> brush_ = ObjectId::Baba;
