@@ -304,7 +304,10 @@ void GameLayer::OnUpdate(float dt) {
   }
 
   if (IsKeyPressed(KEY_R)) {
-    reset_requested_ = true;
+    // Reset directly so the keybind still works when the ImGui overlay is
+    // hidden (the modal opened from OnImGuiRender wouldn't render). The
+    // editor's mouse-driven Reset button keeps the modal as a guard.
+    ResetToInitial();
     return;
   }
 
