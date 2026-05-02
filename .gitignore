@@ -6,3 +6,4 @@ build/
 /assets/imported/
 /progress.json
 __pycache__/
+/imgui.ini

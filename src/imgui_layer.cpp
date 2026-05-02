@@ -102,6 +102,16 @@ void ImGuiLayer::OnAttach() {
   // popups create extra OS windows whose placement doesn't match the raylib
   // window's client area, so dropdowns appear offset from their menu bar.
 
+  // Seed the layout from the committed default when there's no live ini yet
+  // (typical on a fresh checkout). io.IniFilename still points at imgui.ini
+  // so auto-save writes the user's runtime tweaks there - imgui.ini is
+  // gitignored, imgui_default.ini is the canonical layout in the repo.
+  // LoadIniSettingsFromDisk sets SettingsLoaded=true, which suppresses
+  // NewFrame's automatic load of io.IniFilename.
+  if (io.IniFilename && !std::filesystem::exists(io.IniFilename)) {
+    ImGui::LoadIniSettingsFromDisk("imgui_default.ini");
+  }
+
   LoadFonts(dpi_scale);
   SetupStyle(dpi_scale);
 
