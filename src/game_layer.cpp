@@ -362,7 +362,11 @@ void GameLayer::OnUpdate(float dt) {
   }
 
   // Gameplay input should not trigger while typing in ImGui widgets.
-  if (ImGui::GetIO().WantCaptureKeyboard) return;
+  // WantCaptureKeyboard is also true whenever any ImGui window is focused
+  // under ConfigFlags_NavEnableKeyboard - which includes the Viewport panel
+  // hosting the game - so it would swallow WASD/arrows during normal play.
+  // WantTextInput only fires for active text widgets, which is what we want.
+  if (ImGui::GetIO().WantTextInput) return;
 
   if (IsKeyDown(KEY_Z)) {
     auto try_undo = [&]() {
