@@ -151,6 +151,18 @@ void GameLayer::OnAttach() {
               [&](const std::string& a, const std::string& b) {
                 return split(a) < split(b);
               });
+    // Resolve a display name for each level so the dropdown can show titles.
+    // Falling back to the stem keeps unknown/empty names sortable.
+    imported_names_.reserve(imported_stems_.size());
+    for (const auto& stem : imported_stems_) {
+      Level loaded;
+      const auto path = std::filesystem::path{kImportedDir} / (stem + ".json");
+      if (LoadLevelFromJson(path, loaded) && !loaded.name.empty()) {
+        imported_names_.push_back(stem + " - " + loaded.name);
+      } else {
+        imported_names_.push_back(stem);
+      }
+    }
   }
   // Boot into level 0 of the world (e.g. tutorial's "01-intro"). If the world
   // file is missing or empty, fall back to the bundled starter level.
@@ -236,7 +248,8 @@ void GameLayer::OnUpdate(float dt) {
     transition_t_ += dt / kTransitionPhaseSeconds;
     if (transition_state_ == TransitionState::Closing && transition_t_ >= 1.0f) {
       if (!transition_target_.empty()) {
-        LoadLevelFromPath(std::filesystem::path{kLevelsDir} / (transition_target_ + ".json"));
+        const char* dir = imported_active_ ? kImportedDir : kLevelsDir;
+        LoadLevelFromPath(std::filesystem::path{dir} / (transition_target_ + ".json"));
       }
       transition_state_ = TransitionState::Opening;
       transition_t_ = 0.0f;
@@ -558,6 +571,17 @@ void GameLayer::LoadLevelFromPath(const std::filesystem::path& path) {
   board::kCols = level_.cols;
   board::kRows = level_.rows;
   current_level_id_ = path.stem().string();
+  // Track whether this level came from the imported/ pool so the win
+  // transition can pick the next entry from the right list.
+  imported_active_ = (path.parent_path().filename() == "imported");
+  if (imported_active_) {
+    for (int i = 0; i < static_cast<int>(imported_stems_.size()); ++i) {
+      if (imported_stems_[i] == current_level_id_) {
+        imported_index_ = i;
+        break;
+      }
+    }
+  }
   if (!current_level_id_.empty() &&
       std::all_of(current_level_id_.begin(), current_level_id_.end(),
                   [](unsigned char c) { return std::isdigit(c) != 0; })) {
@@ -987,6 +1011,14 @@ void GameLayer::RunWinDefeat() {
 }
 
 std::optional<std::string> GameLayer::NextLevelId() const {
+  // Imported-pool advancement: walk imported_stems_ in its sorted order.
+  if (imported_active_) {
+    if (imported_stems_.empty()) return std::nullopt;
+    const int next = imported_index_ + 1;
+    if (next >= static_cast<int>(imported_stems_.size())) return std::nullopt;
+    return imported_stems_[next];
+  }
+
   if (current_level_id_.empty() || world_.levels.empty()) return std::nullopt;
 
   auto parse_numeric_id = [](const std::string& id) -> std::optional<int> {
@@ -2152,12 +2184,12 @@ void GameLayer::DrawWorldPanel() {
       return a.find(b) != std::string::npos;
     };
     imported_index_ = std::clamp(imported_index_, 0, static_cast<int>(imported_stems_.size()) - 1);
-    const char* cur = imported_stems_[imported_index_].c_str();
+    const char* cur = imported_names_[imported_index_].c_str();
     if (ImGui::BeginCombo("##imported", cur)) {
       for (int i = 0; i < static_cast<int>(imported_stems_.size()); ++i) {
-        if (!matches(imported_stems_[i])) continue;
+        if (!matches(imported_names_[i])) continue;
         const bool selected = (i == imported_index_);
-        if (ImGui::Selectable(imported_stems_[i].c_str(), selected)) {
+        if (ImGui::Selectable(imported_names_[i].c_str(), selected)) {
           imported_index_ = i;
           LoadLevelFromPath(std::filesystem::path{kImportedDir} /
                             (imported_stems_[i] + ".json"));

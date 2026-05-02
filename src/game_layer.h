@@ -234,7 +234,14 @@ class GameLayer : public Layer {
 
   // Imported-level browser (assets/imported/)
   std::vector<std::string> imported_stems_;
+  // Display names cached at load time so the dropdown can show
+  // "0level - baba is you" instead of just "0level".
+  std::vector<std::string> imported_names_;
   int imported_index_ = 0;
+  // True while the active level was loaded from assets/imported/, so the
+  // win-transition advances to the next imported entry instead of the next
+  // tutorial-world id.
+  bool imported_active_ = false;
   char imported_filter_[64] = "";
 
   // Visual sparkles for IsWin entities.
