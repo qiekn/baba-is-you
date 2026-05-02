@@ -212,11 +212,13 @@ void ImGuiLayer::DrawMainMenuBar() {
 }
 
 RenderTexture2D& ImGuiLayer::ViewportTarget() {
-  // Choose a positive size: when the panel is closed/minimized or the UI is
-  // hidden, fall back to the OS window size so the game still has somewhere
-  // to draw to.
-  int want_w = static_cast<int>(viewport_size_.x);
-  int want_h = static_cast<int>(viewport_size_.y);
+  // The render-texture must match the canvas size that game code is currently
+  // drawing against. Game::Render publishes that to board:: each frame
+  // (including when the UI is hidden, in which case it equals the OS window
+  // size). Trusting board:: avoids a one-frame lag where viewport_size_ still
+  // holds the previous panel size after the UI just got toggled off.
+  int want_w = board::kViewportWidth;
+  int want_h = board::kViewportHeight;
   if (want_w <= 0 || want_h <= 0) {
     want_w = std::max(1, GetScreenWidth());
     want_h = std::max(1, GetScreenHeight());
