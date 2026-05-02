@@ -263,8 +263,16 @@ void ImGuiLayer::DrawViewportPanel() {
 
   const ImVec2 size = ImGui::GetContentRegionAvail();
   const ImVec2 pos = ImGui::GetCursorScreenPos();
+  // GetCursorScreenPos is in ImGui screen space, which under
+  // ConfigFlags_ViewportsEnable equals the OS desktop. raylib's
+  // GetMousePosition() is relative to the main OS window's client area, so
+  // subtract the main viewport's origin to bring both into the same space.
+  // This stays correct as long as the Viewport panel lives inside the main
+  // window; if the user detaches it to a standalone OS window, raylib won't
+  // see those mouse events anyway.
+  const ImGuiViewport* main_vp = ImGui::GetMainViewport();
   viewport_size_ = {size.x, size.y};
-  viewport_top_left_ = {pos.x, pos.y};
+  viewport_top_left_ = {pos.x - main_vp->Pos.x, pos.y - main_vp->Pos.y};
   viewport_focused_ = ImGui::IsWindowFocused();
   viewport_hovered_ = ImGui::IsWindowHovered();
   // Publish to the board namespace so non-ImGui code (game_layer mouse
