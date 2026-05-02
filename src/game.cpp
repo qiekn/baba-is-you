@@ -172,6 +172,10 @@ void Game::Render() {
 
   imgui_layer_->Begin();
   if (imgui_layer_->IsVisible()) {
+    // Build the dockspace + menu bar before iterating layers so each panel
+    // can dock into the central node (otherwise GameLayer's windows would
+    // open before the dockspace exists and fail to attach).
+    imgui_layer_->OnImGuiPreRender();
     for (auto& layer : layers_) {
       layer->OnImGuiRender();
     }

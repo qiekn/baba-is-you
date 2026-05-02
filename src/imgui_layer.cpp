@@ -144,15 +144,17 @@ void ImGuiLayer::End() {
   }
 }
 
-void ImGuiLayer::OnImGuiRender() {
-  // Visibility is gated by Game::Render before this runs, so no check here.
-
+void ImGuiLayer::OnImGuiPreRender() {
   // Plain dockspace (no PassthruCentralNode): the central area is now owned
   // by the Viewport panel which renders the game framebuffer as ImGui::Image.
+  // Must run before any other layer's OnImGuiRender so their windows can
+  // attach to the dockspace by id.
   ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
-
   DrawMainMenuBar();
+}
 
+void ImGuiLayer::OnImGuiRender() {
+  // Visibility is gated by Game::Render before this runs, so no check here.
   if (show_viewport_) DrawViewportPanel();
   if (show_inspector_) DrawInspectorPanel();
   if (show_themes_) DrawThemesPanel();

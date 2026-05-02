@@ -12,6 +12,10 @@ class ImGuiLayer : public Layer {
   void OnDetach() override;
   void OnUpdate(float dt) override;
   void OnImGuiRender() override;
+  // Lays the fullscreen dockspace and the main menu bar before any other
+  // layer's OnImGuiRender runs. Panels created during layer iteration can
+  // then attach to the dockspace by id.
+  void OnImGuiPreRender();
 
   // Begin/End bracket the per-frame ImGui pass around every layer's
   // OnImGuiRender. Keeping this explicit (rather than rolling it into
