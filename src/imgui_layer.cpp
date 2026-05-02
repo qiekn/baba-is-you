@@ -266,16 +266,18 @@ void ImGuiLayer::DrawViewportPanel() {
 
   const ImVec2 size = ImGui::GetContentRegionAvail();
   const ImVec2 pos = ImGui::GetCursorScreenPos();
-  // GetCursorScreenPos is in ImGui screen space, which under
-  // ConfigFlags_ViewportsEnable equals the OS desktop. raylib's
-  // GetMousePosition() is relative to the main OS window's client area, so
-  // subtract the main viewport's origin to bring both into the same space.
-  // This stays correct as long as the Viewport panel lives inside the main
-  // window; if the user detaches it to a standalone OS window, raylib won't
-  // see those mouse events anyway.
+  // ImGui (via imgui_impl_glfw) measures in framebuffer/physical pixels, but
+  // raylib's GetMousePosition / GetScreenWidth return logical pixels under
+  // FLAG_WINDOW_HIGHDPI (raylib calls SetMouseScale(1/dpi) internally). Divide
+  // by the DPI scale here so the published origin/size live in the same
+  // logical-pixel space as the rest of the game's coordinate math; otherwise
+  // the editor cursor lands above-and-left of the real pointer on HiDPI
+  // displays. Subtracting the main viewport's Pos additionally handles the
+  // OS-desktop offset that appears when ConfigFlags_ViewportsEnable is on.
   const ImGuiViewport* main_vp = ImGui::GetMainViewport();
-  viewport_size_ = {size.x, size.y};
-  viewport_top_left_ = {pos.x - main_vp->Pos.x, pos.y - main_vp->Pos.y};
+  const float dpi = std::max(1.0f, std::max(GetWindowScaleDPI().x, GetWindowScaleDPI().y));
+  viewport_size_ = {size.x / dpi, size.y / dpi};
+  viewport_top_left_ = {(pos.x - main_vp->Pos.x) / dpi, (pos.y - main_vp->Pos.y) / dpi};
   viewport_focused_ = ImGui::IsWindowFocused();
   viewport_hovered_ = ImGui::IsWindowHovered();
   // Publish to the board namespace so non-ImGui code (game_layer mouse
