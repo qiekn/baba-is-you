@@ -70,6 +70,7 @@ jobs:
           update: true
           install: >-
             git
+            zip
             mingw-w64-clang-x86_64-clang
             mingw-w64-clang-x86_64-libc++
             mingw-w64-clang-x86_64-lld
@@ -116,7 +117,7 @@ jobs:
           cp README.md "${stage}/"
 
           if [[ "${{ matrix.archive }}" == "zip" ]]; then
-            (cd dist && 7z a -tzip "${name}.zip" "${name}")
+            (cd dist && zip -r "${name}.zip" "${name}")
             archive="dist/${name}.zip"
           else
             (cd dist && tar -czf "${name}.tar.gz" "${name}")
