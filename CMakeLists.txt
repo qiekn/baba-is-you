@@ -75,6 +75,13 @@ add_executable(${PROJECT_NAME}
 # on Windows, "Baba Is You" elsewhere.
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "Baba Is You")
 
+# Hide the Windows console window. CMake translates WIN32_EXECUTABLE to
+# -mwindows on Clang/MinGW and /SUBSYSTEM:WINDOWS on MSVC; no-op on Linux/Mac.
+# The MinGW/MSYS CRT supplies a WinMain shim that calls our main(), so no
+# source change is required. Run with WIN32_EXECUTABLE=OFF if you need a
+# console for debugging.
+set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
+
 # On Linux releases we ship the libc++/libunwind runtime next to the
 # executable, so embed a relative rpath that points there. Harmless when
 # those libs aren't present (loader falls back to the system path).
