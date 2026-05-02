@@ -106,6 +106,7 @@ class GameLayer : public Layer {
   // World / progression
   void MarkLevelCompleted(const std::string& id);
   bool IsUnlocked(std::size_t level_index) const;
+  void LoadCampaign(const std::filesystem::path& path);
 
   // Rendering
   void DrawEntities();
@@ -284,6 +285,21 @@ class GameLayer : public Layer {
   World world_;
   Progress progress_;
   std::string current_level_id_;
+
+  // Campaign tree loaded from assets/campaign.json. Each leaf carries the
+  // imported-source stem to load when clicked.
+  struct CampaignLevel {
+    std::string display;
+    std::string source;
+  };
+  struct CampaignSubworld {
+    int id = 0;
+    std::string name;
+    std::vector<CampaignLevel> levels;
+    std::vector<CampaignLevel> extra_levels;
+  };
+  std::vector<CampaignLevel> campaign_main_;
+  std::vector<CampaignSubworld> campaign_subworlds_;
   bool win_handled_ = false;
   bool show_scene_panel_ = true;
   bool show_rules_panel_ = true;

@@ -1,0 +1,906 @@
+{
+  "main_world": [
+    {
+      "id": "00",
+      "name": "Baba Is You",
+      "source": "0level"
+    },
+    {
+      "id": "01",
+      "name": "Where Do I Go?",
+      "source": "1level"
+    },
+    {
+      "id": "02",
+      "name": "Now What Is This?",
+      "source": "189level"
+    },
+    {
+      "id": "03",
+      "name": "Out Of Reach",
+      "source": "3level"
+    },
+    {
+      "id": "04",
+      "name": "Still Out Of Reach",
+      "source": "2level"
+    },
+    {
+      "id": "05",
+      "name": "Volcano",
+      "source": "90level"
+    },
+    {
+      "id": "06",
+      "name": "Off Limits",
+      "source": "5level"
+    },
+    {
+      "id": "07",
+      "name": "Grass Yard",
+      "source": "6level"
+    },
+    {
+      "id": "08",
+      "name": "Slideshow",
+      "source": "243level"
+    },
+    {
+      "id": "09",
+      "name": "Fragile Existence",
+      "source": "245level"
+    },
+    {
+      "id": "10",
+      "name": "Hostile Environment",
+      "source": "117level"
+    },
+    {
+      "id": "Finale",
+      "name": "A Way Out?",
+      "source": "203level"
+    },
+    {
+      "id": "Secret",
+      "name": "?",
+      "source": "78level"
+    }
+  ],
+  "subworlds": [
+    {
+      "id": 1,
+      "name": "The Lake",
+      "levels": [
+        {
+          "display": "01 - Icy Waters",
+          "name": "Icy Waters",
+          "source": "20level"
+        },
+        {
+          "display": "02 - Turns",
+          "name": "Turns",
+          "source": "212level"
+        },
+        {
+          "display": "03 - Affection",
+          "name": "Affection",
+          "source": "10level"
+        },
+        {
+          "display": "04 - Pillar Yard",
+          "name": "Pillar Yard",
+          "source": "4level"
+        },
+        {
+          "display": "05 - Brick Wall",
+          "name": "Brick Wall",
+          "source": "93level"
+        },
+        {
+          "display": "06 - Lock",
+          "name": "Lock",
+          "source": "209level"
+        },
+        {
+          "display": "07 - Novice Locksmith",
+          "name": "Novice Locksmith",
+          "source": "15level"
+        },
+        {
+          "display": "08 - Locked In",
+          "name": "Locked In",
+          "source": "8level"
+        },
+        {
+          "display": "09 - Changeless",
+          "name": "Changeless",
+          "source": "236level"
+        },
+        {
+          "display": "10 - Two Doors",
+          "name": "Two Doors",
+          "source": "210level"
+        },
+        {
+          "display": "11 - Jelly Throne",
+          "name": "Jelly Throne",
+          "source": "136level"
+        },
+        {
+          "display": "12 - Crab Storage",
+          "name": "Crab Storage",
+          "source": "30level"
+        },
+        {
+          "display": "13 - Burglary",
+          "name": "Burglary",
+          "source": "166level"
+        }
+      ],
+      "extra_levels": [
+        {
+          "display": "Extra 1 - Submerged Ruins",
+          "name": "Submerged Ruins",
+          "source": "211level"
+        },
+        {
+          "display": "Extra 2 - Sunken Temple",
+          "name": "Sunken Temple",
+          "source": "314level"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Solitary Island",
+      "levels": [
+        {
+          "display": "00 - Poem",
+          "name": "Poem",
+          "source": "310level"
+        },
+        {
+          "display": "01 - Float",
+          "name": "Float",
+          "source": "205level"
+        },
+        {
+          "display": "02 - Warm River",
+          "name": "Warm River",
+          "source": "218level"
+        },
+        {
+          "display": "03 - Bridge Building",
+          "name": "Bridge Building",
+          "source": "171level"
+        },
+        {
+          "display": "04 - Bridge Building?",
+          "name": "Bridge Building?",
+          "source": "172level"
+        },
+        {
+          "display": "05 - Victory Spring",
+          "name": "Victory Spring",
+          "source": "234level"
+        },
+        {
+          "display": "06 - Assembly Team",
+          "name": "Assembly Team",
+          "source": "107level"
+        },
+        {
+          "display": "07 - Catch The Thief!",
+          "name": "Catch The Thief!",
+          "source": "7level"
+        },
+        {
+          "display": "08 - Tiny Pond",
+          "name": "Tiny Pond",
+          "source": "37level"
+        },
+        {
+          "display": "09 - Research Facility",
+          "name": "Research Facility",
+          "source": "319level"
+        },
+        {
+          "display": "10 - Wireless Connection",
+          "name": "Wireless Connection",
+          "source": "68level"
+        },
+        {
+          "display": "11 - Prison",
+          "name": "Prison",
+          "source": "65level"
+        }
+      ],
+      "extra_levels": [
+        {
+          "display": "Extra 1 - Boiling River",
+          "name": "Boiling River",
+          "source": "219level"
+        },
+        {
+          "display": "Extra 2 - ...Bridges?",
+          "name": "...Bridges?",
+          "source": "173level"
+        },
+        {
+          "display": "Extra 3 - Tiny Isle",
+          "name": "Tiny Isle",
+          "source": "41level"
+        },
+        {
+          "display": "Extra 4 - Dim Signal",
+          "name": "Dim Signal",
+          "source": "134level"
+        },
+        {
+          "display": "Extra 5 - Dungeon",
+          "name": "Dungeon",
+          "source": "318level"
+        },
+        {
+          "display": "Extra 6 - Evaporating River",
+          "name": "Evaporating River",
+          "source": "215level"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Temple Ruins",
+      "levels": [
+        {
+          "display": "01 - Fragility",
+          "name": "Fragility",
+          "source": "199level"
+        },
+        {
+          "display": "02 - Tunnel Vision",
+          "name": "Tunnel Vision",
+          "source": "52level"
+        },
+        {
+          "display": "03 - A Present for You",
+          "name": "A Present for You",
+          "source": "58level"
+        },
+        {
+          "display": "04 - Unreachable Shores",
+          "name": "Unreachable Shores",
+          "source": "17level"
+        },
+        {
+          "display": "05 - But Where's the Key",
+          "name": "But Where's the Key",
+          "source": "23level"
+        },
+        {
+          "display": "06 - Love Is Out There",
+          "name": "Love Is Out There",
+          "source": "33level"
+        },
+        {
+          "display": "07 - Perilous Gang",
+          "name": "Perilous Gang",
+          "source": "71level"
+        },
+        {
+          "display": "08 - Double Moat",
+          "name": "Double Moat",
+          "source": "72level"
+        },
+        {
+          "display": "09 - Walls of Gold",
+          "name": "Walls of Gold",
+          "source": "56level"
+        }
+      ],
+      "extra_levels": [
+        {
+          "display": "Extra 1 - Further Fields",
+          "name": "Further Fields",
+          "source": "129level"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Forest of Fall",
+      "levels": [
+        {
+          "display": "01 - Hop",
+          "name": "Hop",
+          "source": "238level"
+        },
+        {
+          "display": "02 - Grand Stream",
+          "name": "Grand Stream",
+          "source": "221level"
+        },
+        {
+          "display": "03 - Rocky Road",
+          "name": "Rocky Road",
+          "source": "235level"
+        },
+        {
+          "display": "04 - Telephone",
+          "name": "Telephone",
+          "source": "62level"
+        },
+        {
+          "display": "05 - Haunt",
+          "name": "Haunt",
+          "source": "194level"
+        },
+        {
+          "display": "06 - Crate Square",
+          "name": "Crate Square",
+          "source": "220level"
+        },
+        {
+          "display": "07 - Ghost Friend",
+          "name": "Ghost Friend",
+          "source": "36level"
+        },
+        {
+          "display": "08 - Ghost Guard",
+          "name": "Ghost Guard",
+          "source": "26level"
+        },
+        {
+          "display": "09 - Leaf Chamber",
+          "name": "Leaf Chamber",
+          "source": "35level"
+        },
+        {
+          "display": "10 - Not There",
+          "name": "Not There",
+          "source": "137level"
+        },
+        {
+          "display": "11 - Catch",
+          "name": "Catch",
+          "source": "160level"
+        },
+        {
+          "display": "12 - Dead End",
+          "name": "Dead End",
+          "source": "174level"
+        },
+        {
+          "display": "A - Literacy",
+          "name": "Literacy",
+          "source": "77level"
+        },
+        {
+          "display": "B - Broken Playground",
+          "name": "Broken Playground",
+          "source": "29level"
+        },
+        {
+          "display": "C - Fetching",
+          "name": "Fetching",
+          "source": "269level"
+        },
+        {
+          "display": "D - Scenic Pond",
+          "name": "Scenic Pond",
+          "source": "307level"
+        },
+        {
+          "display": "E - Skeletal Door",
+          "name": "Skeletal Door",
+          "source": "70level"
+        }
+      ],
+      "extra_levels": [
+        {
+          "display": "Extra 1 - Jump",
+          "name": "Jump",
+          "source": "239level"
+        },
+        {
+          "display": "Extra 2 - Even Less There",
+          "name": "Even Less There",
+          "source": "138level"
+        },
+        {
+          "display": "Extra 3 - Deep Pool",
+          "name": "Deep Pool",
+          "source": "308level"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Deep Forest",
+      "levels": [
+        {
+          "display": "01 - Renovating",
+          "name": "Renovating",
+          "source": "66level"
+        },
+        {
+          "display": "02 - Toolshed",
+          "name": "Toolshed",
+          "source": "246level"
+        },
+        {
+          "display": "03 - Keep Out!",
+          "name": "Keep Out!",
+          "source": "69level"
+        },
+        {
+          "display": "04 - Baba Doesn't Respond",
+          "name": "Baba Doesn't Respond",
+          "source": "34level"
+        },
+        {
+          "display": "05 - Patrol",
+          "name": "Patrol",
+          "source": "57level"
+        },
+        {
+          "display": "06 - Canyon",
+          "name": "Canyon",
+          "source": "85level"
+        },
+        {
+          "display": "07 - Concrete Goals",
+          "name": "Concrete Goals",
+          "source": "151level"
+        },
+        {
+          "display": "08 - Victory in the Open",
+          "name": "Victory in the Open",
+          "source": "98level"
+        },
+        {
+          "display": "09 - Moving Floor",
+          "name": "Moving Floor",
+          "source": "191level"
+        },
+        {
+          "display": "10 - Lovely House",
+          "name": "Lovely House",
+          "source": "315level"
+        },
+        {
+          "display": "11 - Supermarket",
+          "name": "Supermarket",
+          "source": "248level"
+        },
+        {
+          "display": "12 - Lock the Door",
+          "name": "Lock the Door",
+          "source": "67level"
+        },
+        {
+          "display": "13 - Factory",
+          "name": "Factory",
+          "source": "28level"
+        },
+        {
+          "display": "14 - Tiny Pasture",
+          "name": "Tiny Pasture",
+          "source": "233level"
+        },
+        {
+          "display": "A - Nearly",
+          "name": "Nearly",
+          "source": "50level"
+        },
+        {
+          "display": "B - Not Quite",
+          "name": "Not Quite",
+          "source": "257level"
+        },
+        {
+          "display": "C - Passing Through",
+          "name": "Passing Through",
+          "source": "260level"
+        },
+        {
+          "display": "D - Salvage",
+          "name": "Salvage",
+          "source": "271level"
+        },
+        {
+          "display": "E - Insulation",
+          "name": "Insulation",
+          "source": "268level"
+        }
+      ],
+      "extra_levels": [
+        {
+          "display": "Extra 1 - Crumbling Floor",
+          "name": "Crumbling Floor",
+          "source": "193level"
+        },
+        {
+          "display": "Extra 2 - Skull House",
+          "name": "Skull House",
+          "source": "54level"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Rocket Trip",
+      "levels": [
+        {
+          "display": "01 - Empty",
+          "name": "Empty",
+          "source": "9level"
+        },
+        {
+          "display": "02 - Lonely Flag",
+          "name": "Lonely Flag",
+          "source": "11level"
+        },
+        {
+          "display": "03 - Babas Are You",
+          "name": "Babas Are You",
+          "source": "13level"
+        },
+        {
+          "display": "04 - Please Hold My Key",
+          "name": "Please Hold My Key",
+          "source": "80level"
+        },
+        {
+          "display": "05 - Horror Story",
+          "name": "Horror Story",
+          "source": "201level"
+        },
+        {
+          "display": "06 - Aiming High",
+          "name": "Aiming High",
+          "source": "111level"
+        },
+        {
+          "display": "07 - Trio",
+          "name": "Trio",
+          "source": "112level"
+        },
+        {
+          "display": "08 - Bottleneck",
+          "name": "Bottleneck",
+          "source": "79level"
+        },
+        {
+          "display": "09 - Platformer",
+          "name": "Platformer",
+          "source": "216level"
+        },
+        {
+          "display": "10 - The Pit",
+          "name": "The Pit",
+          "source": "226level"
+        },
+        {
+          "display": "11 - Heavy Words",
+          "name": "Heavy Words",
+          "source": "115level"
+        },
+        {
+          "display": "12 - Guardians",
+          "name": "Guardians",
+          "source": "82level"
+        },
+        {
+          "display": "13 - Sky Hold",
+          "name": "Sky Hold",
+          "source": "217level"
+        }
+      ],
+      "extra_levels": [
+        {
+          "display": "Extra 1 - Existential Crisis",
+          "name": "Existential Crisis",
+          "source": "324level"
+        },
+        {
+          "display": "Extra 2 - Heavy Cloud",
+          "name": "Heavy Cloud",
+          "source": "125level"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Flower Garden",
+      "levels": [
+        {
+          "display": "01 - Condition",
+          "name": "Condition",
+          "source": "59level"
+        },
+        {
+          "display": "02 - Thicket",
+          "name": "Thicket",
+          "source": "94level"
+        },
+        {
+          "display": "03 - Sorting Facility",
+          "name": "Sorting Facility",
+          "source": "242level"
+        },
+        {
+          "display": "04 - Relaxing Spot",
+          "name": "Relaxing Spot",
+          "source": "124level"
+        },
+        {
+          "display": "05 - Maritime Adventures",
+          "name": "Maritime Adventures",
+          "source": "64level"
+        },
+        {
+          "display": "06 - Ruined Orchard",
+          "name": "Ruined Orchard",
+          "source": "89level"
+        },
+        {
+          "display": "07 - Blockade",
+          "name": "Blockade",
+          "source": "150level"
+        },
+        {
+          "display": "08 - Jaywalkers United",
+          "name": "Jaywalkers United",
+          "source": "91level"
+        },
+        {
+          "display": "09 - Overgrowth",
+          "name": "Overgrowth",
+          "source": "130level"
+        },
+        {
+          "display": "10 - Adventurers",
+          "name": "Adventurers",
+          "source": "92level"
+        }
+      ],
+      "extra_levels": [
+        {
+          "display": "Extra 1 - Secret Garden",
+          "name": "Secret Garden",
+          "source": "127level"
+        },
+        {
+          "display": "Extra 2 - Out at Sea",
+          "name": "Out at Sea",
+          "source": "142level"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Chasm",
+      "levels": [
+        {
+          "display": "A - Rocky Prison",
+          "name": "Rocky Prison",
+          "source": "21level"
+        },
+        {
+          "display": "B - Siege",
+          "name": "Siege",
+          "source": "241level"
+        },
+        {
+          "display": "C - Elusive Condition",
+          "name": "Elusive Condition",
+          "source": "31level"
+        },
+        {
+          "display": "D - Treasury",
+          "name": "Treasury",
+          "source": "240level"
+        },
+        {
+          "display": "E - Looking for a Heart",
+          "name": "Looking for a Heart",
+          "source": "19level"
+        },
+        {
+          "display": "F - Lava Flood",
+          "name": "Lava Flood",
+          "source": "110level"
+        },
+        {
+          "display": "G - Entropy",
+          "name": "Entropy",
+          "source": "18level"
+        },
+        {
+          "display": "H - Floodgates",
+          "name": "Floodgates",
+          "source": "25level"
+        },
+        {
+          "display": "I - Lonely Sight",
+          "name": "Lonely Sight",
+          "source": "60level"
+        }
+      ],
+      "extra_levels": [
+        {
+          "display": "Extra-1 - Metacognition",
+          "name": "Metacognition",
+          "source": "155level"
+        },
+        {
+          "display": "Extra-2 - Multitool",
+          "name": "Multitool",
+          "source": "164level"
+        },
+        {
+          "display": "Extra-3 - Broken",
+          "name": "Broken",
+          "source": "175level"
+        },
+        {
+          "display": "Extra-4 - Alley",
+          "name": "Alley",
+          "source": "167level"
+        },
+        {
+          "display": "Extra-5 - Keke and the Star",
+          "name": "Keke and the Star",
+          "source": "156level"
+        },
+        {
+          "display": "Extra-6 - Visiting Baba",
+          "name": "Visiting Baba",
+          "source": "165level"
+        },
+        {
+          "display": "Extra-7 - Automated Doors",
+          "name": "Automated Doors",
+          "source": "163level"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Volcanic Cavern",
+      "levels": [
+        {
+          "display": "01 - Tour",
+          "name": "Tour",
+          "source": "148level"
+        },
+        {
+          "display": "02 - Peril at Every Turn",
+          "name": "Peril at Every Turn",
+          "source": "47level"
+        },
+        {
+          "display": "03 - Pillarwork",
+          "name": "Pillarwork",
+          "source": "266level"
+        },
+        {
+          "display": "04 - Mouse Hole",
+          "name": "Mouse Hole",
+          "source": "95level"
+        },
+        {
+          "display": "05 - Torn Apart",
+          "name": "Torn Apart",
+          "source": "146level"
+        },
+        {
+          "display": "06 - Vital Ingredients",
+          "name": "Vital Ingredients",
+          "source": "46level"
+        },
+        {
+          "display": "07 - Backstage",
+          "name": "Backstage",
+          "source": "270level"
+        },
+        {
+          "display": "08 - The Heist",
+          "name": "The Heist",
+          "source": "101level"
+        },
+        {
+          "display": "09 - Join the Crew",
+          "name": "Join the Crew",
+          "source": "109level"
+        },
+        {
+          "display": "10 - Automaton",
+          "name": "Automaton",
+          "source": "119level"
+        },
+        {
+          "display": "11 - Trick Door",
+          "name": "Trick Door",
+          "source": "145level"
+        },
+        {
+          "display": "12 - Trapped",
+          "name": "Trapped",
+          "source": "176level"
+        },
+        {
+          "display": "13 - Tunnel",
+          "name": "Tunnel",
+          "source": "122level"
+        },
+        {
+          "display": "14 - Broken Expectations",
+          "name": "Broken Expectations",
+          "source": "178level"
+        }
+      ],
+      "extra_levels": [
+        {
+          "display": "Extra 1 - Coronation",
+          "name": "Coronation",
+          "source": "51level"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Mountaintop",
+      "levels": [
+        {
+          "display": "01 - Shuffle",
+          "name": "Shuffle",
+          "source": "105level"
+        },
+        {
+          "display": "02 - Love at First Sight",
+          "name": "Love at First Sight",
+          "source": "100level"
+        },
+        {
+          "display": "03 - Solitude",
+          "name": "Solitude",
+          "source": "195level"
+        },
+        {
+          "display": "04 - What is Baba?",
+          "name": "What is Baba?",
+          "source": "116level"
+        },
+        {
+          "display": "05 - Connector",
+          "name": "Connector",
+          "source": "120level"
+        },
+        {
+          "display": "06 - Floaty Platforms",
+          "name": "Floaty Platforms",
+          "source": "118level"
+        },
+        {
+          "display": "07 - Seeking Acceptance",
+          "name": "Seeking Acceptance",
+          "source": "99level"
+        },
+        {
+          "display": "08 - Tectonic Movements",
+          "name": "Tectonic Movements",
+          "source": "104level"
+        }
+      ],
+      "extra_levels": [
+        {
+          "display": "Extra 1 - The Floatiest Platforms",
+          "name": "The Floatiest Platforms",
+          "source": "48level"
+        }
+      ]
+    }
+  ]
+}

@@ -6,10 +6,12 @@
 #include <cmath>
 #include <cstdio>
 #include <cstring>
+#include <fstream>
 #include <string>
 #include <unordered_set>
 
 #include <imgui.h>
+#include <nlohmann/json.hpp>
 #include <raylib.h>
 
 #include "board.h"
@@ -24,6 +26,7 @@ constexpr const char* kLevelsDir = "assets/levels";
 constexpr const char* kImportedDir = "assets/imported";
 constexpr const char* kWorldFile = "assets/worlds/tutorial.json";
 constexpr const char* kProgressFile = "progress.json";
+constexpr const char* kCampaignFile = "assets/campaign.json";
 
 constexpr const char* kStepSoundPath = "assets/sfx/044.ogg";
 constexpr const char* kWinSoundPath = "assets/sfx/021.ogg";
@@ -131,6 +134,7 @@ void GameLayer::OnAttach() {
   }
   LoadWorld(kWorldFile, world_);
   LoadProgress(kProgressFile, progress_);
+  LoadCampaign(kCampaignFile);
   // Scan the imported-level directory (may not exist in a fresh checkout).
   std::error_code ec;
   if (std::filesystem::is_directory(kImportedDir, ec)) {
@@ -2129,6 +2133,55 @@ void GameLayer::DiscardClipboard() { clipboard_.clear(); }
 // World / progression
 // ---------------------------------------------------------------------------
 
+void GameLayer::LoadCampaign(const std::filesystem::path& path) {
+  campaign_main_.clear();
+  campaign_subworlds_.clear();
+  std::ifstream in(path);
+  if (!in) {
+    TraceLog(LOG_INFO, "No campaign manifest at %s", path.string().c_str());
+    return;
+  }
+  nlohmann::json doc;
+  try {
+    in >> doc;
+  } catch (const nlohmann::json::exception& e) {
+    TraceLog(LOG_WARNING, "Failed to parse %s: %s", path.string().c_str(), e.what());
+    return;
+  }
+
+  auto read_level = [](const nlohmann::json& node, const std::string& display_fallback) {
+    CampaignLevel out;
+    out.display = node.value("display", display_fallback);
+    out.source = node.value("source", "");
+    return out;
+  };
+
+  if (auto it = doc.find("main_world"); it != doc.end() && it->is_array()) {
+    for (const auto& n : *it) {
+      const std::string id = n.value("id", "");
+      const std::string name = n.value("name", "");
+      CampaignLevel lvl;
+      lvl.display = id.empty() ? name : (id + " - " + name);
+      lvl.source = n.value("source", "");
+      campaign_main_.push_back(std::move(lvl));
+    }
+  }
+  if (auto it = doc.find("subworlds"); it != doc.end() && it->is_array()) {
+    for (const auto& n : *it) {
+      CampaignSubworld sw;
+      sw.id = n.value("id", 0);
+      sw.name = n.value("name", "");
+      if (auto lvls = n.find("levels"); lvls != n.end() && lvls->is_array()) {
+        for (const auto& l : *lvls) sw.levels.push_back(read_level(l, ""));
+      }
+      if (auto extras = n.find("extra_levels"); extras != n.end() && extras->is_array()) {
+        for (const auto& l : *extras) sw.extra_levels.push_back(read_level(l, ""));
+      }
+      campaign_subworlds_.push_back(std::move(sw));
+    }
+  }
+}
+
 void GameLayer::MarkLevelCompleted(const std::string& id) {
   const bool added = progress_.completed.insert(id).second;
   if (added) SaveProgress(kProgressFile, progress_);
@@ -2235,35 +2288,48 @@ void GameLayer::DrawWorldPanel() {
     }
   }
 
-  if (!world_.levels.empty() && ImGui::CollapsingHeader("Campaign", ImGuiTreeNodeFlags_DefaultOpen)) {
-    ImGui::Text("%s", world_.title.empty() ? "Levels" : world_.title.c_str());
-    const std::size_t done = progress_.completed.size();
-    ImGui::TextDisabled("Cleared %zu / %zu", done, world_.levels.size());
-    ImGui::Separator();
-
-    for (std::size_t i = 0; i < world_.levels.size(); ++i) {
-      const auto& lvl = world_.levels[i];
-      const std::string display_name = ResolveCampaignLevelName(lvl);
-      const bool unlocked = IsUnlocked(i);
-      const bool completed = progress_.completed.contains(lvl.id);
-      const bool current = (lvl.id == current_level_id_);
-
-      ImGui::PushID(static_cast<int>(i));
-      const char* badge = completed ? "[*]" : (unlocked ? "[ ]" : "[X]");
-      if (current) {
-        ImGui::TextColored(ImVec4(0.4f, 0.9f, 0.4f, 1.0f), "%s %s", badge, display_name.c_str());
-      } else if (unlocked) {
-        ImGui::Text("%s %s", badge, display_name.c_str());
-      } else {
-        ImGui::TextDisabled("%s %s", badge, display_name.c_str());
+  if ((!campaign_main_.empty() || !campaign_subworlds_.empty()) &&
+      ImGui::CollapsingHeader("Campaign", ImGuiTreeNodeFlags_DefaultOpen)) {
+    auto draw_level = [&](const CampaignLevel& lvl, int unique_id) {
+      ImGui::PushID(unique_id);
+      const std::string& src = lvl.source;
+      const std::string current_source = current_level_id_;
+      const bool current = !src.empty() && src == current_source;
+      const bool resolved = !src.empty();
+      const ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Leaf |
+                                       ImGuiTreeNodeFlags_NoTreePushOnOpen |
+                                       ImGuiTreeNodeFlags_SpanAvailWidth |
+                                       (current ? ImGuiTreeNodeFlags_Selected : 0);
+      if (current) ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.4f, 0.9f, 0.4f, 1.0f));
+      else if (!resolved) ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyle().Colors[ImGuiCol_TextDisabled]);
+      ImGui::TreeNodeEx(lvl.display.c_str(), flags);
+      if (current || !resolved) ImGui::PopStyleColor();
+      if (resolved && ImGui::IsItemClicked()) {
+        LoadLevelFromPath(std::filesystem::path{kImportedDir} / (lvl.source + ".json"));
       }
-      ImGui::SameLine();
-      ImGui::BeginDisabled(!unlocked);
-      if (ImGui::Button("Play")) {
-        LoadLevelFromPath(std::filesystem::path{kLevelsDir} / (lvl.id + ".json"));
-      }
-      ImGui::EndDisabled();
       ImGui::PopID();
+    };
+
+    int uid = 0;
+    if (!campaign_main_.empty() &&
+        ImGui::TreeNodeEx("Main World", ImGuiTreeNodeFlags_DefaultOpen)) {
+      for (const auto& lvl : campaign_main_) draw_level(lvl, uid++);
+      ImGui::TreePop();
+    }
+    for (const auto& sw : campaign_subworlds_) {
+      const std::string label = std::to_string(sw.id) + ". " + sw.name;
+      if (ImGui::TreeNodeEx(label.c_str())) {
+        if (!sw.levels.empty() &&
+            ImGui::TreeNodeEx("Levels", ImGuiTreeNodeFlags_DefaultOpen)) {
+          for (const auto& lvl : sw.levels) draw_level(lvl, uid++);
+          ImGui::TreePop();
+        }
+        if (!sw.extra_levels.empty() && ImGui::TreeNodeEx("Extras")) {
+          for (const auto& lvl : sw.extra_levels) draw_level(lvl, uid++);
+          ImGui::TreePop();
+        }
+        ImGui::TreePop();
+      }
     }
 
     ImGui::Separator();
