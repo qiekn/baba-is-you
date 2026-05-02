@@ -18,6 +18,20 @@ inline constexpr float kBoardOffsetY = 14.0f;
 inline constexpr float kBoardVerticalMargin = 30.0f;
 inline float kGridLineThickness = 3.5f;
 
+// Width/height of the area the board renders into. Set every frame by
+// imgui_layer (matches the docked Viewport panel size); falls back to the OS
+// window size when the UI is hidden.
+inline int kViewportWidth = 0;
+inline int kViewportHeight = 0;
+// Top-left corner of the Viewport panel in OS-window coordinates. Used to
+// translate raylib's GetMousePosition() into board-local space.
+inline Vector2 kViewportOrigin{0.0f, 0.0f};
+// True while the mouse is over the docked Viewport panel (or the UI is
+// hidden, in which case the whole window is the viewport).
+inline bool kViewportHovered = true;
+void SetViewportSize(int w, int h);
+void SetViewportOrigin(Vector2 origin);
+
 // Pixel size of a single cell for the currently loaded board, sized so the
 // board fills the available window minus padding. Recomputed each call.
 float Pitch();

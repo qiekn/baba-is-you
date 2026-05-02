@@ -20,11 +20,27 @@ int DisplayCols() {
 int DisplayRows() {
   return kRows;
 }
+
+int ViewportW() {
+  return kViewportWidth > 0 ? kViewportWidth : std::max(1, GetScreenWidth());
+}
+int ViewportH() {
+  return kViewportHeight > 0 ? kViewportHeight : std::max(1, GetScreenHeight());
+}
 }  // namespace
 
+void SetViewportSize(int w, int h) {
+  kViewportWidth = w;
+  kViewportHeight = h;
+}
+
+void SetViewportOrigin(Vector2 origin) {
+  kViewportOrigin = origin;
+}
+
 float Pitch() {
-  const float avail_w = GetScreenWidth() - 2 * kBoardPadding;
-  const float avail_h = GetScreenHeight() - 2 * (kBoardPadding + kBoardVerticalMargin);
+  const float avail_w = ViewportW() - 2 * kBoardPadding;
+  const float avail_h = ViewportH() - 2 * (kBoardPadding + kBoardVerticalMargin);
   return std::min(avail_w / std::max(LayoutColsForPitch(), 1),
                   avail_h / std::max(LayoutRowsForPitch(), 1));
 }
@@ -34,8 +50,8 @@ Rectangle BoardRect() {
   const float w = DisplayCols() * pitch;
   const float h = DisplayRows() * pitch;
   return {
-      (GetScreenWidth() - w) * 0.5f,
-      (GetScreenHeight() - h) * 0.5f + kBoardOffsetY,
+      (ViewportW() - w) * 0.5f,
+      (ViewportH() - h) * 0.5f + kBoardOffsetY,
       w,
       h,
   };

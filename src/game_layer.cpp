@@ -521,7 +521,9 @@ void GameLayer::OnRender() {
     const char* msg = "YOU WIN!";
     const int size = 48;
     const int w = MeasureText(msg, size);
-    DrawText(msg, (GetScreenWidth() - w) / 2, 40, size, GOLD);
+    // BeginTextureMode coordinates: 0..viewport_w. board:: tracks the same.
+    const int vp_w = board::kViewportWidth > 0 ? board::kViewportWidth : GetScreenWidth();
+    DrawText(msg, (vp_w - w) / 2, 40, size, GOLD);
   }
 }
 
@@ -1064,8 +1066,8 @@ void GameLayer::DrawTransitionOverlay() const {
   };
   const float eased_t = ease_in_out(transition_t_);
 
-  const float w = static_cast<float>(GetScreenWidth());
-  const float h = static_cast<float>(GetScreenHeight());
+  const float w = static_cast<float>(board::kViewportWidth > 0 ? board::kViewportWidth : GetScreenWidth());
+  const float h = static_cast<float>(board::kViewportHeight > 0 ? board::kViewportHeight : GetScreenHeight());
   const float cx = w * 0.5f;
   const float cy = h * 0.5f;
   const float max_r = std::sqrt(cx * cx + cy * cy);
@@ -1644,7 +1646,10 @@ void GameLayer::DrawSettingsPanel() {
 // ---------------------------------------------------------------------------
 
 void GameLayer::DrawEditorOverlay() {
-  const Vector2 mp = GetMousePosition();
+  // GetMousePosition() is in OS-window coordinates; the board is now drawn
+  // into a docked panel, so translate to viewport-local space first.
+  const Vector2 mp = {GetMousePosition().x - board::kViewportOrigin.x,
+                      GetMousePosition().y - board::kViewportOrigin.y};
   auto cell_opt = board::ScreenToCell(mp);
   const bool in_board = cell_opt.has_value();
   int col, row;
@@ -1772,14 +1777,18 @@ void GameLayer::DrawEditorOverlay() {
 }
 
 void GameLayer::HandleEditorMouse() {
-  if (ImGui::GetIO().WantCaptureMouse) {
+  // The Viewport panel is itself an ImGui window, so WantCaptureMouse is true
+  // whenever the cursor is over us. Gate on the panel's own hover flag
+  // instead, and translate the cursor into viewport-local space.
+  if (!board::kViewportHovered) {
     dragging_ = false;
     return;
   }
   // Clamp the cursor to the board so a drag preview keeps tracking the mouse
   // when it slips past the playfield edge. `in_board` stays gated on the real
   // hit-test so single-click actions don't fire from dead zones.
-  const Vector2 mp = GetMousePosition();
+  const Vector2 mp = {GetMousePosition().x - board::kViewportOrigin.x,
+                      GetMousePosition().y - board::kViewportOrigin.y};
   auto cell_opt = board::ScreenToCell(mp);
   const bool in_board = cell_opt.has_value();
   int col, row;

@@ -7,10 +7,30 @@
 
 #include <GLFW/glfw3.h>
 #include <imgui.h>
+#include <imgui_internal.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
 #include "board.h"
+
+namespace {
+
+// When the dockspace node hosting the Viewport panel only contains the
+// viewport itself, hide the tab bar for a clean editor look. As soon as the
+// user docks another panel onto the same node, the tab bar re-appears so they
+// can switch between siblings. Mirrors ck-engine's HideDockNodeTabBar.
+void HideDockNodeTabBarIfSolo() {
+  if (!ImGui::IsWindowDocked()) return;
+  ImGuiDockNode* node = ImGui::GetWindowDockNode();
+  if (!node) return;
+  if (node->Windows.Size <= 1) {
+    node->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
+  } else {
+    node->LocalFlags &= ~ImGuiDockNodeFlags_NoTabBar;
+  }
+}
+
+}  // namespace
 
 const ImGuiLayer::Theme ImGuiLayer::kThemes[7] = {
     {
@@ -90,6 +110,11 @@ void ImGuiLayer::OnAttach() {
 }
 
 void ImGuiLayer::OnDetach() {
+  if (viewport_target_.id != 0) {
+    UnloadRenderTexture(viewport_target_);
+    viewport_target_ = RenderTexture2D{};
+    viewport_target_w_ = viewport_target_h_ = 0;
+  }
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
   ImGui::DestroyContext();
@@ -122,9 +147,9 @@ void ImGuiLayer::End() {
 void ImGuiLayer::OnImGuiRender() {
   // Visibility is gated by Game::Render before this runs, so no check here.
 
-  ImGui::DockSpaceOverViewport(
-      0, ImGui::GetMainViewport(),
-      ImGuiDockNodeFlags_PassthruCentralNode | ImGuiDockNodeFlags_NoDockingOverCentralNode);
+  // Plain dockspace (no PassthruCentralNode): the central area is now owned
+  // by the Viewport panel which renders the game framebuffer as ImGui::Image.
+  ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
 
   DrawMainMenuBar();
 
@@ -186,14 +211,58 @@ void ImGuiLayer::DrawMainMenuBar() {
   ImGui::EndMainMenuBar();
 }
 
+RenderTexture2D& ImGuiLayer::ViewportTarget() {
+  // Choose a positive size: when the panel is closed/minimized or the UI is
+  // hidden, fall back to the OS window size so the game still has somewhere
+  // to draw to.
+  int want_w = static_cast<int>(viewport_size_.x);
+  int want_h = static_cast<int>(viewport_size_.y);
+  if (want_w <= 0 || want_h <= 0) {
+    want_w = std::max(1, GetScreenWidth());
+    want_h = std::max(1, GetScreenHeight());
+  }
+  if (want_w != viewport_target_w_ || want_h != viewport_target_h_ || viewport_target_.id == 0) {
+    if (viewport_target_.id != 0) UnloadRenderTexture(viewport_target_);
+    viewport_target_ = LoadRenderTexture(want_w, want_h);
+    SetTextureFilter(viewport_target_.texture, TEXTURE_FILTER_BILINEAR);
+    viewport_target_w_ = want_w;
+    viewport_target_h_ = want_h;
+  }
+  return viewport_target_;
+}
+
 void ImGuiLayer::DrawViewportPanel() {
+  // Zero padding so the FBO image touches the panel borders and tab bar
+  // toggling doesn't shift the rendered area.
+  ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{0.0f, 0.0f});
   if (!ImGui::Begin("Viewport", nullptr, ImGuiWindowFlags_NoCollapse)) {
     ImGui::End();
+    ImGui::PopStyleVar();
     return;
   }
-  ImGui::TextDisabled("The game renders into the raylib framebuffer behind this UI.");
-  ImGui::TextDisabled("Press ` to hide all panels.");
+
+  HideDockNodeTabBarIfSolo();
+
+  const ImVec2 size = ImGui::GetContentRegionAvail();
+  const ImVec2 pos = ImGui::GetCursorScreenPos();
+  viewport_size_ = {size.x, size.y};
+  viewport_top_left_ = {pos.x, pos.y};
+  viewport_focused_ = ImGui::IsWindowFocused();
+  viewport_hovered_ = ImGui::IsWindowHovered();
+  // Publish to the board namespace so non-ImGui code (game_layer mouse
+  // handling, BeginTextureMode-space drawing) can resolve viewport-local
+  // coordinates without depending on ImGuiLayer directly.
+  board::SetViewportOrigin(viewport_top_left_);
+  board::kViewportHovered = viewport_hovered_;
+
+  // raylib RenderTexture is upside-down relative to ImGui, so we flip V.
+  if (viewport_target_.id != 0 && size.x > 0.0f && size.y > 0.0f) {
+    ImGui::Image(static_cast<ImTextureID>(viewport_target_.texture.id),
+                 size, ImVec2{0.0f, 1.0f}, ImVec2{1.0f, 0.0f});
+  }
+
   ImGui::End();
+  ImGui::PopStyleVar();
 }
 
 void ImGuiLayer::DrawInspectorPanel() {

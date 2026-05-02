@@ -134,7 +134,25 @@ void Game::ToggleBorderless() {
 }
 
 void Game::Render() {
-  BeginDrawing();
+  // Sync the board's notion of viewport size with what ImGui is going to paint
+  // into. When the UI is hidden the panel hasn't been measured this frame, so
+  // fall back to the OS window dimensions.
+  const Vector2 vp = imgui_layer_->ViewportSize();
+  const int vp_w = (vp.x > 0.0f) ? static_cast<int>(vp.x) : GetScreenWidth();
+  const int vp_h = (vp.y > 0.0f) ? static_cast<int>(vp.y) : GetScreenHeight();
+  if (!imgui_layer_->IsVisible() || vp.x <= 0.0f || vp.y <= 0.0f) {
+    board::SetViewportSize(GetScreenWidth(), GetScreenHeight());
+    board::SetViewportOrigin({0.0f, 0.0f});
+    board::kViewportHovered = true;
+  } else {
+    board::SetViewportSize(vp_w, vp_h);
+    // Origin and hovered are published from DrawViewportPanel each ImGui pass.
+  }
+
+  RenderTexture2D& rt = imgui_layer_->ViewportTarget();
+
+  // 1. Render the game into the FBO that the Viewport panel will sample.
+  BeginTextureMode(rt);
   const auto edge_bg = game_layer_ ? game_layer_->LevelEdge() : std::nullopt;
   ClearBackground(edge_bg.value_or(imgui_layer_->BackgroundColor()));
 
@@ -144,16 +162,26 @@ void Game::Render() {
   }
   DrawGridOverlay();
   // Draw transition while we're still in raylib's normal 2D render state.
-  // Rendering it after ImGui's OpenGL backend can leave driver state that
-  // prevents the raylib triangles from showing reliably.
   if (game_layer_) game_layer_->DrawTransitionOverlay();
   rlDrawRenderBatchActive();
+  EndTextureMode();
+
+  // 2. Compose ImGui (or blit the FBO directly when the UI is hidden).
+  BeginDrawing();
+  ClearBackground(BLACK);
 
   imgui_layer_->Begin();
   if (imgui_layer_->IsVisible()) {
     for (auto& layer : layers_) {
       layer->OnImGuiRender();
     }
+  } else {
+    // UI hidden: stretch the FBO across the whole window.
+    const Rectangle src = {0.0f, 0.0f, static_cast<float>(rt.texture.width),
+                           -static_cast<float>(rt.texture.height)};
+    const Rectangle dst = {0.0f, 0.0f, static_cast<float>(GetScreenWidth()),
+                           static_cast<float>(GetScreenHeight())};
+    DrawTexturePro(rt.texture, src, dst, {0.0f, 0.0f}, 0.0f, WHITE);
   }
   imgui_layer_->End();
 

@@ -30,6 +30,18 @@ class ImGuiLayer : public Layer {
   bool ShowGrid() const { return show_grid_; }
   void BindGamePanelToggles(bool* scene, bool* rules, bool* editor, bool* world, bool* settings);
 
+  // Viewport (game framebuffer) integration.
+  // Lazily (re)allocates a RenderTexture2D matching the ImGui Viewport panel's
+  // size. Callers draw into this texture; DrawViewportPanel composites it back
+  // through ImGui::Image.
+  RenderTexture2D& ViewportTarget();
+  // Size in pixels of the most recently sampled viewport panel content area.
+  // When the UI is hidden, this falls back to the OS window size so the game
+  // still fills the screen.
+  Vector2 ViewportSize() const { return viewport_size_; }
+  Vector2 ViewportTopLeft() const { return viewport_top_left_; }
+  bool ViewportHovered() const { return viewport_hovered_; }
+
  private:
   struct ColorValue {
     float r = 0.0f;
@@ -64,7 +76,7 @@ class ImGuiLayer : public Layer {
   static const Theme kThemes[7];
 
   bool visible_ = true;
-  bool show_viewport_ = false;
+  bool show_viewport_ = true;
   bool show_inspector_ = true;
   bool show_themes_ = true;
   bool show_demo_ = false;
@@ -75,6 +87,15 @@ class ImGuiLayer : public Layer {
   bool* show_editor_panel_ = nullptr;
   bool* show_world_panel_ = nullptr;
   bool* show_settings_panel_ = nullptr;
+
+  // Render-to-texture state for the docked Viewport panel.
+  RenderTexture2D viewport_target_{};
+  int viewport_target_w_ = 0;
+  int viewport_target_h_ = 0;
+  Vector2 viewport_size_{0.0f, 0.0f};
+  Vector2 viewport_top_left_{0.0f, 0.0f};
+  bool viewport_hovered_ = false;
+  bool viewport_focused_ = false;
 
   int selected_theme_ = 0;
   ColorValue background_color_{};
