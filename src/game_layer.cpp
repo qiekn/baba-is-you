@@ -692,17 +692,29 @@ std::pair<int, int> GameLayer::Delta(Direction dir) {
   return {0, 0};
 }
 
-bool GameLayer::CanEnter(int x, int y, int dx, int dy, bool mover_is_float) {
+bool GameLayer::CanEnter(int x, int y, int dx, int dy, bool mover_is_float,
+                         bool chain_has_open, bool chain_has_shut) {
   if (x < 0 || x >= board::kCols || y < 0 || y >= board::kRows) return false;
   bool any_push = false;
+  bool next_open = chain_has_open;
+  bool next_shut = chain_has_shut;
   for (auto [e, cell] : registry_.view<const Cell>().each()) {
     if (cell.x != x || cell.y != y) continue;
     const bool other_is_float = registry_.all_of<IsFloat>(e);
     if (other_is_float != mover_is_float) continue;
+    const bool e_open = registry_.all_of<IsOpen>(e);
+    const bool e_shut = registry_.all_of<IsShut>(e);
+    // OPEN-SHUT pair: the chain may pass through; both are destroyed once
+    // the entities share a cell (handled by RunWinDefeat).
+    if ((e_shut && chain_has_open) || (e_open && chain_has_shut)) continue;
     if (registry_.all_of<IsStop>(e)) return false;
-    if (registry_.all_of<IsPush>(e)) any_push = true;
+    if (registry_.all_of<IsPush>(e)) {
+      any_push = true;
+      if (e_open) next_open = true;
+      if (e_shut) next_shut = true;
+    }
   }
-  if (any_push) return CanEnter(x + dx, y + dy, dx, dy, mover_is_float);
+  if (any_push) return CanEnter(x + dx, y + dy, dx, dy, mover_is_float, next_open, next_shut);
   return true;
 }
 
@@ -750,7 +762,9 @@ bool GameLayer::TryMove(entt::entity who, Direction dir) {
   const int tx = c.x + dx;
   const int ty = c.y + dy;
   const bool mover_is_float = registry_.all_of<IsFloat>(who);
-  if (!CanEnter(tx, ty, dx, dy, mover_is_float)) return false;
+  const bool mover_is_open = registry_.all_of<IsOpen>(who);
+  const bool mover_is_shut = registry_.all_of<IsShut>(who);
+  if (!CanEnter(tx, ty, dx, dy, mover_is_float, mover_is_open, mover_is_shut)) return false;
   const int from_x = c.x;
   const int from_y = c.y;
   PushChain(tx, ty, dx, dy, mover_is_float);

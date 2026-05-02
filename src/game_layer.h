@@ -67,7 +67,12 @@ class GameLayer : public Layer {
   // per-frame editor preview to avoid cyclic-rule oscillation).
   void RecomputeRules(bool apply_transformations = false);
   bool TryMove(entt::entity who, Direction dir);
-  bool CanEnter(int x, int y, int dx, int dy, bool mover_is_float);
+  // OPEN/SHUT pairs (e.g. KEY IS OPEN + DOOR IS SHUT) cancel each other when
+  // they overlap. CanEnter therefore lets the move-chain pass through a SHUT
+  // when the chain carries an OPEN (and vice versa); the actual destruction
+  // happens in RunWinDefeat once the entities share a cell.
+  bool CanEnter(int x, int y, int dx, int dy, bool mover_is_float,
+                bool chain_has_open = false, bool chain_has_shut = false);
   void PushChain(int x, int y, int dx, int dy, bool mover_is_float);
   // After an entity vacates (from_x, from_y) moving by (dx, dy), drag any
   // Pull-tagged entity chained along the opposite direction forward by one
