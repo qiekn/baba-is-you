@@ -1,0 +1,81 @@
+name: build
+
+on:
+  push:
+    branches: [main, remake]
+    tags: ["v*"]
+  pull_request:
+    branches: [main, remake]
+  workflow_dispatch:
+
+# softprops/action-gh-release needs write access to create releases and upload
+# assets. Repos default to read-only GITHUB_TOKEN, so opt in explicitly.
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      # CLANG64 mirrors the project's local toolchain: clang + libc++ + lld.
+      # Without libc++ the build fails - CMakeLists.txt hardcodes -stdlib=libc++.
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: CLANG64
+          update: true
+          install: >-
+            git
+            mingw-w64-clang-x86_64-clang
+            mingw-w64-clang-x86_64-libc++
+            mingw-w64-clang-x86_64-lld
+            mingw-w64-clang-x86_64-cmake
+            mingw-w64-clang-x86_64-ninja
+
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Stage release artifacts
+        id: stage
+        run: |
+          set -euo pipefail
+          name="baba-${GITHUB_REF_NAME//\//-}-windows-x64"
+          stage="dist/${name}"
+          mkdir -p "${stage}"
+          cp build/baba.exe "${stage}/"
+          cp -r assets "${stage}/"
+          cp imgui_default.ini "${stage}/"
+          cp README.md "${stage}/"
+          # Ship the runtime DLLs the exe pulls from msys2 (libc++, libunwind,
+          # libwinpthread...). ldd lists everything; filter out Windows system
+          # DLLs which exist on every target machine.
+          ldd "${stage}/baba.exe" \
+            | awk '{print $3}' \
+            | grep -i '^/clang64/' \
+            | xargs -I{} cp {} "${stage}/"
+          (cd dist && 7z a -tzip "${name}.zip" "${name}")
+          echo "name=${name}" >> "${GITHUB_OUTPUT}"
+          echo "zip=dist/${name}.zip" >> "${GITHUB_OUTPUT}"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.stage.outputs.name }}
+          path: ${{ steps.stage.outputs.zip }}
+          if-no-files-found: error
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.stage.outputs.zip }}
+          generate_release_notes: true
