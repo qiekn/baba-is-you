@@ -2319,15 +2319,8 @@ void GameLayer::DrawWorldPanel() {
     for (const auto& sw : campaign_subworlds_) {
       const std::string label = std::to_string(sw.id) + ". " + sw.name;
       if (ImGui::TreeNodeEx(label.c_str())) {
-        if (!sw.levels.empty() &&
-            ImGui::TreeNodeEx("Levels", ImGuiTreeNodeFlags_DefaultOpen)) {
-          for (const auto& lvl : sw.levels) draw_level(lvl, uid++);
-          ImGui::TreePop();
-        }
-        if (!sw.extra_levels.empty() && ImGui::TreeNodeEx("Extras")) {
-          for (const auto& lvl : sw.extra_levels) draw_level(lvl, uid++);
-          ImGui::TreePop();
-        }
+        for (const auto& lvl : sw.levels) draw_level(lvl, uid++);
+        for (const auto& lvl : sw.extra_levels) draw_level(lvl, uid++);
         ImGui::TreePop();
       }
     }
