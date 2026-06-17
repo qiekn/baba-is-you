@@ -1,4 +1,4 @@
-# Yet Another Baba-Is-You Clone
+# Yet Another Baba-Is-You Demake
 
 > This project is just for programming practice.  
 > [Buy Baba Is You on Steam](https://store.steampowered.com/app/736260/Baba_Is_You/)
